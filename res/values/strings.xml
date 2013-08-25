@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HPSMovie</string>
+    <string name="action_settings">Settings</string>
+    <string name="rec_movie">動画を撮る</string>
+    <string name="rec_text">●REC</string>
+    <string name="stop_text">●STOP</string>
+</resources>
