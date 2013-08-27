@@ -3,6 +3,7 @@ package jp.recruit.hps.movie.client;
 import java.io.File;
 import java.io.IOException;
 
+import jp.recruit.hps.movie.client.task.FileUploadAsyncTask;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -22,13 +23,16 @@ public class RecordActivity extends Activity implements OnClickListener {
 	private SurfaceHolder.Callback mCallback;
 	private MediaRecorder mRecorder;
 	private Camera mCamera;
+	private File mFile;
 	private boolean isRecording;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_record);
+		// StrictMode.ThreadPolicy policy = new
+		// StrictMode.ThreadPolicy.Builder().permitAll().build();
+		// StrictMode.setThreadPolicy(policy);
 		init();
 	}
 
@@ -72,6 +76,8 @@ public class RecordActivity extends Activity implements OnClickListener {
 		mRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
+		mRecorder.setVideoFrameRate(15);
+		
 		mRecorder.setOutputFile(getFilePath());
 		mRecorder.setPreviewDisplay(holder.getSurface());
 	}
@@ -97,6 +103,7 @@ public class RecordActivity extends Activity implements OnClickListener {
 						.setVisibility(View.VISIBLE);
 				((TextView) findViewById(R.id.textViewStop))
 						.setVisibility(View.GONE);
+				new FileUploadAsyncTask(this).execute(mFile);
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -106,20 +113,22 @@ public class RecordActivity extends Activity implements OnClickListener {
 	}
 
 	private String getFilePath() {
-		File dir = Environment.getExternalStorageDirectory();
-		File appDir = new File(dir, "HPSMovie");
+		if (mFile == null) {
+			File dir = Environment.getExternalStorageDirectory();
+			File appDir = new File(dir, "HPSMovie");
 
-		if (!appDir.exists()) {
-			appDir.mkdir();
+			if (!appDir.exists()) {
+				appDir.mkdir();
+			}
+
+			String fileName = String.valueOf(System.currentTimeMillis());
+			mFile = new File(appDir, fileName + ".mp4");
 		}
-
-		String fileName = String.valueOf(System.currentTimeMillis());
-		return new File(appDir, fileName + ".mp4").getAbsolutePath();
+		return mFile.getAbsolutePath();
 	}
 
 	public void destroyRecorder() {
 		if (mRecorder != null) {
-			mRecorder.stop();
 			mRecorder.reset();
 			mRecorder.release();
 			mRecorder = null;
