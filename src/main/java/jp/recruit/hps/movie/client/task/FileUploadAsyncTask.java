@@ -1,77 +1,71 @@
 package jp.recruit.hps.movie.client.task;
 
 import java.io.File;
+import java.io.IOException;
+
+import jp.recruit.hps.movie.client.api.RemoteApi;
+import jp.recruit.hps.movie.client.utils.AWSUtils;
+import android.content.Context;
+import android.util.Log;
 
 import com.amazonaws.services.s3.model.ProgressEvent;
 import com.amazonaws.services.s3.model.ProgressListener;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.appspot.hps_movie.movieEndpoint.MovieEndpoint.MovieV1EndPoint;
+import com.appspot.hps_movie.movieEndpoint.MovieEndpoint.MovieV1EndPoint.CreateMovie;
 
-import jp.recruit.hps.movie.client.utils.AWSUtils;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.os.AsyncTask;
+public class FileUploadAsyncTask extends DialogAsyncTask {
+	private final String userKey;
+	private String fileName;
 
-public class FileUploadAsyncTask extends AsyncTask<File, Integer, Boolean>
-		implements OnCancelListener {
-	ProgressDialog dialog;
-	Context context;
-	double totalByteRead = 0.0d;
-	double fileSize = 0.0d;
-
-	public FileUploadAsyncTask(Context context) {
-		this.context = context;
+	public FileUploadAsyncTask(Context context, String userKey) {
+		super(context);
+		this.userKey = userKey;
 	}
 
 	@Override
-	protected void onPreExecute() {
-		dialog = new ProgressDialog(context);
-		dialog.setTitle("Please wait");
-		dialog.setMessage("Uploading file...");
-		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setCancelable(true);
-		dialog.setOnCancelListener(this);
-		dialog.setMax(100);
-		dialog.setProgress(0);
-		dialog.show();
-	}
-
-	protected void onProgressUpdate(Integer... values) {
-		dialog.setProgress(values[0]);
-	}
-
-	@Override
-	protected Boolean doInBackground(File... files) {
-		if (files.length == 0 || files[0].length() == 0l) {
+	protected Boolean doInBackground(Object... files) {
+		if (files.length == 0) {
 			return false;
 		}
-		fileSize = files[0].length();
+		File file = (File) files[0];
+		fileName = file.getName();
 		PutObjectRequest request = new PutObjectRequest(AWSUtils.BUCKET_NAME,
-				AWSUtils.getKey("test", files[0].getName()), files[0]);
-		request.setProgressListener(new ProgressListener() {
+				AWSUtils.getKey(userKey, fileName), file);
+		request.setProgressListener(new FileUploadProgressListener(file
+				.length()) {
 
-			@Override
-			public void progressChanged(ProgressEvent event) {
-				totalByteRead += event.getBytesTransferred();
-				publishProgress((int)((totalByteRead / fileSize) * 100));
-			}
 		});
 		return AWSUtils.uploadToS3(request);
 	}
 
 	@Override
-	protected void onCancelled() {
-		dialog.dismiss();
-	}
-
-	@Override
 	protected void onPostExecute(Boolean result) {
-		dialog.dismiss();
+		if (result) {
+			MovieV1EndPoint endPoint = RemoteApi.getMovieEndpoint()
+					.movieV1EndPoint();
+			try {
+				CreateMovie action = endPoint.createMovie(userKey, fileName);
+				action.execute();
+			} catch (IOException e) {
+				Log.d("Error", e.getMessage());
+			}
+		}
+		super.onPostExecute(result);
 	}
 
-	@Override
-	public void onCancel(DialogInterface dialog) {
-		this.cancel(true);
+	class FileUploadProgressListener implements ProgressListener {
+		private final double fileSize;
+		private double totalByteRead = 0.0d;
+
+		FileUploadProgressListener(double fileSize) {
+			this.fileSize = fileSize;
+		}
+
+		@Override
+		public void progressChanged(ProgressEvent event) {
+			totalByteRead += event.getBytesTransferred();
+			publishProgress((int) ((totalByteRead / fileSize) * 100));
+		}
 	}
 }

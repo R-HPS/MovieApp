@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import jp.recruit.hps.movie.client.task.FileUploadAsyncTask;
+import jp.recruit.hps.movie.client.utils.CommonUtils;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -30,9 +31,6 @@ public class RecordActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record);
-		// StrictMode.ThreadPolicy policy = new
-		// StrictMode.ThreadPolicy.Builder().permitAll().build();
-		// StrictMode.setThreadPolicy(policy);
 		init();
 	}
 
@@ -103,7 +101,7 @@ public class RecordActivity extends Activity implements OnClickListener {
 						.setVisibility(View.VISIBLE);
 				((TextView) findViewById(R.id.textViewStop))
 						.setVisibility(View.GONE);
-				new FileUploadAsyncTask(this).execute(mFile);
+				new FileUploadAsyncTask(this, CommonUtils.TEST_USER_KEY).execute(mFile);
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
