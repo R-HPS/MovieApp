@@ -2,8 +2,11 @@
 <resources>
 
     <string name="app_name">HPSMovie</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">設定</string>
+    <string name="top">TOP</string>
+    <string name="movie_list">動画一覧</string>
     <string name="rec_movie">動画を撮る</string>
+    <string name="view_movie">動画を見る</string>
     <string name="rec_text">●REC</string>
     <string name="stop_text">■STOP</string>
 </resources>

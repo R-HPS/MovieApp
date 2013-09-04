@@ -1,6 +1,7 @@
 package jp.recruit.hps.movie.client;
 
 import jp.recruit.hps.movie.client.task.DownloadAndShowVideoAsyncTask;
+import jp.recruit.hps.movie.client.utils.CommonUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,8 @@ public class VideoActivity extends Activity {
 		Intent i = getIntent();
 		mVideo = (VideoView) findViewById(R.id.videoView1);
 		new DownloadAndShowVideoAsyncTask(this).execute(
-				i.getStringExtra("USER_KEY"), i.getStringExtra("FILE_NAME"));
+				i.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY),
+				i.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME));
 	}
 
 	public VideoView getVideo() {

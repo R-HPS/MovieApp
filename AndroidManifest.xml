@@ -38,6 +38,18 @@
             android:name=".RecordActivity"
             android:label="@string/rec_movie" >
         </activity>
+        <activity
+            android:name=".TopActivity"
+            android:label="@string/top" >
+        </activity>
+        <activity
+            android:name=".MovieListActivity"
+            android:label="@string/movie_list" >
+        </activity>
+        <activity
+            android:name=".VideoActivity"
+            android:label="@string/view_movie" >
+        </activity>
     </application>
 
 </manifest>
