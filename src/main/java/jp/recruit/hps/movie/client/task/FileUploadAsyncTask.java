@@ -36,11 +36,7 @@ public class FileUploadAsyncTask extends DialogAsyncTask {
 				.length()) {
 
 		});
-		return AWSUtils.uploadToS3(request);
-	}
-
-	@Override
-	protected void onPostExecute(Boolean result) {
+		Boolean result = AWSUtils.uploadToS3(request);
 		if (result) {
 			MovieV1EndPoint endPoint = RemoteApi.getMovieEndpoint()
 					.movieV1EndPoint();
@@ -51,6 +47,11 @@ public class FileUploadAsyncTask extends DialogAsyncTask {
 				Log.d("Error", e.getMessage());
 			}
 		}
+		return result;
+	}
+
+	@Override
+	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
 	}
 
