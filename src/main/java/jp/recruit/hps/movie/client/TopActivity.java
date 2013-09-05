@@ -18,16 +18,18 @@ import com.appspot.hps_movie.movieEndpoint.model.MovieV1DtoCollection;
 
 public class TopActivity extends Activity {
 	private String mTargetUserKey = CommonUtils.TEST_USER_KEY;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_top);
-		
+
 		Button record_button = (Button) findViewById(R.id.go_to_record_from_top);
 		record_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(TopActivity.this, RecordActivity.class);
+				Intent intent = new Intent(TopActivity.this,
+						RecordActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -38,36 +40,42 @@ public class TopActivity extends Activity {
 			}
 		});
 	}
-	
+
 	public class MovieTask extends AsyncTask<Void, Void, Boolean> {
 		private ArrayList<String> mFileNameList = new ArrayList<String>();
-		
+
 		@Override
 		protected Boolean doInBackground(Void... args) {
 
 			try {
 				MovieEndpoint endpoint = RemoteApi.getMovieEndpoint();
-				GetMovieList getMovieList = endpoint.movieV1EndPoint().getMovieList(mTargetUserKey);
+				GetMovieList getMovieList = endpoint.movieV1EndPoint()
+						.getMovieList(mTargetUserKey);
 
 				MovieV1DtoCollection result = getMovieList.execute();
-
+				if (result.getItems() == null || result.getItems().size() == 0) {
+					return false;
+				}
 				for (MovieV1Dto dto : result.getItems()) {
 					mFileNameList.add(dto.getFileName());
 				}
-				return true;
 			} catch (Exception e) {
 				return false;
 			}
+			return true;
 		}
 
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			if (success) {
-				Intent intent = new Intent(TopActivity.this, MovieListActivity.class);
-				intent.putExtra(CommonUtils.STRING_EXTRA_USER_KEY, mTargetUserKey);
-				intent.putExtra(CommonUtils.STRING_ARRAY_LIST_EXTRA_FILE_NAME_LIST, mFileNameList);
+				Intent intent = new Intent(TopActivity.this,
+						VideoActivity.class);
+				intent.putExtra(CommonUtils.STRING_EXTRA_USER_KEY,
+						mTargetUserKey);
+				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
+						mFileNameList.get(0));
 				startActivity(intent);
-			} 
+			}
 		}
 	}
 }

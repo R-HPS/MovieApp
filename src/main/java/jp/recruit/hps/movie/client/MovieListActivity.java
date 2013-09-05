@@ -17,7 +17,7 @@ public class MovieListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.activity_movie_list);
 
 		Intent i = getIntent();
@@ -29,10 +29,10 @@ public class MovieListActivity extends Activity {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.liner_view_movie_list);
 		for (final String fileName : fileNameList) {
             TextView tv = new TextView(this);
-            tv.setHeight(LayoutParams.MATCH_PARENT);
-            tv.setWidth(20);
-            tv.setGravity(Gravity.CENTER);
             tv.setText(fileName);
+            tv.setWidth(LayoutParams.MATCH_PARENT);
+            tv.setHeight(LayoutParams.WRAP_CONTENT);
+            tv.setGravity(Gravity.TOP);
             tv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {

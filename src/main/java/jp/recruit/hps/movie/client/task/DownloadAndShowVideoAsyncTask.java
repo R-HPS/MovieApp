@@ -34,8 +34,8 @@ public class DownloadAndShowVideoAsyncTask extends DialogAsyncTask {
 		String fileName = (String) args[1];
 		S3Object object = AWSUtils.downloadFromS3(userKey, fileName);
 		InputStream is = object.getObjectContent();
-		File mFile = FileUtils.createNewFile("tmp_"
-				+ System.currentTimeMillis() + ".mp4");
+		mFile = FileUtils.createNewFile("tmp_"
+				+ System.currentTimeMillis() + ".3gp");
 		double fileSize = object.getObjectMetadata().getContentLength();
 		double totalByteRead = 0.0d;
 		FileOutputStream fos = null;
@@ -44,7 +44,7 @@ public class DownloadAndShowVideoAsyncTask extends DialogAsyncTask {
 			byte[] buf = new byte[4000];
 			int length;
 			while ((length = is.read(buf)) != -1) {
-				fos.write(buf);
+				fos.write(buf, 0, length);
 				totalByteRead += length;
 				publishProgress((int) ((totalByteRead / fileSize) * 100));
 			}
@@ -69,9 +69,8 @@ public class DownloadAndShowVideoAsyncTask extends DialogAsyncTask {
 	public void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
 		if (result) {
-			VideoView video = ((VideoActivity) context).getVideo();
+			VideoView  video = ((VideoActivity) context).getVideo();
 			video.setVideoPath(mFile.getAbsolutePath());
-			video.start();
 		}
 	}
 

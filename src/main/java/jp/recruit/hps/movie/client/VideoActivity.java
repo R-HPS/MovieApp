@@ -4,6 +4,8 @@ import jp.recruit.hps.movie.client.task.DownloadAndShowVideoAsyncTask;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.VideoView;
@@ -19,6 +21,12 @@ public class VideoActivity extends Activity {
 
 		Intent i = getIntent();
 		mVideo = (VideoView) findViewById(R.id.videoView1);
+		mVideo.setOnPreparedListener(new OnPreparedListener() {
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				mVideo.start();				
+			}
+		});
 		new DownloadAndShowVideoAsyncTask(this).execute(
 				i.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY),
 				i.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME));

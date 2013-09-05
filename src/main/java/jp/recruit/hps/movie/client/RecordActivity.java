@@ -70,11 +70,11 @@ public class RecordActivity extends Activity implements OnClickListener {
 		mRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
-		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		mRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-		mRecorder.setVideoFrameRate(15);
+		mRecorder.setVideoFrameRate(30);
 		
 		mRecorder.setOutputFile(getFilePath());
 		mRecorder.setPreviewDisplay(holder.getSurface());
@@ -120,7 +120,7 @@ public class RecordActivity extends Activity implements OnClickListener {
 			}
 
 			String fileName = String.valueOf(System.currentTimeMillis());
-			mFile = new File(appDir, fileName + ".mp4");
+			mFile = new File(appDir, fileName + ".3gp");
 		}
 		return mFile.getAbsolutePath();
 	}
