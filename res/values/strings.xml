@@ -9,4 +9,7 @@
     <string name="view_movie">動画を見る</string>
     <string name="rec_text">●REC</string>
     <string name="stop_text">■STOP</string>
+    <string name="keyword">キーワード</string>
+    <string name="search_from_company_name">企業名で検索</string>
+    <string name="search">検索</string>
 </resources>

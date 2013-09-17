@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import jp.recruit.hps.movie.client.task.FileUploadAsyncTask;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
+import jp.recruit.hps.movie.client.utils.FileUtils;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -75,7 +75,7 @@ public class RecordActivity extends Activity implements OnClickListener {
 		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
 		mRecorder.setVideoFrameRate(30);
-		
+
 		mRecorder.setOutputFile(getFilePath());
 		mRecorder.setPreviewDisplay(holder.getSurface());
 	}
@@ -101,7 +101,8 @@ public class RecordActivity extends Activity implements OnClickListener {
 						.setVisibility(View.VISIBLE);
 				((TextView) findViewById(R.id.textViewStop))
 						.setVisibility(View.GONE);
-				new FileUploadAsyncTask(this, CommonUtils.TEST_USER_KEY).execute(mFile);
+				new FileUploadAsyncTask(this, CommonUtils.TEST_USER_KEY)
+						.execute(mFile);
 			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -112,15 +113,8 @@ public class RecordActivity extends Activity implements OnClickListener {
 
 	private String getFilePath() {
 		if (mFile == null) {
-			File dir = Environment.getExternalStorageDirectory();
-			File appDir = new File(dir, "HPSMovie");
-
-			if (!appDir.exists()) {
-				appDir.mkdir();
-			}
-
-			String fileName = String.valueOf(System.currentTimeMillis());
-			mFile = new File(appDir, fileName + ".3gp");
+			mFile = FileUtils
+					.createNewFile(System.currentTimeMillis() + ".3gp");
 		}
 		return mFile.getAbsolutePath();
 	}
