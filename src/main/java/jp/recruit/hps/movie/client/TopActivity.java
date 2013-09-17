@@ -7,7 +7,9 @@ import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,19 +39,44 @@ public class TopActivity extends Activity {
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
+			new GetCompanyListAsyncTask(this).execute(query);
+		}
+	}
+
+	public class GetCompanyListAsyncTask extends
+			AsyncTask<String, Integer, Boolean> {
+		private final Context context;
+		private List<CompanyV1Dto> list;
+
+		public GetCompanyListAsyncTask(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(String... queries) {
+			String query = queries[0];
 			CompanyEndpoint endpoint = RemoteApi.getCompanyEndpoint();
 			try {
 				CompanyV1DtoCollection collection = endpoint
 						.companyV1EndPoint().searchCompany(query).execute();
 				if (collection != null) {
-					List<CompanyV1Dto> list = collection.getItems();
-					ListView lv = (ListView) findViewById(R.id.company_list);
-					lv.setAdapter(new CompanyAdapter(this, list));
+					list = collection.getItems();
+				} else {
+					return false;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				return false;
 			}
+			return true;
+		}
 
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				ListView lv = (ListView) findViewById(R.id.company_list);
+				lv.setAdapter(new CompanyAdapter(context, list));
+			}
 		}
 	}
 }
