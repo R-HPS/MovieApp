@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/companyfase" >
+        android:layout_below="@+id/title" >
 
     </ListView>
 
@@ -38,15 +38,5 @@
         android:layout_below="@+id/headimage"
         android:layout_centerHorizontal="true"
         android:text="TextView" />
-
-    <TextView
-        android:id="@+id/companyfase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/companyname"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="TextView"
-        android:textSize="10dp" />
 
 </RelativeLayout>
