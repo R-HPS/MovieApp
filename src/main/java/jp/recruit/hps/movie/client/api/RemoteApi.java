@@ -5,6 +5,7 @@ import java.io.IOException;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
+import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.movieEndpoint.MovieEndpoint;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
@@ -44,6 +45,16 @@ public class RemoteApi {
 	
 	public static CompanyEndpoint getCompanyEndpoint() {
 		CompanyEndpoint.Builder endpointBuilder = new CompanyEndpoint.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				new HttpRequestInitializer() {
+					public void initialize(HttpRequest httpRequest) {
+					}
+				});
+		return updateBuilder(endpointBuilder).build();
+	}
+	
+	public static InterviewEndpoint getInterviewEndpoint() {
+		InterviewEndpoint.Builder endpointBuilder = new InterviewEndpoint.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					public void initialize(HttpRequest httpRequest) {
