@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 	import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
@@ -32,23 +33,9 @@ public class CompanyInterviewActivity extends Activity {
 			new GetInterviewListAsyncTask(this).execute(companyKey);
 			final String companyName = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
-			
-//		//	findViewById(R.id.search_button).setOnClickListener(
-//					new OnClickListener() {
-//						@Override
-//						public void onClick(View v) {
-//							onSearchRequested();
-//						}
-//					});
+			TextView tv = (TextView)findViewById(R.id.companyname);
+			tv.setText(companyName);
 		}
-	//CommonUtils.sampleUserKey
-//		@Override
-//		protected void onNewIntent(Intent intent) {
-//			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//				String query = intent.getStringExtra(SearchManager.QUERY);
-//				new GetCompanyListAsyncTask(this).execute(query);
-//			}
-//		}
 
 		public class GetInterviewListAsyncTask extends
 				AsyncTask<String, Integer, Boolean> {
