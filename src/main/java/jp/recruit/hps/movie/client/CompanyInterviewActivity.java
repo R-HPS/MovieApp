@@ -30,6 +30,9 @@ public class CompanyInterviewActivity extends Activity {
 			final String companyKey = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
 			new GetInterviewListAsyncTask(this).execute(companyKey);
+			final String companyName = i
+					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
+			
 //		//	findViewById(R.id.search_button).setOnClickListener(
 //					new OnClickListener() {
 //						@Override

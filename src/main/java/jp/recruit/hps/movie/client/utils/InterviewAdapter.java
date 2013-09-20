@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
@@ -45,6 +47,14 @@ public class InterviewAdapter extends BaseAdapter {
 	public Integer getAtmosphere(int position) {
 		return list.get(position).getAtmosphere();
 	}
+	
+	public long getStartDate(int position){
+		return list.get(position).getStartDate();
+	}
+	
+	public long getEndDate(int position){
+		return list.get(position).getEndDate();
+	}
 
 	@Override
 	public long getItemId(int position) {
@@ -54,9 +64,18 @@ public class InterviewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.company, null);
+			convertView = inflater.inflate(R.layout.company_list_inflater, null);
 		}
-		TextView tv = (TextView) convertView.findViewById(R.id.company_name);
+		TextView tv = (TextView) convertView.findViewById(R.id.questionText);
+		tv.setText(getQuestion(position));
+		tv = (TextView) convertView.findViewById(R.id.categoryText);
+		tv.setText(getCategory(position));
+		tv = (TextView) convertView.findViewById(R.id.startTimeText);
+		tv.setText("始まり"+getStartDate(position));
+		tv = (TextView) convertView.findViewById(R.id.endTimeText);
+		tv.setText("始まり"+getEndDate(position));
+		ProgressBar prog = (ProgressBar) convertView.findViewById(R.id.atmosphereBar);
+		prog.setProgress(getAtmosphere(position));
 		//tv.setText(getName(position));
 		return convertView;
 	}

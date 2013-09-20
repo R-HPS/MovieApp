@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
@@ -47,7 +48,7 @@ public class CompanyAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.company, null);
 		}
-		TextView tv = (TextView) convertView.findViewById(R.id.company_name);
+		Button tv = (Button) convertView.findViewById(R.id.company_name_button);
 		tv.setText(getName(position));
 		return convertView;
 	}

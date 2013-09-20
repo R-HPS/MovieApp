@@ -38,6 +38,7 @@
             android:name=".RecordActivity"
             android:label="@string/rec_movie" >
         </activity>
+        
         <activity
             android:name=".TopActivity"
             android:label="@string/top"
@@ -67,6 +68,10 @@
         <activity
             android:name=".VideoActivity"
             android:label="@string/view_movie" >
+        </activity>
+        <activity
+            android:name=".CompanyInterviewActivity"
+            android:label="インタビューをみる" >
         </activity>
     </application>
 
