@@ -11,22 +11,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/mypage_head_02" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Button" />
-
+        android:src="@drawable/mypage_head_02"
+        android:contentDescription="@string/desc"
+        />
+            
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/imageView1" >
 

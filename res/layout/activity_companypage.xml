@@ -11,7 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/receive_head_02" />
+        android:src="@drawable/receive_head_02"
+        android:contentDescription="@string/desc" />
 
     <ListView
         android:id="@+id/listView2"
@@ -29,7 +30,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="42dp"
-        android:src="@drawable/receive_company_title_02" />
+        android:src="@drawable/receive_company_title_02"
+        android:contentDescription="@string/desc" />
 
     <TextView
         android:id="@+id/companyname"
@@ -37,6 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/headimage"
         android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:text="@string/exampletext" />
 
 </RelativeLayout>

@@ -10,7 +10,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/receive_format_05" />
+        android:src="@drawable/receive_format_05"
+        android:contentDescription="@string/desc" />
 
     <ProgressBar
         android:id="@+id/atmosphereBar"
@@ -29,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/atmosphereBar"
         android:layout_marginRight="50dp"
-        android:text="Textview" />
+        android:text="@string/exampletext" />
 
     <TextView
         android:id="@+id/endTimeText"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/startTimeText"
         android:layout_below="@+id/startTimeText"
-        android:text="TextView" />
+        android:text="@string/exampletext" />
 
     <TextView
         android:id="@+id/questionText"
@@ -45,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/categoryText"
         android:layout_alignLeft="@+id/atmosphereBar"
-        android:text="TextView" />
+        android:text="@string/exampletext" />
 
     <TextView
         android:id="@+id/categoryText"
@@ -54,6 +55,6 @@
         android:layout_alignBottom="@+id/receive_listview"
         android:layout_alignLeft="@+id/endTimeText"
         android:layout_marginBottom="21dp"
-        android:text="TextView" />
+        android:text="@string/exampletext" />
 
 </RelativeLayout>

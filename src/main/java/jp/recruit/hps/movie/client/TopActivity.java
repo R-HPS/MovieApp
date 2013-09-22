@@ -8,12 +8,8 @@ import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
