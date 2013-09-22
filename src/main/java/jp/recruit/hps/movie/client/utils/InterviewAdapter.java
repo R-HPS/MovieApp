@@ -73,9 +73,9 @@ public class InterviewAdapter extends BaseAdapter {
 		tv = (TextView) convertView.findViewById(R.id.startTimeText);
 		tv.setText("始まり"+getStartDate(position));
 		tv = (TextView) convertView.findViewById(R.id.endTimeText);
-		tv.setText("始まり"+getEndDate(position));
+		tv.setText("おわり"+getEndDate(position));
 		ProgressBar prog = (ProgressBar) convertView.findViewById(R.id.atmosphereBar);
-		prog.setProgress(getAtmosphere(position));
+		prog.setProgress(15);
 		//tv.setText(getName(position));
 		return convertView;
 	}

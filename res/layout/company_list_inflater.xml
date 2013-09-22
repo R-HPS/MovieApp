@@ -5,20 +5,21 @@
 
     <ImageView
         android:id="@+id/receive_listview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:src="@drawable/receive_format_05" />
 
     <ProgressBar
         android:id="@+id/atmosphereBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="110dp"
         android:layout_marginTop="34dp" />
 
     <TextView
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/atmosphereBar"
-        android:layout_marginRight="53dp"
+        android:layout_marginRight="50dp"
         android:text="Textview" />
 
     <TextView

@@ -62,22 +62,6 @@ public class TopActivity extends Activity {
 			if (result) {
 				ListView lv = (ListView) findViewById(R.id.listView1);
 				lv.setAdapter(new CompanyAdapter(context, list));
-				lv.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int number, long arg3) {
-						// TODO 自動生成されたメソッド・スタブ
-						Intent intent = new Intent(TopActivity.this,
-								CompanyInterviewActivity.class);
-						intent.putExtra(CommonUtils.STRING_EXTRA_USER_KEY, list
-								.get(number).getKey());
-						intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
-								list.get(number).getName());
-						startActivity(intent);
-
-					}
-				});
 			}
 		}
 	}
