@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/headimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -18,27 +18,60 @@
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/title" >
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/company_title"
+        android:layout_above="@+id/changelist" >
 
     </ListView>
 
-    <ImageView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="42dp"
-        android:src="@drawable/receive_company_title_02"
-        android:contentDescription="@string/desc" />
-
-    <TextView
-        android:id="@+id/companyname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headimage"
-        android:layout_centerHorizontal="true"
-        android:text="@string/exampletext" />
+    
+    <FrameLayout
+        android:id="@+id/company_title"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/headimage"
+	    android:layout_centerHorizontal="true"
+	    android:layout_gravity="center"
+	    >
+	    <ImageView
+	        android:layout_marginTop="5dp"
+	        android:id="@+id/company_title_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="80dp"
+	        android:src="@drawable/receive_company_title_02"
+	        android:contentDescription="@string/desc" />
+	
+	    <TextView
+	        android:id="@+id/companyname"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:textColor="@color/black"
+	        android:text="@string/exampletext" />
+	</FrameLayout>	    
+	
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/changelist"
+        >
+	    <ImageButton 
+	    android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:id="@+id/realtimebtn"
+        android:contentDescription="@string/desc"
+        />
+        <ImageButton
+	    android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:id="@+id/backyardbtn"
+        android:contentDescription="@string/desc"
+        />
+    </LinearLayout>
 
 </RelativeLayout>
