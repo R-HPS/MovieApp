@@ -2,10 +2,10 @@ package jp.recruit.hps.movie.client;
 
 
 
-	import java.io.IOException;
+import java.io.IOException;
 import java.util.List;
 
-	import jp.recruit.hps.movie.client.api.RemoteApi;
+import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.InterviewAdapter;
 import android.app.Activity;
@@ -16,7 +16,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
-	import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
+import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1DtoCollection;
 
@@ -70,8 +70,9 @@ public class CompanyInterviewActivity extends Activity {
 				if (result) {
 					ListView lv = (ListView) findViewById(R.id.listView2);
 					lv.setAdapter(new InterviewAdapter(context, list));
-								}
+					
+				}
 			}
-	}
+		}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
+import jp.recruit.hps.movie.client.utils.CompanyPriferences;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -58,6 +59,8 @@ public class TopActivity extends Activity {
 			if (result) {
 				ListView lv = (ListView) findViewById(R.id.listView1);
 				lv.setAdapter(new CompanyAdapter(context, list));
+				CompanyPriferences company = new CompanyPriferences(context,list);
+				company.setCompanyData();
 			}
 		}
 	}
