@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
 
 public class CompanyAdapter extends BaseAdapter {
 	private LayoutInflater inflater;

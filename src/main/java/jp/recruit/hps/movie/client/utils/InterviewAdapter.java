@@ -42,7 +42,7 @@ public class InterviewAdapter extends BaseAdapter {
 		return list.get(position).getQuestion();
 	}
 	
-	public Integer getAtmosphere(int position) {
+	public String getAtmosphere(int position) {
 		return list.get(position).getAtmosphere();
 	}
 	

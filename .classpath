@@ -10,4 +10,5 @@
 	<classpathentry kind="src" path="endpoint-libs/libmovieEndpoint-v1/movieEndpoint/movieendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libcompanyEndpoint-v1/companyEndpoint/companyendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libinterviewEndpoint-v1/interviewEndpoint/interviewendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libinterviewGroupEndpoint-v1/interviewGroupEndpoint/interviewgroupendpoint-v1-generated-source"/>
 </classpath>

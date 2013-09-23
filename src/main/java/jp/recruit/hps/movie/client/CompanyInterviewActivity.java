@@ -71,7 +71,7 @@ public class CompanyInterviewActivity extends Activity {
 					ListView lv = (ListView) findViewById(R.id.listView2);
 					lv.setAdapter(new InterviewAdapter(context, list));
 								}
-		}
+			}
 	}
 
 }

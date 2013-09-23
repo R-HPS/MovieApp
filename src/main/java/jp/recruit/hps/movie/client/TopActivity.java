@@ -12,9 +12,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
-import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
-import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.interviewGroupEndpoint.InterviewGroupEndpoint;
 
 public class TopActivity extends Activity {
 	@Override
@@ -37,10 +37,10 @@ public class TopActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(String... queries) {
 			String query = queries[0];
-			CompanyEndpoint endpoint = RemoteApi.getCompanyEndpoint();
+			InterviewGroupEndpoint endpoint = RemoteApi.getInterviewGroupEndpoint();
 			try {
 				CompanyV1DtoCollection collection = endpoint
-						.companyV1EndPoint().getCompanies(query).execute();
+						.interviewGroupV1EndPoint().getInterviewGroups(query).execute();
 				if (collection != null && collection.getItems() != null) {
 					list = collection.getItems();
 				} else {
