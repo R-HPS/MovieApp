@@ -7,6 +7,7 @@
     <string name="movie_list">動画一覧</string>
     <string name="rec_movie">動画を撮る</string>
     <string name="view_movie">動画を見る</string>
+    <string name="view_interview">情報を見る</string>
     <string name="rec_text">●REC</string>
     <string name="stop_text">■STOP</string>
     <string name="keyword">キーワード</string>
@@ -14,4 +15,5 @@
     <string name="search">検索</string>
     <string name="desc">画像を表示できませんでした</string>
     <string name="exampletext">TextView</string>
+    
 </resources>
