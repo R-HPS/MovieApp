@@ -13,7 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
@@ -22,6 +25,7 @@ import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1DtoCollection;
 
 
 public class CompanyInterviewActivity extends Activity {
+		private List<InterviewV1Dto> list;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -36,6 +40,8 @@ public class CompanyInterviewActivity extends Activity {
 			TextView tv = (TextView)findViewById(R.id.companyname);
 			tv.setText(companyName);
 		}
+		
+		
 
 		public class GetInterviewListAsyncTask extends
 				AsyncTask<String, Integer, Boolean> {
@@ -68,6 +74,10 @@ public class CompanyInterviewActivity extends Activity {
 			@Override
 			protected void onPostExecute(Boolean result) {
 				if (result) {
+					ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+					progressBar.setVisibility(View.GONE);
+					LinearLayout layout =(LinearLayout) findViewById(R.id.companystatus);
+					layout.setVisibility(View.VISIBLE);
 					ListView lv = (ListView) findViewById(R.id.listView2);
 					lv.setAdapter(new InterviewAdapter(context, list));
 					

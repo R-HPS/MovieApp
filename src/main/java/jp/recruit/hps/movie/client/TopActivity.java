@@ -57,7 +57,7 @@ public class TopActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				ListView lv = (ListView) findViewById(R.id.listView1);
+				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
 				lv.setAdapter(new CompanyAdapter(context, list));
 				CompanyPriferences company = new CompanyPriferences(context,list);
 				company.setCompanyData();

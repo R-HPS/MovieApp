@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background" >
-
+	 <ProgressBar
+	  android:id="@+id/progressBar"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  style="?android:attr/progressBarStyle"
+	  android:layout_below="@+id/company_title"
+      android:layout_centerHorizontal="true"
+      />
+    
     <ImageView
         android:id="@+id/headimage"
         android:layout_width="match_parent"
@@ -19,9 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/company_title"
-        android:layout_above="@+id/changelist" >
-
+        android:layout_below="@+id/companystatus"
+        android:layout_above="@+id/changelist"
+        android:visibility="gone"
+		>
+		
     </ListView>
 
     
@@ -31,7 +41,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/headimage"
 	    android:layout_centerHorizontal="true"
-	    android:layout_gravity="center"
+	   
 	    >
 	    <ImageView
 	        android:layout_marginTop="5dp"
@@ -48,8 +58,141 @@
 	        android:layout_gravity="center"
 	        android:textColor="@color/black"
 	        android:text="@string/exampletext" />
-	</FrameLayout>	    
-	
+	    
+	    <TextView
+	        android:id="@+id/companyphase"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_marginTop="20dp"
+	        android:textColor="@color/black"
+	        android:text="@string/exampletext" />
+	</FrameLayout>	 
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:weightSum="3"
+	    android:layout_below="@+id/company_title"
+	    android:id="@+id/companystatus"
+	    android:layout_alignParentLeft="true"
+	    android:orientation="horizontal"
+	    android:baselineAligned="false"
+	    android:visibility="gone"
+	    >
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:orientation="horizontal"
+	        android:weightSum="5"
+	        >
+	        <Space 
+			    android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            />
+			<RelativeLayout
+			    android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+			    >
+
+			    <ImageView
+			        android:id="@+id/odayaka"
+			        android:layout_width="30dp"
+			        android:layout_height="30dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignParentTop="true"
+			        android:adjustViewBounds="true"
+			        android:background="@drawable/ic_launcher"
+			        android:contentDescription="@string/desc" />
+
+		        <TextView
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_below="@+id/odayaka"
+		            android:layout_centerHorizontal="true"
+		            android:text="@string/atomosphereMeter"
+		            android:textColor="@color/blue" />
+			</RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+			    >
+		        <ImageView
+			        android:id="@+id/futuu"
+			        android:layout_width="30dp"
+			        android:layout_height="30dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignParentTop="true"
+			        android:adjustViewBounds="true"
+			        android:background="@drawable/ic_launcher"
+			        android:contentDescription="@string/desc" />
+		        <TextView
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center"
+		            android:layout_below="@+id/futuu"
+		            android:layout_centerHorizontal="true"
+		            android:text="@string/atomosphereMeter" 
+		            android:textColor="@color/green"/>
+			</RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+			    >
+		        <ImageView
+			        android:id="@+id/appaku"
+			        android:layout_width="30dp"
+			        android:layout_height="30dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignParentTop="true"
+			        android:adjustViewBounds="true"
+			        android:background="@drawable/ic_launcher"
+			        android:contentDescription="@string/desc" />
+		        <TextView
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center"
+					android:layout_below="@+id/appaku"
+		            android:layout_centerHorizontal="true"
+		            android:text="@string/atomosphereMeter"
+		            android:textColor="@color/red" />
+			</RelativeLayout>
+			<Space 
+			    android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            />
+	    </LinearLayout>
+	    <RelativeLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+
+	        >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/companytime"
+	            android:layout_centerInParent="true"
+	            android:maxLines="1" />
+	    </RelativeLayout>
+	    <RelativeLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/companycategory"
+	            android:layout_centerInParent="true"
+	            android:maxLines="1" />
+		</RelativeLayout>    "
+	</LinearLayout>
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="50dp"
