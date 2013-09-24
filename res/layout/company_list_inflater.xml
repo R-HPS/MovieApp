@@ -1,31 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:background="@null"
+    android:weightSum="10">
+    <Space 
+	   android:layout_width="0dp"
+	   android:layout_height="match_parent"
+	   android:layout_weight="1"/>
+    
+	<RelativeLayout
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="8"
+	    >
+	    <ImageView
+	        android:id="@+id/receive_listview"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:src="@drawable/receive00_item_blue"
+	        android:adjustViewBounds="true"
+	        android:contentDescription="@string/desc" />
 	
-    <ImageView
-        android:id="@+id/receive_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/receive00_item_blue"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/desc" />
-
-    <TextView
-        android:id="@+id/company_question_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/exampletext" />
-
-    <TextView
-        android:id="@+id/company_universe_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/receive_listview"
-        android:layout_alignParentRight="true"
-        android:text="@string/exampletext" />
-
-</RelativeLayout>
+	    <TextView
+	        android:layout_marginTop="5dp"
+	        android:id="@+id/company_question_text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:textColor="@color/black"
+	        android:textSize="13sp"
+	        android:text="@string/exampletext" />
+	
+	    <TextView
+	        android:id="@+id/company_universe_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/receive_listview"
+	        android:layout_alignParentRight="true"
+	        android:text="@string/exampletext" />
+	    <ImageView
+	        android:id="@+id/receive_bann"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:src="@drawable/receive00_bann_05"
+	        android:adjustViewBounds="true"
+	        android:contentDescription="@string/desc" />
+		</RelativeLayout>
+	<Space 
+	   android:layout_width="0dp"
+	   android:layout_height="match_parent"
+	   android:layout_weight="1"/>
+</LinearLayout>

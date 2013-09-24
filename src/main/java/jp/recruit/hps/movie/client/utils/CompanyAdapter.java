@@ -1,7 +1,6 @@
 package jp.recruit.hps.movie.client.utils;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import jp.recruit.hps.movie.client.CompanyInterviewActivity;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -106,6 +104,8 @@ public class CompanyAdapter extends BaseAdapter {
 				intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY, getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
+				intent.putExtra(CommonUtils.String_EXTRA_COMPANY_PHASE, 
+						getPhase(position));
 				context.startActivity(intent);				
 			}
 		});

@@ -1,7 +1,6 @@
 package jp.recruit.hps.movie.client;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 
 import jp.recruit.hps.movie.client.api.RemoteApi;
