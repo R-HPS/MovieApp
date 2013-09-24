@@ -30,7 +30,6 @@
 		        android:id="@+id/company_name_button"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/mypage00_schedules_before"
 		        android:contentDescription="@string/desc" />
 		    <TextView 
 		        android:layout_width="wrap_content"
@@ -38,6 +37,7 @@
 		        android:text="@string/exampletext"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="5dp"
+		        android:textColor="@color/black"
 		        android:id="@+id/mypage_company_name"
 		        />
 
@@ -48,6 +48,7 @@
 		        android:layout_alignBaseline="@+id/mypage_company_name"
 		        android:layout_alignBottom="@+id/mypage_company_name"
 		        android:layout_alignParentRight="true"
+		        android:textColor="@color/black"
 		        android:layout_marginRight="3dp"
 		        android:textSize="12sp"
 		        android:text="@string/exampletext" />

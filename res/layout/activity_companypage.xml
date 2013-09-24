@@ -30,6 +30,7 @@
         android:layout_below="@+id/companystatus"
         android:layout_above="@+id/changelist"
         android:visibility="gone"
+        android:divider="@null"
 		>
 		
     </ListView>

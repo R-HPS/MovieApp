@@ -11,7 +11,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1DtoCollection;
@@ -57,8 +59,11 @@ public class TopActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				ProgressBar prog = (ProgressBar)findViewById(R.id.mypage_progressBar);
+				prog.setVisibility(View.GONE);
 				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
 				lv.setAdapter(new CompanyAdapter(context, list));
+				lv.setVisibility(View.VISIBLE);
 				CompanyPriferences company = new CompanyPriferences(context,list);
 				company.setCompanyData();
 			}
