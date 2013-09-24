@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,16 +26,15 @@ import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1DtoCollection;
 
 
 public class CompanyInterviewActivity extends Activity {
-		private List<InterviewV1Dto> list;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
 			setContentView(R.layout.activity_companypage);
 			Intent i = getIntent();
-			final String companyKey = i
-					.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
-			new GetInterviewListAsyncTask(this).execute(companyKey);
+			final String interviewGroupKey = i
+					.getStringExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY);
+			new GetInterviewListAsyncTask(this).execute(interviewGroupKey);
 			final String companyName = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
 			TextView tv = (TextView)findViewById(R.id.companyname);
@@ -78,10 +78,68 @@ public class CompanyInterviewActivity extends Activity {
 					progressBar.setVisibility(View.GONE);
 					LinearLayout layout =(LinearLayout) findViewById(R.id.companystatus);
 					layout.setVisibility(View.VISIBLE);
+					setText();
+					
 					ListView lv = (ListView) findViewById(R.id.listView2);
 					lv.setAdapter(new InterviewAdapter(context, list));
 					
 				}
+			}
+			final int TEXT_VIEWS[]={
+				R.id.odayakapt,R.id.futuupt,R.id.appakupt
+			};
+			
+			//Textにセット
+			private void setText() {
+				// TODO 自動生成されたメソッド・スタブ
+				//Atmosphereをセット
+				for(int i=0;i<TEXT_VIEWS.length;i++){
+					TextView text = (TextView)findViewById(TEXT_VIEWS[i]);
+					int score = checkAtmosphere(i);
+					String s = String.format(getText(R.string.companyatmosphere).toString(), score);
+					text.setText(Html.fromHtml(s));
+				}
+				//面接時間をセット
+					TextView text = (TextView)findViewById(R.id.timetext);
+					int score = checkCompanyTime();
+					String s = String.format(getText(R.string.companytime).toString(), score);
+					text.setText(Html.fromHtml(s));
+				//面接時間をセット
+					text = (TextView)findViewById(R.id.categorytext);
+					String style = checkCompanyCategory();
+					s = String.format(getText(R.string.companycategory).toString(), style);
+					text.setText(Html.fromHtml(s));
+			}
+			private String checkCompanyCategory() {
+				// TODO 自動生成されたメソッド・スタブ
+				int score =0;
+				for(int i=0;i<list.size();i++){
+					int tmp = 1;//本来はここで面接形式の最大値を書く
+					score = score+tmp;
+				}
+				String s ="a";
+				return s;
+			}
+
+			private int checkCompanyTime() {
+				// TODO 自動生成されたメソッド・スタブ
+				int score =0;
+				for(int i=0;i<list.size();i++){
+					int tmp = 1;//本来はここで面接時間の平均を書く
+					score = score+tmp;
+				}
+				return score;
+			}
+
+			//Atmosphereのそれぞれの値を取得
+			private int checkAtmosphere(int i) {
+				// TODO 自動生成されたメソッド・スタブ
+				int score=0;
+				for(int j=0;j<list.size();j++){
+					int tmp = 3;//本来はここにatmosphereの数を足していく
+					score = score+tmp;
+				}
+				return score;
 			}
 		}
 

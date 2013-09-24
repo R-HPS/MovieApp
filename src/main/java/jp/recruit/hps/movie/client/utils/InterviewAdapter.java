@@ -50,9 +50,7 @@ public class InterviewAdapter extends BaseAdapter {
 		return list.get(position).getStartDate();
 	}
 	
-	public long getEndDate(int position){
-		return list.get(position).getEndDate();
-	}
+
 
 	@Override
 	public long getItemId(int position) {
@@ -70,8 +68,7 @@ public class InterviewAdapter extends BaseAdapter {
 		tv.setText(getCategory(position));
 		tv = (TextView) convertView.findViewById(R.id.startTimeText);
 		tv.setText("始まり"+getStartDate(position));
-		tv = (TextView) convertView.findViewById(R.id.endTimeText);
-		tv.setText("おわり"+getEndDate(position));
+
 		ProgressBar prog = (ProgressBar) convertView.findViewById(R.id.atmosphereBar);
 		prog.setProgress(15);
 		//tv.setText(getName(position));

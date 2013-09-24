@@ -63,7 +63,7 @@ public class CompanyAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				Intent intent = new Intent(context,
 						CompanyInterviewActivity.class);
-				intent.putExtra(CommonUtils.STRING_EXTRA_USER_KEY, getKey(position));
+				intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY, getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
 				context.startActivity(intent);				

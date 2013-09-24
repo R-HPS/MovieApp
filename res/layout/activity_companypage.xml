@@ -64,7 +64,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center"
-	        android:layout_marginTop="20dp"
+	        android:layout_marginTop="18dp"
 	        android:textColor="@color/black"
 	        android:text="@string/exampletext" />
 	</FrameLayout>	 
@@ -113,6 +113,7 @@
 		            android:layout_below="@+id/odayaka"
 		            android:layout_centerHorizontal="true"
 		            android:text="@string/atomosphereMeter"
+		            android:id="@+id/odayakapt"
 		            android:textColor="@color/blue" />
 			</RelativeLayout>
 	        <RelativeLayout
@@ -134,6 +135,7 @@
 		            android:layout_height="wrap_content"
 		            android:layout_gravity="center"
 		            android:layout_below="@+id/futuu"
+		            android:id="@+id/futuupt"
 		            android:layout_centerHorizontal="true"
 		            android:text="@string/atomosphereMeter" 
 		            android:textColor="@color/green"/>
@@ -157,6 +159,7 @@
 		            android:layout_height="wrap_content"
 		            android:layout_gravity="center"
 					android:layout_below="@+id/appaku"
+					android:id="@+id/appakupt"
 		            android:layout_centerHorizontal="true"
 		            android:text="@string/atomosphereMeter"
 		            android:textColor="@color/red" />
@@ -178,6 +181,7 @@
 	            android:layout_height="wrap_content"
 	            android:text="@string/companytime"
 	            android:layout_centerInParent="true"
+	            android:id="@+id/timetext"
 	            android:maxLines="1" />
 	    </RelativeLayout>
 	    <RelativeLayout
@@ -190,6 +194,7 @@
 	            android:layout_height="wrap_content"
 	            android:text="@string/companycategory"
 	            android:layout_centerInParent="true"
+	            android:id="@+id/categorytext"
 	            android:maxLines="1" />
 		</RelativeLayout>    "
 	</LinearLayout>
