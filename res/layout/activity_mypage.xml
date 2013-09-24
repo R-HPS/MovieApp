@@ -14,14 +14,48 @@
         android:src="@drawable/mypage_head_02"
         android:contentDescription="@string/desc"
         />
+    <ImageView
+        android:id="@+id/mypage_topline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/mypage_title"
+        android:src="@drawable/mypage00_toplines_02"
+        android:contentDescription="@string/desc"
+        />
             
     <ListView
         android:id="@+id/mypage_company_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/mypage_title" >
+        android:layout_below="@+id/mypage_topline"
+        android:layout_above="@+id/mypage_changebtn" >
 
     </ListView>
+        <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/mypage_changebtn"
+        >
+	    <ImageButton 
+	    android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:id="@+id/newregistbtn"
+        android:contentDescription="@string/desc"
+        />
+        <ImageButton
+	    android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:id="@+id/changeuserbtn"
+        android:contentDescription="@string/desc"
+        />
+    </LinearLayout>
 
 </RelativeLayout>

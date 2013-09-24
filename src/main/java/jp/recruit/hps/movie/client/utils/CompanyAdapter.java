@@ -1,5 +1,7 @@
 package jp.recruit.hps.movie.client.utils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import jp.recruit.hps.movie.client.CompanyInterviewActivity;
@@ -12,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
 
@@ -41,6 +45,17 @@ public class CompanyAdapter extends BaseAdapter {
 	public String getName(int position) {
 		return list.get(position).getName();
 	}
+	
+	public String getPhase(int position){
+		return list.get(position).getName();
+	}
+	
+//	public Calendar getDate(int position){
+//		long time =0;
+//		Calendar cal;
+//		cal.setTimeInMillis(list.get(position).getDate());
+//		return cal;
+//	}
 
 	public String getKey(int position) {
 		return list.get(position).getKey();
@@ -56,8 +71,16 @@ public class CompanyAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.company, null);
 		}
-		Button tv = (Button) convertView.findViewById(R.id.company_name_button);
+		ImageButton imgbtn = (ImageButton) convertView.findViewById(R.id.company_name_button);
+		if(position!=0){
+			imgbtn.setImageResource(R.drawable.mypage00_schedules_before);
+		}else{
+			imgbtn.setImageResource(R.drawable.mypage00_schedules_after);
+		}
+		TextView tv = (TextView) convertView.findViewById(R.id.mypage_company_name);
 		tv.setText(getName(position));
+		tv = (TextView) convertView.findViewById(R.id.mypage_company_phase);
+		tv.setText(getPhase(position));
 		tv.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

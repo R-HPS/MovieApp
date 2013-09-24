@@ -82,6 +82,7 @@ public class CompanyInterviewActivity extends Activity {
 					
 					ListView lv = (ListView) findViewById(R.id.listView2);
 					lv.setAdapter(new InterviewAdapter(context, list));
+					lv.setVisibility(View.VISIBLE);
 					
 				}
 			}
@@ -96,7 +97,7 @@ public class CompanyInterviewActivity extends Activity {
 				for(int i=0;i<TEXT_VIEWS.length;i++){
 					TextView text = (TextView)findViewById(TEXT_VIEWS[i]);
 					int score = checkAtmosphere(i);
-					String s = String.format(getText(R.string.companyatmosphere).toString(), score);
+					String s = String.format(getText(R.string.atomosphereMeter).toString(), score);
 					text.setText(Html.fromHtml(s));
 				}
 				//面接時間をセット
@@ -104,7 +105,7 @@ public class CompanyInterviewActivity extends Activity {
 					int score = checkCompanyTime();
 					String s = String.format(getText(R.string.companytime).toString(), score);
 					text.setText(Html.fromHtml(s));
-				//面接時間をセット
+				//面接形式をセット
 					text = (TextView)findViewById(R.id.categorytext);
 					String style = checkCompanyCategory();
 					s = String.format(getText(R.string.companycategory).toString(), style);
@@ -112,11 +113,15 @@ public class CompanyInterviewActivity extends Activity {
 			}
 			private String checkCompanyCategory() {
 				// TODO 自動生成されたメソッド・スタブ
-				int score =0;
-				for(int i=0;i<list.size();i++){
-					int tmp = 1;//本来はここで面接形式の最大値を書く
-					score = score+tmp;
-				}
+//				int scoreGroup =0;
+//				int scoreIndivisual=0;
+//				for(int i=0;i<list.size();i++){
+//					if(list.get(i).getCategory().equals()){
+//						scoreGroup++;
+//					}else{
+//						scoreIndivisual++;
+//					}
+//				}
 				String s ="a";
 				return s;
 			}
@@ -126,18 +131,25 @@ public class CompanyInterviewActivity extends Activity {
 				int score =0;
 				for(int i=0;i<list.size();i++){
 					int tmp = 1;//本来はここで面接時間の平均を書く
+					
+//					 score=score+list.get(i).getStartDate()
+					 
 					score = score+tmp;
 				}
+//				score = score/list.size();
 				return score;
 			}
-
+			private final String ATMOSPHERES[]={
+					"SUNNY", "CLOUDY", "RAINY"
+			};
 			//Atmosphereのそれぞれの値を取得
 			private int checkAtmosphere(int i) {
 				// TODO 自動生成されたメソッド・スタブ
 				int score=0;
 				for(int j=0;j<list.size();j++){
-					int tmp = 3;//本来はここにatmosphereの数を足していく
-					score = score+tmp;
+					if(list.get(j).getAtmosphere()!=null&&list.get(j).getAtmosphere().equals(ATMOSPHERES[i])==true){
+					score++;
+					}
 				}
 				return score;
 			}

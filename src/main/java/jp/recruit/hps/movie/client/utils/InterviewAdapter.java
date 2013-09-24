@@ -64,6 +64,7 @@ public class InterviewAdapter extends BaseAdapter {
 		}
 		TextView tv = (TextView) convertView.findViewById(R.id.questionText);
 		tv.setText(getQuestion(position));
+		tv.setText(getAtmosphere(position));
 		tv = (TextView) convertView.findViewById(R.id.categoryText);
 		tv.setText(getCategory(position));
 		tv = (TextView) convertView.findViewById(R.id.startTimeText);
