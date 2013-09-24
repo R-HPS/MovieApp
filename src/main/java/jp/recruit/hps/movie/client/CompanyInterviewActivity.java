@@ -15,7 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,7 +76,7 @@ public class CompanyInterviewActivity extends Activity {
 				if (result) {
 					ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
 					progressBar.setVisibility(View.GONE);
-					LinearLayout layout =(LinearLayout) findViewById(R.id.companystatus);
+					FrameLayout layout =(FrameLayout) findViewById(R.id.companystatus);
 					layout.setVisibility(View.VISIBLE);
 					setText();
 					

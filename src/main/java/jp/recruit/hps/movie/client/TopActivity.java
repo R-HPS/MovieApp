@@ -1,6 +1,7 @@
 package jp.recruit.hps.movie.client;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import jp.recruit.hps.movie.client.api.RemoteApi;
@@ -11,9 +12,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1DtoCollection;
@@ -23,9 +26,20 @@ public class TopActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.activity_mypage);
+		setNowTime();
 		new GetCompanyListAsyncTask(this).execute(CommonUtils.TEST_USER_KEY);
+	}
+
+	private void setNowTime() {
+		// TODO 自動生成されたメソッド・スタブ
+		TextView dateText = (TextView)findViewById(R.id.nowtime);
+	    Time time = new Time("Asia/Tokyo");
+	    time.setToNow();
+	    String date = time.year + "年" + (time.month+1) + "月" + time.monthDay + "日 " +
+	            time.hour + "時" + time.minute + "分";
+	    dateText.setText(date);
 	}
 
 	public class GetCompanyListAsyncTask extends
