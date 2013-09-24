@@ -1,60 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="wrap_content" >
+	
     <ImageView
         android:id="@+id/receive_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/receive_format_05"
+        android:src="@drawable/receive00_item_blue"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/desc" />
 
-    <ProgressBar
-        android:id="@+id/atmosphereBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="34dp" />
-
     <TextView
-        android:id="@+id/startTimeText"
+        android:id="@+id/company_question_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/atmosphereBar"
-        android:layout_marginRight="50dp"
+        android:layout_centerInParent="true"
         android:text="@string/exampletext" />
 
     <TextView
-        android:id="@+id/endTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/startTimeText"
-        android:layout_below="@+id/startTimeText"
-        android:text="@string/exampletext" />
-
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/categoryText"
-        android:layout_alignLeft="@+id/atmosphereBar"
-        android:text="@string/exampletext" />
-
-    <TextView
-        android:id="@+id/categoryText"
+        android:id="@+id/company_universe_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/receive_listview"
-        android:layout_alignLeft="@+id/endTimeText"
-        android:layout_marginBottom="21dp"
+        android:layout_alignParentRight="true"
         android:text="@string/exampletext" />
 
 </RelativeLayout>

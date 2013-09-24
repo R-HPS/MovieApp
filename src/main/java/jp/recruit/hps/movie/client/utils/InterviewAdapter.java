@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -50,7 +51,10 @@ public class InterviewAdapter extends BaseAdapter {
 		return list.get(position).getStartDate();
 	}
 	
-
+	private final String ATMOSPHERES[]={
+			"SUNNY", "CLOUDY", "RAINY"
+	};
+	
 
 	@Override
 	public long getItemId(int position) {
@@ -62,17 +66,18 @@ public class InterviewAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.company_list_inflater, null);
 		}
-		TextView tv = (TextView) convertView.findViewById(R.id.questionText);
+		TextView tv = (TextView) convertView.findViewById(R.id.company_question_text);
 		tv.setText(getQuestion(position));
-		tv.setText(getAtmosphere(position));
-		tv = (TextView) convertView.findViewById(R.id.categoryText);
-		tv.setText(getCategory(position));
-		tv = (TextView) convertView.findViewById(R.id.startTimeText);
-		tv.setText("始まり"+getStartDate(position));
-
-		ProgressBar prog = (ProgressBar) convertView.findViewById(R.id.atmosphereBar);
-		prog.setProgress(15);
-		//tv.setText(getName(position));
+		ImageView img = (ImageView) convertView.findViewById(R.id.receive_listview);
+		if(getAtmosphere(position)!=null){
+			if(getAtmosphere(position).equals(ATMOSPHERES[0])){
+				img.setImageResource(R.drawable.receive00_item_blue);
+			}else if(getAtmosphere(position).equals(ATMOSPHERES[1])){
+				img.setImageResource(R.drawable.receive00_item_green);
+			}else{
+				img.setImageResource(R.drawable.receive00_item_red);
+			}
+		}
 		return convertView;
 	}
 }

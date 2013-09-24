@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background" >
-	 <ProgressBar
+	<ProgressBar
 	  android:id="@+id/progressBar"
 	  android:layout_width="wrap_content"
 	  android:layout_height="wrap_content"
@@ -11,7 +11,6 @@
 	  android:layout_below="@+id/company_title"
       android:layout_centerHorizontal="true"
       />
-    
     <ImageView
         android:id="@+id/headimage"
         android:layout_width="match_parent"
@@ -49,7 +48,7 @@
 	        android:layout_marginTop="5dp"
 	        android:id="@+id/company_title_view"
 	        android:layout_width="match_parent"
-	        android:layout_height="80dp"
+	        android:layout_height="wrap_content"
 	        android:src="@drawable/receive_company_title_02"
 	        android:adjustViewBounds="true"
 	        android:contentDescription="@string/desc" />
@@ -75,11 +74,12 @@
 	<FrameLayout
 	    android:id="@+id/companystatus"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="50dp"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/company_title"
-	    android:visibility="gone" >
+	    android:visibility="gone"
+	    >
 	    
 	    <ImageView
 	        android:layout_width="match_parent"
@@ -88,15 +88,13 @@
 	        android:adjustViewBounds="true"
 	        android:src="@drawable/receive00_status_02" />
 
-	
-		<LinearLayout 
+		<LinearLayout
 		    android:layout_width="match_parent"
 		    android:layout_height="match_parent"
-		    android:weightSum="3"
-		    
-		    android:orientation="horizontal"
 		    android:baselineAligned="false"
-		    >
+		    android:orientation="horizontal"
+		    android:weightSum="3" >
+
 		    <LinearLayout
 		        android:layout_width="0dp"
 		        android:layout_height="match_parent"
@@ -106,86 +104,61 @@
 		        >
 		        <Space 
 				    android:layout_width="0dp"
-		            android:layout_height="match_parent"
+		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
 		            />
 				<RelativeLayout
 				    android:layout_width="0dp"
-		            android:layout_height="match_parent"
+		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
 				    >
 	
-				    <ImageView
-				        android:id="@+id/odayaka"
-				        android:layout_width="30dp"
-				        android:layout_height="30dp"
-				        android:layout_alignParentRight="true"
-				        android:layout_alignParentTop="true"
-				        android:adjustViewBounds="true"
-				        android:src="@drawable/ic_launcher"      
-				        android:contentDescription="@string/desc" />
-	
 			        <TextView
+			            android:id="@+id/odayakapt"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:layout_below="@+id/odayaka"
+			            android:layout_alignParentBottom="true"
 			            android:layout_centerHorizontal="true"
 			            android:text="@string/atomosphereMeter"
-			            android:id="@+id/odayakapt"
 			            android:textColor="@color/blue" />
+
 				</RelativeLayout>
 		        <RelativeLayout
 				    android:layout_width="0dp"
-		            android:layout_height="match_parent"
+		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
 				    >
-			        <ImageView
-				        android:id="@+id/futuu"
-				        android:layout_width="30dp"
-				        android:layout_height="30dp"
-				        android:layout_alignParentRight="true"
-				        android:layout_alignParentTop="true"
-				        android:adjustViewBounds="true"
-				        android:src="@drawable/ic_launcher"
-				        android:contentDescription="@string/desc" />
+
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_below="@+id/futuu"
 			            android:id="@+id/futuupt"
+			            android:layout_alignParentBottom="true"
 			            android:layout_centerHorizontal="true"
 			            android:text="@string/atomosphereMeter" 
 			            android:textColor="@color/green"/>
 				</RelativeLayout>
 		        <RelativeLayout
 				    android:layout_width="0dp"
-		            android:layout_height="match_parent"
+		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
 				    >
 			        
-			        <ImageView
-				        android:id="@+id/appaku"
-				        android:layout_width="30dp"
-				        android:layout_height="30dp"
-				        android:layout_alignParentRight="true"
-				        android:layout_alignParentTop="true"
-				        android:adjustViewBounds="true"
-				        android:src="@drawable/ic_launcher"
-				        android:contentDescription="@string/desc" />
+
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-						android:layout_below="@+id/appaku"
 						android:id="@+id/appakupt"
 			            android:layout_centerHorizontal="true"
+			            android:layout_alignParentBottom="true"
 			            android:text="@string/atomosphereMeter"
 			            android:textColor="@color/red" />
 				</RelativeLayout>
 				<Space 
 				    android:layout_width="0dp"
-		            android:layout_height="match_parent"
+		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
 		            />
 		    </LinearLayout>
@@ -193,32 +166,36 @@
 		    <RelativeLayout
 		        android:layout_width="0dp"
 		        android:layout_height="match_parent"
-		        android:layout_weight="1"
-	
-		        >
+		        android:layout_weight="1.00" >
+
 		        <TextView
+		            android:id="@+id/timetext"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
+		            android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true"
+		            android:maxLines="1"
 		            android:text="@string/companytime"
-		            android:layout_centerInParent="true"
-		        	android:textColor="@color/black"
-		            android:id="@+id/timetext"
-		            android:maxLines="1" />
+		            android:textColor="@color/black" />
+
 		    </RelativeLayout>
+
 		    <RelativeLayout
 		        android:layout_width="0dp"
 		        android:layout_height="match_parent"
-		        android:layout_weight="1"
-		        >
+		        android:layout_weight="1.00" >
+
 		        <TextView
+		            android:id="@+id/categorytext"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
+		            android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true"
+		            android:maxLines="1"
 		            android:text="@string/companycategory"
-		            android:layout_centerInParent="true"
-		            android:id="@+id/categorytext"
-		     		android:textColor="@color/black"
-		            android:maxLines="1" />
-			</RelativeLayout>    "
+		            android:textColor="@color/black" />
+
+			</RelativeLayout>    
 		</LinearLayout>
 	</FrameLayout>
     <LinearLayout 
