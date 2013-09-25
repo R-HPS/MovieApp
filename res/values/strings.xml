@@ -16,5 +16,6 @@
     <string name="desc">画像を表示できませんでした</string>
     <string name="exampletext">TextView</string>
     <string name="button_go_to_login">ログイン</string>
+    <string name="register_interview_page">登録ページ</string>
     
 </resources>

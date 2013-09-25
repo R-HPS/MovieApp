@@ -30,13 +30,14 @@ public class TopActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_mypage);
-		setNowTime();
+		
 		
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
+		setNowTime();
 		checkCompanyTime();
 		new GetCompanyListAsyncTask(this).execute(CommonUtils.TEST_USER_KEY);
 	}

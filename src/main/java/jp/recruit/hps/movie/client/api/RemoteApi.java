@@ -8,6 +8,7 @@ import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
+import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
@@ -76,6 +77,16 @@ public class RemoteApi {
 	
 	public static RegisterEndpoint getRegisterEndpoint() {
 		RegisterEndpoint.Builder endpointBuilder = new RegisterEndpoint.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				new HttpRequestInitializer() {
+					public void initialize(HttpRequest httpRequest) {
+					}
+				});
+		return updateBuilder(endpointBuilder).build();
+	}
+	
+	public static QuestionEndpoint getQuestionEndpoint() {
+		QuestionEndpoint.Builder endpointBuilder = new QuestionEndpoint.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					public void initialize(HttpRequest httpRequest) {

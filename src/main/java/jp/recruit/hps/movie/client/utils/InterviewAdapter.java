@@ -34,7 +34,7 @@ public class InterviewAdapter extends BaseAdapter {
 		return list.get(position);
 	}
 
-	public String getCategory(int position) {
+	public int getCategory(int position) {
 		return list.get(position).getCategory();
 	}
 	
@@ -42,17 +42,13 @@ public class InterviewAdapter extends BaseAdapter {
 		return list.get(position).getQuestion();
 	}
 	
-	public String getAtmosphere(int position) {
+	public int getAtmosphere(int position) {
 		return list.get(position).getAtmosphere();
 	}
 	
 	public long getStartDate(int position){
 		return list.get(position).getStartDate();
 	}
-	
-	private final String ATMOSPHERES[]={
-			"SUNNY", "CLOUDY", "RAINY"
-	};
 	
 
 	@Override
@@ -67,16 +63,16 @@ public class InterviewAdapter extends BaseAdapter {
 		}
 		TextView tv = (TextView) convertView.findViewById(R.id.company_question_text);
 		tv.setText(getQuestion(position));
-		ImageView img = (ImageView) convertView.findViewById(R.id.receive_listview);
-		if(getAtmosphere(position)!=null){
-			if(getAtmosphere(position).equals(ATMOSPHERES[0])){
-				img.setImageResource(R.drawable.receive00_item_blue);
-			}else if(getAtmosphere(position).equals(ATMOSPHERES[1])){
-				img.setImageResource(R.drawable.receive00_item_green);
-			}else{
-				img.setImageResource(R.drawable.receive00_item_red);
-			}
-		}
+//		ImageView img = (ImageView) convertView.findViewById(R.id.receive_listview);
+//		if(getAtmosphere(position)!=){
+//			if(getAtmosphere(position)==0){
+//				img.setImageResource(R.drawable.receive00_item_blue);
+//			}else if(getAtmosphere(position)==1){
+//				img.setImageResource(R.drawable.receive00_item_green);
+//			}else{
+//				img.setImageResource(R.drawable.receive00_item_red);
+//			}
+//		}
 		return convertView;
 	}
 }

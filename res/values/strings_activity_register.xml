@@ -7,8 +7,8 @@
     <!-- Strings related to register -->
     <string name="register_prompt_firstname">名</string>
     <string name="register_prompt_lastname">姓</string>
-    <string name="register_prompt_email">Eメールアドレス</string>
-    <string name="register_prompt_password">パスワード</string>
+    <string name="register_prompt_email">大学のメールアドレス</string>
+    <string name="register_prompt_password">パスワード（６文字以上）</string>
     <string name="register_prompt_password_again">パスワード（再確認）</string>
     <string name="register_action_sign_up"><b>新規登録</b></string>
     <string name="register_action_sign_up_short">新規登録</string>

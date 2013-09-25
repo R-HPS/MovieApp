@@ -6,6 +6,7 @@ import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.common.CommonConstant;
 import jp.recruit.hps.movie.common.RegisterConstant;
 import jp.recruit.hps.movie.client.utils.AddressChecker;
+import jp.recruit.hps.movie.client.utils.CommonUtils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -88,6 +89,22 @@ public class RegisterActivity extends Activity {
 						attemptRegister();
 					}
 				});
+		findViewById(R.id.register_cansel_button).setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View view) {
+						
+						canselRegister();
+					}
+				});
+		
+	}
+	/**
+	 * canselしてloginActivityに戻る
+	 */
+	public void canselRegister(){
+		Intent intent = new Intent(this,
+				LoginActivity.class);
+		startActivity(intent);				
 	}
 
 
