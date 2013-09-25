@@ -9,7 +9,7 @@
 	<classpathentry kind="output" path="bin/classes"/>
 	<classpathentry kind="src" path="endpoint-libs/libcompanyEndpoint-v1/companyEndpoint/companyendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libinterviewEndpoint-v1/interviewEndpoint/interviewendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libinterviewGroupEndpoint-v1/interviewGroupEndpoint/interviewgroupendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libselectionEndpoint-v1/selectionEndpoint/selectionendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libloginEndpoint-v1/loginEndpoint/loginendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libregisterEndpoint-v1/registerEndpoint/registerendpoint-v1-generated-source"/>
 	

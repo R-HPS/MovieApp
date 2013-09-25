@@ -18,9 +18,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
-import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1DtoCollection;
-import com.appspot.hps_movie.interviewGroupEndpoint.InterviewGroupEndpoint;
+import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 
 public class TopActivity extends Activity {
 	private final String PREF_KEY = "comapanydate1";
@@ -84,10 +84,10 @@ public class TopActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(String... queries) {
 			String query = queries[0];
-			InterviewGroupEndpoint endpoint = RemoteApi.getInterviewGroupEndpoint();
+			SelectionEndpoint endpoint = RemoteApi.getSelectionEndpoint();
 			try {
 				CompanyV1DtoCollection collection = endpoint
-						.interviewGroupV1EndPoint().getInterviewGroups(query).execute();
+						.selectionV1EndPoint().getSelections(query).execute();
 				if (collection != null && collection.getItems() != null) {
 					list = collection.getItems();
 				} else {

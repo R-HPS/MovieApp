@@ -32,9 +32,9 @@ public class CompanyInterviewActivity extends Activity {
 			
 			setContentView(R.layout.activity_companypage);
 			Intent i = getIntent();
-			final String interviewGroupKey = i
-					.getStringExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY);
-			new GetInterviewListAsyncTask(this).execute(interviewGroupKey);
+			final String selectionKey = i
+					.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
+			new GetInterviewListAsyncTask(this).execute(selectionKey);
 			final String companyName = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
 			final String companyPhase = i

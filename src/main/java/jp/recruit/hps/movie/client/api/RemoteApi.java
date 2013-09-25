@@ -6,7 +6,7 @@ import jp.recruit.hps.movie.client.utils.CommonUtils;
 
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
-import com.appspot.hps_movie.interviewGroupEndpoint.InterviewGroupEndpoint;
+import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -55,8 +55,8 @@ public class RemoteApi {
 		return updateBuilder(endpointBuilder).build();
 	}
 	
-	public static InterviewGroupEndpoint getInterviewGroupEndpoint() {
-		InterviewGroupEndpoint.Builder endpointBuilder = new InterviewGroupEndpoint.Builder(
+	public static SelectionEndpoint getSelectionEndpoint() {
+		SelectionEndpoint.Builder endpointBuilder = new SelectionEndpoint.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					public void initialize(HttpRequest httpRequest) {

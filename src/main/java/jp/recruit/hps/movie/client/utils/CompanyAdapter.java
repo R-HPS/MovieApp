@@ -15,7 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
 
 public class CompanyAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
@@ -101,7 +101,7 @@ public class CompanyAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				Intent intent = new Intent(context,
 						CompanyInterviewActivity.class);
-				intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY, getKey(position));
+				intent.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY, getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE, 
