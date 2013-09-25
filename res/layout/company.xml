@@ -37,7 +37,7 @@
 		        android:text="@string/exampletext"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="5dp"
-		        android:textColor="@color/black"
+		        android:textColor="@color/recruit_black"
 		        android:id="@+id/mypage_company_name"
 		        />
 
@@ -48,7 +48,7 @@
 		        android:layout_alignBaseline="@+id/mypage_company_name"
 		        android:layout_alignBottom="@+id/mypage_company_name"
 		        android:layout_alignParentRight="true"
-		        android:textColor="@color/black"
+		        android:textColor="@color/recruit_black"
 		        android:layout_marginRight="3dp"
 		        android:textSize="12sp"
 		        android:text="@string/exampletext" />
@@ -60,7 +60,7 @@
 		        android:layout_alignBottom="@+id/company_name_button"
 		        android:layout_alignLeft="@+id/mypage_company_name"
 		        android:textSize="12sp"
-		        android:textColor="@color/red"
+		        android:textColor="@color/recruit_red"
 		        android:text="@string/exampletext" />
 		    
 		    <TextView
@@ -70,7 +70,7 @@
 		        android:layout_alignBottom="@+id/company_name_button"
 		        android:layout_alignRight="@+id/mypage_company_phase"
 		        android:textSize="12sp"
-		        android:textColor="@color/red"
+		        android:textColor="@color/recruit_red"
 		        android:text="@string/exampletext" />
 
 		</RelativeLayout>

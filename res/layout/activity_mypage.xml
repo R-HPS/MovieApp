@@ -38,20 +38,20 @@
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 android:text="@string/exampletext"
-                android:textColor="@color/black"
+                android:textColor="@color/recruit_black"
                 />
     </FrameLayout>
             
     
     
     <ProgressBar
-	  android:id="@+id/mypage_progressBar"
-	  android:layout_width="wrap_content"
-	  android:layout_height="wrap_content"
-	  style="?android:attr/progressBarStyle"
-	  android:layout_below="@+id/mypage_topline_layout"
-      android:layout_above="@+id/mypage_changebtn"
-      android:layout_centerHorizontal="true"
+		android:id="@+id/mypage_progressBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="?android:attr/progressBarStyle"
+		android:layout_below="@+id/mypage_topline_layout"
+	    android:layout_above="@+id/mypage_changebtn"
+	    android:layout_centerHorizontal="true"
       />      
     <ListView
         android:id="@+id/mypage_company_list"
@@ -67,26 +67,26 @@
     </ListView>
     
         <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:weightSum="2"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/mypage_changebtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:weightSum="2"
+	        android:orientation="horizontal"
+	        android:layout_alignParentBottom="true"
+	        android:id="@+id/mypage_changebtn"
         >
 	    <ImageButton 
-	    android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:id="@+id/newregistbtn"
-        android:contentDescription="@string/desc"
+		    android:layout_width="0dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1"
+	        android:id="@+id/newregistbtn"
+	        android:contentDescription="@string/desc"
         />
         <ImageButton
-	    android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:id="@+id/changeuserbtn"
-        android:contentDescription="@string/desc"
+		    android:layout_width="0dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1"
+	        android:id="@+id/changeuserbtn"
+	        android:contentDescription="@string/desc"
         />
     </LinearLayout>
 

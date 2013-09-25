@@ -51,7 +51,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center"
-	        android:textColor="@color/black"
+	        android:textColor="@color/recruit_black"
 	        android:text="@string/exampletext" />
 	    
 	    <TextView
@@ -60,7 +60,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center"
 	        android:layout_marginTop="18dp"
-	        android:textColor="@color/black"
+	        android:textColor="@color/recruit_black"
 	        android:text="@string/exampletext" />
 	</FrameLayout>	 
 
@@ -169,7 +169,7 @@
 		            android:layout_centerVertical="true"
 		            android:maxLines="1"
 		            android:text="@string/companytime"
-		            android:textColor="@color/black" />
+		            android:textColor="@color/recruit_black" />
 
 		    </RelativeLayout>
 
@@ -186,7 +186,7 @@
 		            android:layout_centerVertical="true"
 		            android:maxLines="1"
 		            android:text="@string/companycategory"
-		            android:textColor="@color/black" />
+		            android:textColor="@color/recruit_black" />
 
 			</RelativeLayout>    
 		</LinearLayout>
