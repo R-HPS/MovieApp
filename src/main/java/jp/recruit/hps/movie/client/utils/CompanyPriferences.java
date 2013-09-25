@@ -6,7 +6,6 @@ import com.appspot.hps_movie.interviewGroupEndpoint.model.CompanyV1Dto;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 public class CompanyPriferences {
 	private static final String KEYS_NAME[]={
