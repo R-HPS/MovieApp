@@ -46,10 +46,11 @@ public class TopActivity extends Activity {
 		// TODO 自動生成されたメソッド・スタブ
 	    // SharedPrefernces の取得
 		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, MODE_PRIVATE);
+		Calendar cal =Calendar.getInstance();
 		if(pref!=null){
 			Long l = pref.getLong(PREF_KEY, -1);
 			if(l!=-1){
-				
+				cal.setTimeInMillis(l);
 			}
 		}
 	}

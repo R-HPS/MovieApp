@@ -92,7 +92,7 @@ public class CompanyAdapter extends BaseAdapter {
 			TextView tv = (TextView) convertView.findViewById(R.id.mypage_company_date);
 			Calendar cal = getDate(position);
 			tv.setText(cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+
-					cal.get(Calendar.DATE)+" "+week_name[(cal.get(cal.get(Calendar.DAY_OF_WEEK))-2)]);
+					cal.get(Calendar.DATE)+" "+week_name[(cal.get(Calendar.DAY_OF_WEEK)-1)]);
 			tv = (TextView) convertView.findViewById(R.id.mypage_company_time);
 			tv.setText(cal.get(Calendar.HOUR_OF_DAY)+"："+cal.get(Calendar.MINUTE)+"~");
 		}
