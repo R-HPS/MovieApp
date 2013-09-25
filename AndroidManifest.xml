@@ -89,6 +89,12 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".CompanyInterviewActivity"
+            android:label="@string/view_interview" 
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
         
     </application>
 

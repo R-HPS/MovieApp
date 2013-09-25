@@ -92,7 +92,7 @@ public class CompanyAdapter extends BaseAdapter {
 			TextView tv = (TextView) convertView.findViewById(R.id.mypage_company_date);
 			Calendar cal = getDate(position);
 			tv.setText(cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+
-					cal.get(Calendar.DATE)+" "+(cal.get(cal.get(Calendar.DAY_OF_WEEK))-1));
+					cal.get(Calendar.DATE)+" "+week_name[(cal.get(cal.get(Calendar.DAY_OF_WEEK))-2)]);
 			tv = (TextView) convertView.findViewById(R.id.mypage_company_time);
 			tv.setText(cal.get(Calendar.HOUR_OF_DAY)+"："+cal.get(Calendar.MINUTE)+"~");
 		}
@@ -104,7 +104,7 @@ public class CompanyAdapter extends BaseAdapter {
 				intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEWGROUP_KEY, getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
-				intent.putExtra(CommonUtils.String_EXTRA_COMPANY_PHASE, 
+				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE, 
 						getPhase(position));
 				context.startActivity(intent);				
 			}

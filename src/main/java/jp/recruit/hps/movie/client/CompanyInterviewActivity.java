@@ -38,7 +38,7 @@ public class CompanyInterviewActivity extends Activity {
 			final String companyName = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
 			final String companyPhase = i
-					.getStringExtra(CommonUtils.String_EXTRA_COMPANY_PHASE);
+					.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE);
 			TextView tv = (TextView)findViewById(R.id.companyname);
 			tv.setText(companyName);
 			tv = (TextView)findViewById(R.id.companyphase);
