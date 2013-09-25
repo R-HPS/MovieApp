@@ -8,7 +8,6 @@ import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewGroupEndpoint.InterviewGroupEndpoint;
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
-import com.appspot.hps_movie.movieEndpoint.MovieEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
@@ -34,16 +33,6 @@ public class RemoteApi {
 			}
 		});
 		return builder;
-	}
-
-	public static MovieEndpoint getMovieEndpoint() {
-		MovieEndpoint.Builder endpointBuilder = new MovieEndpoint.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				new HttpRequestInitializer() {
-					public void initialize(HttpRequest httpRequest) {
-					}
-				});
-		return updateBuilder(endpointBuilder).build();
 	}
 	
 	public static CompanyEndpoint getCompanyEndpoint() {
