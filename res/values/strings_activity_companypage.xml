@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="companyatmosphere">雰囲気</string>
+    <string name="companytime" formatted="false">平均&lt;font color=\"red\"&gt;%d&lt;/font&gt;分</string>
+    <string name="companycategory">面接・%s</string>
+    <string name="atomosphereMeter">%d</string>
+    
+    
+    
+</resources>
