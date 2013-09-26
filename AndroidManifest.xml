@@ -101,6 +101,13 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".RegisterCompanyActivity"
+            android:label="@string/register_company_page" 
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+        
         
     </application>
 

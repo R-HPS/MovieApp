@@ -11,7 +11,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Intent intent = new Intent(this, TopActivity.class);
+		Intent intent = new Intent(this, RegisterCompanyActivity.class);
 		startActivity(intent);
 	}
 
