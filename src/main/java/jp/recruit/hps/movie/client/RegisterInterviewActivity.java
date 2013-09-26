@@ -3,27 +3,21 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.util.List;
 
-import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
-import com.appspot.hps_movie.loginEndpoint.LoginEndpoint.LoginV1Endpoint.Login;
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
+import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint.QuestionV1EndPoint.CreateQuestion;
+import com.appspot.hps_movie.questionEndpoint.model.QuestionResultV1Dto;
 import com.appspot.hps_movie.questionEndpoint.model.QuestionV1Dto;
 import com.appspot.hps_movie.questionEndpoint.model.QuestionV1DtoCollection;
-import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
-
 import jp.recruit.hps.movie.client.utils.QuestionAdapter;
-import jp.recruit.hps.movie.client.CompanyInterviewActivity.GetInterviewListAsyncTask;
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
-import jp.recruit.hps.movie.client.utils.CompanyAdapter;
-import jp.recruit.hps.movie.client.utils.CompanyPriferences;
 import jp.recruit.hps.movie.common.CommonConstant;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -46,7 +40,9 @@ public class RegisterInterviewActivity extends Activity {
 	}
 	
 	public void setButton(){
-		findViewById(R.id.add_list_btn).setOnClickListener(
+		Button btn = (Button)findViewById(R.id.add_list_btn);
+		btn.setVisibility(View.VISIBLE);
+		btn.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
 
@@ -69,42 +65,43 @@ public class RegisterInterviewActivity extends Activity {
 				});
 	}
 
-//	public class SetQuestionAsyncTask extends
-//	AsyncTask<String,Integer,Boolean> {
-//		QuestionV1Dto question;
-//		@Override
-//		protected Boolean doInBackground(String... params) {
-//
-//			// TODO 自動生成されたメソッド・スタブ
-//			try {
-//				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
-//				QuestionResultV1Dto result = endpoint.questionV1EndPoint().
-//						createQuestion(userKey, selectionKey, params[0]);
-//				if (SUCCESS.equals(result.getResult())) {
-//					question = result.getQuestion();
-//					return true;
-//				} else {
-//					return false;
-//				}
-//
-//			} catch (Exception e) {
-//				return false;
-//			}
-//
-//		}
-//		@Override
-//		protected void onPostExecute(Boolean result) {
-//			if (result) {
-//				ProgressBar prog =(ProgressBar)findViewById
-//						(R.id.register_question_progressBar);
-//				prog.setVisibility(View.GONE);
-//				adapter.addList(question);
-//				//アダプタに対してデータが変更したことを知らせる
-//				adapter.notifyDataSetChanged();
-//			}
-//		}
-//
-//	}
+	public class SetQuestionAsyncTask extends
+	AsyncTask<String,Integer,Boolean> {
+		QuestionV1Dto question;
+		@Override
+		protected Boolean doInBackground(String... params) {
+
+			// TODO 自動生成されたメソッド・スタブ
+			try {
+				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
+				CreateQuestion createQuestion = endpoint.questionV1EndPoint().createQuestion(userKey, selectionKey, params[0]);
+				QuestionResultV1Dto result =createQuestion.execute();
+				if (SUCCESS.equals(result.getResult())) {
+					question = result.getQuestion();
+					return true;
+				} else {
+					return false;
+				}
+
+			} catch (Exception e) {
+				return false;
+			}
+
+		}
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				ProgressBar prog =(ProgressBar)findViewById
+						(R.id.register_question_progressBar);
+				prog.setVisibility(View.GONE);
+				adapter.addList(question);
+				//アダプタに対してデータが変更したことを知らせる
+				adapter.notifyDataSetChanged();
+				setButton();
+			}
+		}
+
+	}
 
 	public class GetQuestionListAsyncTask extends
 	AsyncTask<String, Integer, Boolean> {
@@ -137,10 +134,14 @@ public class RegisterInterviewActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				findViewById(R.id.register_question_progress_layout).setVisibility(View.GONE);
+				
 				ListView lv = (ListView)findViewById(R.id.register_question_list);
+				lv.setVisibility(View.VISIBLE);
+				findViewById(R.id.register_add_list_layout).setVisibility(View.VISIBLE);
 				adapter = new QuestionAdapter(context,list);
 				lv.setAdapter(adapter);
-				
+				setButton();
 			}
 		}
 	}

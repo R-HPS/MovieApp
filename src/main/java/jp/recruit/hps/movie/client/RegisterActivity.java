@@ -6,7 +6,6 @@ import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.common.CommonConstant;
 import jp.recruit.hps.movie.common.RegisterConstant;
 import jp.recruit.hps.movie.client.utils.AddressChecker;
-import jp.recruit.hps.movie.client.utils.CommonUtils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;

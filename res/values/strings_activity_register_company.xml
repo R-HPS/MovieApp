@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_company_name">会社名</string>
+    <string name="register_company_section">部門名</string>
+    <string name="register_company_phase">選考段階</string>
+    <string name="register_company_time">選考開始時間</string>
+	
+    
+
+
+</resources>
