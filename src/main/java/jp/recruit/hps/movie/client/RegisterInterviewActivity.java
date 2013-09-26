@@ -32,7 +32,7 @@ public class RegisterInterviewActivity extends Activity {
 	String selectionKey;
 	String userKey;
 	private static String SUCCESS = CommonConstant.SUCCESS;
-	
+
 	public RegisterInterviewActivity() {
 		// TODO 自動生成されたコンストラクター・スタブ
 		setContentView(R.layout.activity_companypage);
@@ -41,88 +41,111 @@ public class RegisterInterviewActivity extends Activity {
 				.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
 		userKey = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
-		
+
 		new GetQuestionListAsyncTask(this).execute(selectionKey);
 	}
 	
-//public class SetQuestionAsyncTask extends
-//	AsyncTask<String,Integer,Boolean> {
-//
-//	@Override
-//	protected Boolean doInBackground(String... params) {
-//		// TODO 自動生成されたメソッド・スタブ
-//		try {
-//			QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
-//			QuestionResultV1Dto result = endpoint.questionV1EndPoint().
-//					createQuestion(userKey, selectionKey, params[0]);
-//			if (SUCCESS.equals(result.getResult())) {
-//				return true;
-//			} else {
-//				return false;
-//			}
-//
-//		} catch (Exception e) {
-//			return false;
-//		}
-//		
-//	}
-//	
-//}
+	public void setButton(){
+		findViewById(R.id.add_list_btn).setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View view) {
 
-public class GetQuestionListAsyncTask extends
-AsyncTask<String, Integer, Boolean> {
-	private final Context context;
-	private List<QuestionV1Dto> list;
-	
-	public GetQuestionListAsyncTask(Context context) {
-		this.context = context;
+						findViewById(R.id.add_list_btn).setVisibility(View.GONE);
+						findViewById(R.id.register_add_text_layout)
+						.setVisibility(View.VISIBLE);
+						findViewById(R.id.add_question_send_btn).setOnClickListener(new View.OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								// TODO 自動生成されたメソッド・スタブ
+								findViewById(R.id.add_question_send_btn)
+								.setVisibility(View.GONE);
+								ProgressBar prog =(ProgressBar)findViewById
+										(R.id.register_question_progressBar);
+								prog.setVisibility(View.VISIBLE);
+							}	
+						});
+					}
+				});
 	}
 
-	@Override
-	protected Boolean doInBackground(String... queries) {
-		String query = queries[0];
-		QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
-		try {
-			QuestionV1DtoCollection collection = endpoint
-					.questionV1EndPoint().getQuestions(query).execute();
-			if (collection != null && collection.getItems() != null) {
-				list = collection.getItems();
-			} else {
+	public class SetQuestionAsyncTask extends
+	AsyncTask<String,Integer,Boolean> {
+		QuestionV1Dto question;
+		@Override
+		protected Boolean doInBackground(String... params) {
+
+			// TODO 自動生成されたメソッド・スタブ
+			try {
+				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
+				QuestionResultV1Dto result = endpoint.questionV1EndPoint().
+						createQuestion(userKey, selectionKey, params[0]);
+				if (SUCCESS.equals(result.getResult())) {
+					question = result.getQuestion();
+					return true;
+				} else {
+					return false;
+				}
+
+			} catch (Exception e) {
 				return false;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
+
 		}
-		return true;
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				ProgressBar prog =(ProgressBar)findViewById
+						(R.id.register_question_progressBar);
+				prog.setVisibility(View.GONE);
+				adapter.addList(question);
+				//アダプタに対してデータが変更したことを知らせる
+				adapter.notifyDataSetChanged();
+			}
+		}
+
 	}
 
-	@Override
-	protected void onPostExecute(Boolean result) {
-		if (result) {
+	public class GetQuestionListAsyncTask extends
+	AsyncTask<String, Integer, Boolean> {
+		private final Context context;
+		private List<QuestionV1Dto> list;
+
+		public GetQuestionListAsyncTask(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(String... queries) {
+			String query = queries[0];
+			QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
+			try {
+				QuestionV1DtoCollection collection = endpoint
+						.questionV1EndPoint().getQuestions(query).execute();
+				if (collection != null && collection.getItems() != null) {
+					list = collection.getItems();
+				} else {
+					return false;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
 				ListView lv = (ListView)findViewById(R.id.register_question_list);
 				adapter = new QuestionAdapter(context,list);
 				lv.setAdapter(adapter);
-				findViewById(R.id.add_list_btn).setOnClickListener(
-						new View.OnClickListener() {
-							public void onClick(View view) {
-								
-								findViewById(view.getId()).setVisibility(View.GONE);
-								findViewById(R.id.register_add_text_layout)
-									.setVisibility(View.VISIBLE);
-								findViewById(R.id.add_question_send_btn).setOnClickListener(new View.OnClickListener() {
-									
-									@Override
-									public void onClick(View v) {
-										// TODO 自動生成されたメソッド・スタブ
-										
-									}
-								});
-							}
-						});
+				
+			}
 		}
 	}
-}
+	
+	
 }
 
 

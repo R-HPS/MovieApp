@@ -75,4 +75,8 @@ public class QuestionAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
+	
+	public void addList(QuestionV1Dto question){
+		list.add(question);
+	}
 }
