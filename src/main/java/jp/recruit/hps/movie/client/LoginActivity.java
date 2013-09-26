@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
@@ -83,7 +84,7 @@ public class LoginActivity extends Activity {
 				});
 		
 		//ボタン作成
-	    Button register_btn = (Button)findViewById(R.id.go_to_register_from_login);
+	    ImageView register_btn = (ImageView)findViewById(R.id.go_to_register_from_login);
 	    register_btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {  //新規登録画面へ遷移
 	    		startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

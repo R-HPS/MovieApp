@@ -69,42 +69,42 @@ public class RegisterInterviewActivity extends Activity {
 				});
 	}
 
-	public class SetQuestionAsyncTask extends
-	AsyncTask<String,Integer,Boolean> {
-		QuestionV1Dto question;
-		@Override
-		protected Boolean doInBackground(String... params) {
-
-			// TODO 自動生成されたメソッド・スタブ
-			try {
-				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
-				QuestionResultV1Dto result = endpoint.questionV1EndPoint().
-						createQuestion(userKey, selectionKey, params[0]);
-				if (SUCCESS.equals(result.getResult())) {
-					question = result.getQuestion();
-					return true;
-				} else {
-					return false;
-				}
-
-			} catch (Exception e) {
-				return false;
-			}
-
-		}
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if (result) {
-				ProgressBar prog =(ProgressBar)findViewById
-						(R.id.register_question_progressBar);
-				prog.setVisibility(View.GONE);
-				adapter.addList(question);
-				//アダプタに対してデータが変更したことを知らせる
-				adapter.notifyDataSetChanged();
-			}
-		}
-
-	}
+//	public class SetQuestionAsyncTask extends
+//	AsyncTask<String,Integer,Boolean> {
+//		QuestionV1Dto question;
+//		@Override
+//		protected Boolean doInBackground(String... params) {
+//
+//			// TODO 自動生成されたメソッド・スタブ
+//			try {
+//				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
+//				QuestionResultV1Dto result = endpoint.questionV1EndPoint().
+//						createQuestion(userKey, selectionKey, params[0]);
+//				if (SUCCESS.equals(result.getResult())) {
+//					question = result.getQuestion();
+//					return true;
+//				} else {
+//					return false;
+//				}
+//
+//			} catch (Exception e) {
+//				return false;
+//			}
+//
+//		}
+//		@Override
+//		protected void onPostExecute(Boolean result) {
+//			if (result) {
+//				ProgressBar prog =(ProgressBar)findViewById
+//						(R.id.register_question_progressBar);
+//				prog.setVisibility(View.GONE);
+//				adapter.addList(question);
+//				//アダプタに対してデータが変更したことを知らせる
+//				adapter.notifyDataSetChanged();
+//			}
+//		}
+//
+//	}
 
 	public class GetQuestionListAsyncTask extends
 	AsyncTask<String, Integer, Boolean> {
