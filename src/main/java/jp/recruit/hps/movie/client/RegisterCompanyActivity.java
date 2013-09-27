@@ -39,6 +39,9 @@ public class RegisterCompanyActivity extends Activity{
 	private String userKey;
 	private String selectionKey;
 	
+	//現在時刻
+	private Calendar mCal;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -76,6 +79,7 @@ public class RegisterCompanyActivity extends Activity{
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
 				// TODO Auto-generated method stub
+				mCal = Calendar.getInstance();
 				new DatePickerDialog(RegisterCompanyActivity.this, new DatePickerDialog.OnDateSetListener() {
 					@Override
 					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -84,7 +88,7 @@ public class RegisterCompanyActivity extends Activity{
 						mDateView.setText( String.format("%04d/%02d/%02d", year, monthOfYear+1, dayOfMonth));
 					}
 				}
-				, 2010, 8, 19)
+				, mCal.get(Calendar.YEAR), mCal.get(Calendar.MONTH),mCal.get(Calendar.DATE) )
 				.show();
 			}
 		});
@@ -94,6 +98,7 @@ public class RegisterCompanyActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
+				mCal = Calendar.getInstance();
 				// TODO Auto-generated method stub
 				new TimePickerDialog(RegisterCompanyActivity.this, new TimePickerDialog.OnTimeSetListener() {
 					@Override
@@ -102,7 +107,7 @@ public class RegisterCompanyActivity extends Activity{
 						// 時間が設定されたときの処理
 						mTimeView.setText( String.format("%02d:%02d", hourOfDay, minute));
 					}
-				} , 13, 0, true)
+				} , mCal.get(Calendar.HOUR_OF_DAY), mCal.get(Calendar.MINUTE), true)
 				.show();
 			}
 		});
@@ -122,28 +127,48 @@ public class RegisterCompanyActivity extends Activity{
 	private void setSelection() {
 		// TODO 自動生成されたメソッド・スタブ
 		// Reset errors.
-		//mNameView.setError(null);
+		mNameView.setError(null);
 		mDateView.setError(null);
 		mTimeView.setError(null);
 		
 
 		// Store values at the time of the login attempt.		
 	//	mName= mNameView.getText().toString();
-		String date =mDateView.getText().toString()+" "+mTimeView.getText().toString();
-		mTime = setCal(date);
-		mSection = mSectionSpinner.getTag().toString();
-		mPhase = mPhaseSpinner.getTag().toString();
+		
 		
 		boolean cancel =false;
 		View focusView =null;
 		
-		// Check for a valid email address.
-				if (TextUtils.isEmpty(mName)) {
-					mNameView.setError(getString(R.string.error_field_required));
-					focusView = mNameView;
-					cancel = true;
-				}
+		if(mNameView.getText()!=null){
+			mName = mNameView.getText().toString();
+		}else{
+			cancel = true;
+		}
 		
+		if(mDateView.getText()!=null&&mTimeView.getText()!=null){
+			String date =mDateView.getText().toString()+" "+mTimeView.getText().toString();
+			mTime = setCal(date);
+		}else{
+			cancel = true;
+		}
+
+		// Check for a valid email address.
+		if (TextUtils.isEmpty(mName)) {
+			mNameView.setError(getString(R.string.error_field_required));
+			focusView = mNameView;
+			cancel = true;
+		}
+		if(mSectionSpinner.getTag()!=null){
+			mSection = mSectionSpinner.getTag().toString();
+		}else {
+			cancel=true;
+		}
+		if(mPhaseSpinner.getTag()!=null){		
+			mPhase = mPhaseSpinner.getTag().toString();
+		}else{
+			cancel=true;					
+		}
+
 	}
 
 	private Long setCal(String strDate) {
