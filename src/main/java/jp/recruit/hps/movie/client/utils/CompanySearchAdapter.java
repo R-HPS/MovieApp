@@ -16,14 +16,12 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 public class CompanySearchAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<CompanyV1Dto> list;
-	private final Context context;
 
 	public CompanySearchAdapter(Context context, List<CompanyV1Dto> list) {
 		super();
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.list = list;
-		this.context = context;
 	}
 
 	@Override

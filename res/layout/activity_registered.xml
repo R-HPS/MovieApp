@@ -10,16 +10,20 @@
     android:gravity="center"
     tools:context=".MainActivity" >
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/recruit_black"
-        android:text="@string/message_registered_in" />
-    
-    <Button 
+		android:src="@drawable/after_register_title"
+		android:contentDescription="@string/desc"
+		android:adjustViewBounds="true"
+		/>    
+    <ImageView
         android:id="@+id/go_to_login_from_registered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_go_to_login" />
-
+		android:src="@drawable/after_register_return"
+		android:layout_marginTop="30dp"
+		android:adjustViewBounds="true"
+		android:contentDescription="@string/desc"
+		/>
 </LinearLayout>
