@@ -115,8 +115,6 @@
                 android:contentDescription="@string/desc"
                 />
             </LinearLayout>
-            
-
         </LinearLayout>
     </ScrollView>
 

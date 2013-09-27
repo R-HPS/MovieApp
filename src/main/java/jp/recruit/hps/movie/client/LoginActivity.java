@@ -198,6 +198,7 @@ public class LoginActivity extends Activity {
 			    editor.commit();
 				
 				LoginResultV1Dto result = login.execute();
+			
 
 				if (SUCCESS.equals(result.getResult())) {
 					return true;

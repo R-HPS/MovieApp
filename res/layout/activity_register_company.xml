@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_company_name"
-        android:drawableBottom="@drawable/login_mail_06"
+        android:drawableBottom="@drawable/register_companyname"
         android:id="@+id/register_company_name"
         />
 
@@ -50,27 +50,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_company_time"
-        android:id="@+id/register_company_time" />
+         />
 	    
-	<TextView
-	    android:id="@+id/register_company_date_text"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:drawableRight="@drawable/register00_regbutton_07" />
-	        
+
+	
 	<TextView
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 
-	        android:drawableRight="@drawable/register00_regbutton_07"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:drawableBottom="@drawable/register00_comany_schedule"
 	        android:id="@+id/register_company_time_text"
 	    />
-
-	<ImageView
-	    android:layout_width="wrap_content"
+	<LinearLayout
+	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="30dp"
-	    android:src="@drawable/register00_regbutton_07" 
-	    android:contentDescription="@string/desc"
-	    android:id="@+id/register_company_registbtn"/>
+	    android:gravity="center"
+	    android:orientation="horizontal"
+	    android:weightSum="2">
+		<ImageView
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/register00_regbutton_07" 
+		    android:contentDescription="@string/desc"
+		    android:id="@+id/register_company_registbtn"
+		    android:layout_weight="1"
+		    />
+		<ImageView
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
 
+		    android:src="@drawable/register00_cancelbutton_09" 
+		    android:contentDescription="@string/desc"
+		    android:id="@+id/register_company_cancelbtn"
+		    android:layout_weight="1"/>
+	</LinearLayout>
 </LinearLayout>

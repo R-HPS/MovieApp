@@ -4,8 +4,12 @@
     <string name="register_company_section">部門名</string>
     <string name="register_company_phase">選考段階</string>
     <string name="register_company_time">選考開始時間</string>
-	
-    
-
+    <string name="register_company_startTime_text">時間</string>
+    <string name="register_company_startDate_text">日付</string>
+	<string name="date_format">%tF</string>
+    <string name="time_format">%tR</string>
+    <string name="date_time_format">%1$tF %1$tR</string>
+    <string name="register_company_set_title">設定</string>
+    <string name="register_company_cancel_title">キャンセル</string>
 
 </resources>
