@@ -18,13 +18,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 
 public class TopActivity extends Activity {
-
+	GetCompanyListAsyncTask mLoadSelectionTask;
 	String userkey;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,20 @@ public class TopActivity extends Activity {
 		super.onResume();
 		setNowTime();
 		checkCompanyTime();
-		new GetCompanyListAsyncTask(this).execute(CommonUtils.TEST_USER_KEY);
+		String userKey =getUserKey();
+		if(userKey==null){
+			startActivity(new Intent(this,LoginActivity.class));
+			Toast.makeText( this, R.string.mypage_userkey_error, Toast.LENGTH_SHORT ).show();
+			finish();
+		}
+		mLoadSelectionTask = new GetCompanyListAsyncTask(this);
+		mLoadSelectionTask.execute(CommonUtils.TEST_USER_KEY);//userKey
+	}
+
+	private String getUserKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+		return pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
 	}
 
 	private void checkCompanyTime() {
@@ -115,6 +129,9 @@ public class TopActivity extends Activity {
 				lv.setVisibility(View.VISIBLE);
 				CompanyPriferences company = new CompanyPriferences(context,list);
 				company.setCompanyData();
+			}else {
+				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
+				findViewById(R.id.mypage_company_null_text).setVisibility(View.VISIBLE);
 			}
 		}
 	}

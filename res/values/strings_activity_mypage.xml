@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="string_mypage_company_phase">%s次選考</string>
-    
+    <string name="mypage_userkey_error">情報取得失敗のためログイン画面に戻ります。</string>  
+    <string name="mypage_company_null">登録されている選考がありません。</string>
 </resources>

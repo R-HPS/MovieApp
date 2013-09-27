@@ -11,5 +11,7 @@
     <string name="date_time_format">%1$tF %1$tR</string>
     <string name="register_company_set_title">設定</string>
     <string name="register_company_cancel_title">キャンセル</string>
-
+    <string name="register_company_select">登録したい企業名</string>
+    <string name="register_company_name_set">企業名登録</string>
+    <string name="register_company_name_nothing">見つかりませんでした。</string>
 </resources>

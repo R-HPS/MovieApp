@@ -50,44 +50,42 @@
 		android:layout_height="wrap_content"
 		style="?android:attr/progressBarStyle"
 		android:layout_below="@+id/mypage_topline_layout"
-	    android:layout_above="@+id/mypage_changebtn"
+	    android:layout_above="@+id/newregistbtn"
 	    android:layout_centerHorizontal="true"
       />      
+	<TextView 
+	    android:id="@+id/mypage_company_null_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/mypage_topline_layout"
+        android:layout_above="@+id/newregistbtn"
+        android:text="@string/mypage_company_null"
+        android:textSize="15sp"
+        android:visibility="gone"
+	    />
     <ListView
         android:id="@+id/mypage_company_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/mypage_topline_layout"
-        android:layout_above="@+id/mypage_changebtn"
+        android:layout_above="@+id/newregistbtn"
         android:divider="@null"
         android:visibility="gone"
         >
 
     </ListView>
     
-        <LinearLayout 
-	        android:layout_width="match_parent"
-	        android:layout_height="50dp"
-	        android:weightSum="2"
-	        android:orientation="horizontal"
+
+	    <ImageView 
 	        android:layout_alignParentBottom="true"
-	        android:id="@+id/mypage_changebtn"
-        >
-	    <ImageButton 
-		    android:layout_width="0dp"
+		    android:layout_width="match_parent"
 	        android:layout_height="50dp"
-	        android:layout_weight="1"
+	        android:src="@drawable/mypage_newevent"
 	        android:id="@+id/newregistbtn"
 	        android:contentDescription="@string/desc"
         />
-        <ImageButton
-		    android:layout_width="0dp"
-	        android:layout_height="50dp"
-	        android:layout_weight="1"
-	        android:id="@+id/changeuserbtn"
-	        android:contentDescription="@string/desc"
-        />
-    </LinearLayout>
+
 
 </RelativeLayout>

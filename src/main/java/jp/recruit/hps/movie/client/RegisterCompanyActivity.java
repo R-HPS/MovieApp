@@ -1,23 +1,35 @@
 package jp.recruit.hps.movie.client;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
-import jp.recruit.hps.movie.client.utils.CommonUtils;
-
+import jp.recruit.hps.movie.client.api.RemoteApi;
+import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
+import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -30,6 +42,8 @@ public class RegisterCompanyActivity extends Activity{
 	private String mPhase;
 	private String mDate;
 	private Long mTime;
+	
+	CompanySearchAdapter adapter;
 	
 	String tmpTime;
 	String tmpDate;
@@ -44,7 +58,18 @@ public class RegisterCompanyActivity extends Activity{
 
 	private String selectionKey;
 
-	AlertDialog dialog;
+	AlertDialog mDateDialog;
+	AlertDialog companyDialog;
+	Button button;
+	
+	CompanyV1Dto company;
+	//dialog用
+	ListView listView;
+	ProgressBar progressBar;
+	EditText companytext;
+	TextView nothing;
+	GetCompanySerchAsyncTask mSearchTask;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -62,8 +87,10 @@ public class RegisterCompanyActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
-				
+				setCompanyDialog();
 			}
+
+			
 		});
 		//会社部門のspinnerのセット
 		mSectionSpinner  = (Spinner)this.findViewById(R.id.register_company_section_spinner);
@@ -103,6 +130,50 @@ public class RegisterCompanyActivity extends Activity{
 						finish();
 					}
 				});
+	}
+	
+	private void setCompanyDialog() {
+		// TODO 自動生成されたメソッド・スタブ
+		//コンテキストからインフレータを取得
+		LayoutInflater inflater = LayoutInflater.from(this);
+		//レイアウトXMLからビュー(レイアウト)をインフレート
+		final View companyDialogView = inflater.inflate(R.layout.register_company_dialog, null);
+		//内容の登録
+		listView = (ListView)companyDialogView.findViewById(R.id.register_company_name_list);
+		companytext = (EditText)companyDialogView.findViewById(R.id.register_company_select_text);
+		progressBar = (ProgressBar)companyDialogView.findViewById(R.id.register_company_search_progress);
+		nothing = (TextView)companyDialogView.findViewById(R.id.register_company_name_nothing);
+		
+		companyDialog = new AlertDialog.Builder(this)
+		.setView(companyDialogView)
+		.setTitle(R.string.register_company_name_set)
+		.setPositiveButton(R.string.register_company_set_title, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO 自動生成されたメソッド・スタブ
+						company=(CompanyV1Dto) adapter.getItem(listView.getCheckedItemPosition());
+						mNameView.setText(company.getName());
+					}
+				})
+		.setNegativeButton(R.string.register_company_cancel_title, null).show();
+		button = companyDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+	    button.setEnabled(false);
+		companyDialog.findViewById(R.id.register_company_serchbtn)
+			.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO 自動生成されたメソッド・スタブ
+					button.setEnabled(false);
+					nothing.setVisibility(View.GONE);
+					listView.setVisibility(View.GONE);
+					progressBar.setVisibility(View.VISIBLE);
+					mSearchTask = new GetCompanySerchAsyncTask(RegisterCompanyActivity.this);
+					mSearchTask.execute(companytext.getText().toString());
+				}
+			});
+
 	}
 	
 	private void setSelection() {
@@ -202,7 +273,7 @@ public class RegisterCompanyActivity extends Activity{
 		view.addView(timePicker);                                       // (6)
 
 		// 日時を設定するビューを使ったダイアログを生成する
-		dialog = new AlertDialog.Builder(this)              // (7)
+		mDateDialog = new AlertDialog.Builder(this)              // (7)
 		.setView(view)                                          // (8)
 		.setTitle(
 				String.format(getString(R.string.date_time_format),
@@ -212,7 +283,7 @@ public class RegisterCompanyActivity extends Activity{
 								.setNegativeButton(R.string.register_company_cancel_title, null).show();
 	
 		// pickerに値が変化したことを検知するハンドラーを設定する
-		DateChangedHandler handler = new DateChangedHandler(dialog);    // (10)
+		DateChangedHandler handler = new DateChangedHandler(mDateDialog);    // (10)
 
 		datePicker.init(year, monthOfYear, dayOfMonth, handler);        // (11)
 		timePicker.setCurrentHour(hourOfDay);                           // (12)
@@ -279,5 +350,53 @@ public class RegisterCompanyActivity extends Activity{
 					calendar));
 		}
 	}
+	
+	public class GetCompanySerchAsyncTask extends
+	AsyncTask<String, Integer, Boolean> {
+		private final Context context;
+		private List<CompanyV1Dto> list;
 
+		public GetCompanySerchAsyncTask(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(String... queries) {
+			String query = queries[0];
+			CompanyEndpoint endpoint = RemoteApi.getCompanyEndpoint();
+			try {
+				CompanyV1DtoCollection collection = endpoint
+						.companyV1EndPoint().searchCompany(query).execute();
+				if (collection != null) {
+					list = collection.getItems();
+				} else {
+					return false;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				progressBar.setVisibility(View.GONE);
+				adapter = new CompanySearchAdapter(context,list);
+				listView.setVisibility(View.VISIBLE);
+				listView.setAdapter(adapter);
+		        // 単一選択モードにする
+		        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+		        // デフォルト値をセットする
+		        listView.setItemChecked(0, true);
+			    button.setEnabled(true);
+		        
+			}else{
+				progressBar.setVisibility(View.GONE);
+				nothing.setVisibility(View.VISIBLE);
+			}
+			
+		}
+	}
 }

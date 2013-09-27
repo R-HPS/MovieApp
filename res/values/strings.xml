@@ -17,5 +17,6 @@
     <string name="exampletext">TextView</string>
     <string name="button_go_to_login">ログイン</string>
     <string name="register_interview_page">登録ページ</string>
-	<string name="register_company_page">会社登録ページ</string>    
+	<string name="register_company_page">会社登録ページ</string>  
+
 </resources>

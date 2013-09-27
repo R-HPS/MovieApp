@@ -17,6 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_company_name"
+        android:id="@+id/register_company_name_panel"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableBottom="@drawable/register_companyname"
         android:id="@+id/register_company_name"
         />
