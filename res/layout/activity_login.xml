@@ -50,6 +50,7 @@
                 android:contentDescription="@string/desc"
                 />
             <EditText
+                android:layout_marginTop="30dp"
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +84,7 @@
                 android:id="@+id/go_to_register_from_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/login_button_11"
+                android:src="@drawable/login_signup"
                 android:contentDescription="@string/desc"
               />
 
