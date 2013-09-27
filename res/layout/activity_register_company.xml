@@ -10,18 +10,20 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/receive_head_02"
+        android:src="@drawable/register01_title"
         android:adjustViewBounds="true"
         android:contentDescription="@string/desc"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/recruit_black"
         android:text="@string/register_company_name"
         android:id="@+id/register_company_name_panel"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/recruit_black"
         android:drawableBottom="@drawable/register_companyname"
         android:id="@+id/register_company_name"
         />
@@ -31,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:textColor="@color/recruit_black"
         android:text="@string/register_company_section" />
 
     <Spinner
@@ -40,9 +43,10 @@
         />
 
     <TextView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/recruit_black"
         android:text="@string/register_company_phase"
         android:id="@+id/register_company_phase"
         />
@@ -51,9 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 	<TextView
-	    android:layout_marginTop="30dp"
+	    android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/recruit_black"
         android:text="@string/register_company_time"
          />
 	    
@@ -63,10 +68,12 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textSize="20sp"
+	        android:textColor="@color/recruit_black"
 	        android:drawableBottom="@drawable/register00_comany_schedule"
 	        android:id="@+id/register_company_time_text"
 	    />
 	<LinearLayout
+	    android:layout_marginTop="10dp"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"

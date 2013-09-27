@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="6"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+    <EditText 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:id="@+id/register_company_select_text"
+        android:hint="@string/register_company_select"
+        />
+
+    <ImageView
+        android:id="@+id/register_company_serchbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/register_company_search" />
+
+	</LinearLayout>
+	<!-- load中-->
+	  <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/register_company_search_progress"
+            />
+	<ListView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/register_company_name_list"
+	    android:visibility="gone"
+	    />
+	<!-- 見つからなかった場合 -->
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/register_company_name_nothing"
+	    android:text="@string/register_company_name_nothing"
+	    android:visibility="gone"
+	    android:textSize="20sp"
+	    />
+	</LinearLayout>
