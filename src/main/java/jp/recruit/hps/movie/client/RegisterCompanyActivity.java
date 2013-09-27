@@ -28,6 +28,7 @@ public class RegisterCompanyActivity extends Activity{
 	private String mName;
 	private String mSection;
 	private String mPhase;
+	private String mDate;
 	private Long mTime;
 	
 	String tmpTime;
@@ -40,8 +41,7 @@ public class RegisterCompanyActivity extends Activity{
 	private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
 	private ImageView mCancelButton;
-	
-	private String userKey;
+
 	private String selectionKey;
 
 	AlertDialog dialog;
@@ -51,9 +51,6 @@ public class RegisterCompanyActivity extends Activity{
 		// TODO 自動生成されたコンストラクター・スタブ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_company);
-		Intent i = getIntent();
-		userKey = i
-				.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
 		setButtons();
 	}
 
@@ -117,36 +114,31 @@ public class RegisterCompanyActivity extends Activity{
 
 		// Store values at the time of the login attempt.		
 	//	mName= mNameView.getText().toString();
-		
-		
+		mName = mNameView.getText().toString();
+		mDate = mDateView.getText().toString();
 		boolean cancel =false;
 		View focusView =null;
 		
-		if(mNameView.getText()!=null){
-			mName = mNameView.getText().toString();
-		}else{
-			cancel = true;
-		}
-		
-		if(mDateView.getText()!=null){
-			String date =mDateView.getText().toString();
-			mTime = setCal(date);
-		}else{
-			cancel = true;
-		}
-
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mName)) {
+		if(TextUtils.isEmpty(mName)){
 			mNameView.setError(getString(R.string.error_field_required));
 			focusView = mNameView;
 			cancel = true;
 		}
-		if(mSectionSpinner.getTag()!=null){
+		
+		if(TextUtils.isEmpty(mDate)){
+			mDateView.setError(getString(R.string.error_field_required));
+			cancel = true;
+		}else{
+			String date =mDateView.getText().toString();
+			mTime = setCal(date);
+		}
+
+		if(mSectionSpinner.getTag().toString()!=null){
 			mSection = mSectionSpinner.getTag().toString();
 		}else {
 			cancel=true;
 		}
-		if(mPhaseSpinner.getTag()!=null){		
+		if(mPhaseSpinner.getTag().toString()!=null){		
 			mPhase = mPhaseSpinner.getTag().toString();
 		}else{
 			cancel=true;					

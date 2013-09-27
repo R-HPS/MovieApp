@@ -24,7 +24,7 @@ import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 
 public class TopActivity extends Activity {
-	private final String PREF_KEY = "comapanydate1";
+
 	String userkey;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,6 @@ public class TopActivity extends Activity {
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
 				Intent i =  new Intent(TopActivity.this,RegisterCompanyActivity.class);
-				i.putExtra(CommonUtils.STRING_EXTRA_USER_KEY, userkey);
 				startActivity(i);
 			}
 		});
@@ -57,9 +56,10 @@ public class TopActivity extends Activity {
 		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, MODE_PRIVATE);
 		Calendar cal =Calendar.getInstance();
 		if(pref!=null){
-			Long l = pref.getLong(PREF_KEY, -1);
+			Long l = pref.getLong(CommonUtils.STRING_COMPANY_DATE_FIRST, -1);
 			if(l!=-1){
 				cal.setTimeInMillis(l);
+				
 			}
 		}
 	}

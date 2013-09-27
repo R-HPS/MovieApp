@@ -1,6 +1,7 @@
 package jp.recruit.hps.movie.client;
 
 import jp.recruit.hps.movie.client.api.RemoteApi;
+import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.common.CommonConstant;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -191,16 +192,15 @@ public class LoginActivity extends Activity {
 				Login login = endpoint.loginV1Endpoint().login(mEmail,
 						mPassword);
 				
-				//ログイン中のユーザー情報をpreferenceに格納して用いることができるようにする
-				SharedPreferences pref = getSharedPreferences("user", Activity.MODE_PRIVATE);
-				SharedPreferences.Editor editor = pref.edit();
-				editor.putString("email",mEmail);  
-			    editor.commit();
-				
 				LoginResultV1Dto result = login.execute();
 			
 
 				if (SUCCESS.equals(result.getResult())) {
+					//ログイン中のユーザー情報をpreferenceに格納して用いることができるようにする
+					SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putString(CommonUtils.STRING_EXTRA_USER_KEY,result.getKey());  
+				    editor.commit();
 					return true;
 				} else {
 					return false;

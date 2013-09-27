@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 
 public class CompanyPriferences {
 	private static final String KEYS_NAME[]={
-		"comapanyname1","comapanyname3","comapanyname3"
+		"comapanyname1","comapanyname2","comapanyname3"
 	};
 	private static final String KEYS_PHASE[]={
 		"comapanyphase1","comapanyphase2","comapanyphase3"
