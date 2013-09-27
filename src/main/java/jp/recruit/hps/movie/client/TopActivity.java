@@ -10,6 +10,7 @@ import jp.recruit.hps.movie.client.utils.CompanyAdapter;
 import jp.recruit.hps.movie.client.utils.CompanyPriferences;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,14 +25,22 @@ import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 
 public class TopActivity extends Activity {
 	private final String PREF_KEY = "comapanydate1";
-	
+	String userkey;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_mypage);
-		
-		
+		findViewById(R.id.newregistbtn).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自動生成されたメソッド・スタブ
+				Intent i =  new Intent(TopActivity.this,RegisterCompanyActivity.class);
+				i.putExtra(CommonUtils.STRING_EXTRA_USER_KEY, userkey);
+				startActivity(i);
+			}
+		});
 	}
 	
 	@Override
@@ -66,11 +75,6 @@ public class TopActivity extends Activity {
 	            + "日 " + cal.get(Calendar.HOUR_OF_DAY) + "時"
 	            + cal.get(Calendar.MINUTE) + "分";
 	    dateText.setText(tmp);
-//		Time time = new Time("Asia/Tokyo");
-//	    time.setToNow();
-//	    String date = time.year + "年" + (time.month+1) + "月" + time.monthDay + "日 " +
-//	            time.hour + "時" + time.minute + "分";
-//	    dateText.setText(date);
 	}
 
 	public class GetCompanyListAsyncTask extends

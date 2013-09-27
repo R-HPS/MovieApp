@@ -2,9 +2,12 @@ package jp.recruit.hps.movie.client;
 
 import java.util.Calendar;
 
+import jp.recruit.hps.movie.client.utils.CommonUtils;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,6 +44,9 @@ public class RegisterCompanyActivity extends Activity{
 		// TODO 自動生成されたコンストラクター・スタブ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_company);
+		Intent i = getIntent();
+		userKey = i
+				.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
 		setButtons();
 	}
 
