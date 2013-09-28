@@ -36,19 +36,19 @@ public class InterviewAdapter extends BaseAdapter {
 	public int getCategory(int position) {
 		return list.get(position).getCategory();
 	}
-	
-	public String getQuestion(int position) {
-		return list.get(position).getQuestion();
-	}
-	
-	public int getAtmosphere(int position) {
-		return list.get(position).getAtmosphere();
-	}
-	
-	public long getStartDate(int position){
-		return list.get(position).getStartDate();
-	}
-	
+//	
+//	public String getQuestion(int position) {
+//		return list.get(position).getQuestion();
+//	}
+//	
+//	public int getAtmosphere(int position) {
+//		return list.get(position).getAtmosphere();
+//	}
+//	
+//	public long getStartDate(int position){
+//		return list.get(position).getStartDate();
+//	}
+//	
 
 	@Override
 	public long getItemId(int position) {
@@ -61,7 +61,7 @@ public class InterviewAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.company_list_inflater, null);
 		}
 		TextView tv = (TextView) convertView.findViewById(R.id.company_question_text);
-		tv.setText(getQuestion(position));
+//		tv.setText(getQuestion(position));
 //		ImageView img = (ImageView) convertView.findViewById(R.id.receive_listview);
 //		if(getAtmosphere(position)!=){
 //			if(getAtmosphere(position)==0){

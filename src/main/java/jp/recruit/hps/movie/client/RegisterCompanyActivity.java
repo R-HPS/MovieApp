@@ -1,10 +1,10 @@
 package jp.recruit.hps.movie.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import jp.recruit.hps.movie.client.RegisterActivity.UserRegisterTask;
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
 import jp.recruit.hps.movie.common.CommonConstant;
@@ -15,8 +15,9 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint.RegisterV1Endpoint.Register;
 import com.appspot.hps_movie.registerEndpoint.model.RegisterResultV1Dto;
-import com.google.api.client.util.Lists;
-
+import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
+import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1Dto;
+import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1DtoCollection;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -61,6 +62,9 @@ public class RegisterCompanyActivity extends Activity{
 	
 	String tmpTime;
 	String tmpDate;
+	
+	ArrayList<String> mSectionArray;
+	ArrayList<String> mPhaseArray;
 	
 	// UI references.
 	private TextView mNameView;
@@ -118,11 +122,11 @@ public class RegisterCompanyActivity extends Activity{
 		//会社部門のspinnerのセット
 		mSectionSpinner  = (Spinner)this.findViewById(R.id.register_company_section_spinner);
 		String arr[]={"a","b","c"};
-		setSpinner(mSectionSpinner,arr);
+	//	setSpinner(mSectionSpinner,);
 		//会社の選考段階のspinnerセット
 		mPhaseSpinner = (Spinner)this.findViewById(R.id.register_company_phase_spinner);
 		String[] phases = getResources().getStringArray(R.array.register_company_phase_str_arr);
-		setSpinner(mPhaseSpinner,phases);
+	//	setSpinner(mPhaseSpinner,phases);
 		
 		//面接受ける日にちのセット
 		mDateView = (TextView)findViewById(R.id.register_company_time_text);
@@ -178,6 +182,7 @@ public class RegisterCompanyActivity extends Activity{
 						// TODO 自動生成されたメソッド・スタブ
 						company=(CompanyV1Dto) adapter.getItem(listView.getCheckedItemPosition());
 						mNameView.setText(company.getName());
+						new GetCompanyListAsyncTask(RegisterCompanyActivity.this).execute(company.getKey());
 					}
 				})
 		.setNegativeButton(R.string.register_company_cancel_title, null).show();
@@ -296,6 +301,47 @@ public class RegisterCompanyActivity extends Activity{
 		}
 	}
 	
+	//companyKeyからselectionを取得
+	public class GetCompanyListAsyncTask extends
+	AsyncTask<String, Integer, Boolean> {
+		private final Context context;
+		private List<SelectionV1Dto> list;
+
+		public GetCompanyListAsyncTask(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(String... queries) {
+			String query = queries[0];
+			SelectionEndpoint endpoint = RemoteApi.getSelectionEndpoint();
+			try {
+				SelectionV1DtoCollection collection = endpoint
+						.selectionV1EndPoint().getCompanySelections(query).execute();
+				if (collection != null && collection.getItems() != null) {
+					list = collection.getItems();
+				} else {
+					return false;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				for(SelectionV1Dto dto: list  ){
+					mSectionArray.add(dto.getSection());
+					mPhaseArray.add(dto.getPhase());
+				}
+				setSpinner(mPhaseSpinner, mPhaseArray);
+				setSpinner(mSectionSpinner, mSectionArray);
+			}
+		}
+	}	
 	/**
 	 * Represents an asynchronous registration task used to authenticate
 	 * the user.
@@ -307,14 +353,13 @@ public class RegisterCompanyActivity extends Activity{
 			try {
 				RegisterEndpoint endpoint = RemoteApi.getRegisterEndpoint();
 				Register register = endpoint.registerV1Endpoint().register(
-						mName, mPhase, mPasswordAgain);
+						mName, mPhase, mName);
 				RegisterResultV1Dto result = register.execute();
 
 				
 				if (SUCCESS.equals(result.getResult())) {
 					return true;
 				} else {
-					setErrorMessage(result);
 					return false;
 				}
 			} catch (Exception e) {
@@ -362,7 +407,8 @@ public class RegisterCompanyActivity extends Activity{
 		    return cal.getTimeInMillis();
 	}
 
-	private void setSpinner(Spinner spinner,String[] arr){
+	private void setSpinner(Spinner spinner,ArrayList<String> arr){
+		  
 		  ArrayAdapter<String> adapter =
 		  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
 		  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
