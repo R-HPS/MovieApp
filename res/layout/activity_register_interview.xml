@@ -31,7 +31,8 @@
             android:text="@string/register_progress_signing_up"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-
+	
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +48,23 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/desc"
             android:src="@drawable/serve00_title" />
-
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="1"
+		    android:layout_gravity="center"
+		    android:orientation="vertical"
+		    >
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/companytime"
+		        android:textSize="20dp"
+		        
+		        android:id="@+id/register_interview_companyname"
+		        />
+		    
+		</LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

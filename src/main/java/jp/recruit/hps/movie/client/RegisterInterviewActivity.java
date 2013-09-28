@@ -97,6 +97,10 @@ public class RegisterInterviewActivity extends Activity {
 		setContentView(R.layout.activity_register_interview);
 		Intent i = getIntent();
 		selectionKey = i.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
+		String companyName = i
+				.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME);
+		TextView name = (TextView)findViewById(R.id.register_interview_companyname);
+		name.setText(companyName);
 		SharedPreferences pref = getSharedPreferences(
 				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
 		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);

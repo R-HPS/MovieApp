@@ -36,6 +36,8 @@ public class HPSActivity extends Activity {
 			Intent intent = new Intent(this, RegisterCompanyActivity.class);
 			intent.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
 					CompanyPreferences.getKey(current));
+			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME, 
+					CompanyPreferences.getName(current));
 			startActivity(intent);
 			finish();
 		}

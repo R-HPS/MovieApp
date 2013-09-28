@@ -12,6 +12,8 @@ public class CompanyPreferences {
 			"comapanyKey2", "comapanyKey3" };
 	private static final String KEYS_DATE[] = { "comapanyDate1",
 			"comapanyDate2", "comapanyDate3" };
+	private static final String KEYS_NAME[] = { "comapanyName1",
+		"comapanyName2", "comapanyName3" };
 	
 	private static final int COUNT = 3;
 
@@ -30,12 +32,16 @@ public class CompanyPreferences {
 		for (int i = 0; i < count; i++) {
 			if (list.get(i) != null) {
 				// Editor に値を代入
-				if (list.get(i).getName() != null) {
+				if (list.get(i).getKey() != null) {
 					editor.putString(KEYS_KEY[i], list.get(i).getKey());
 				}
 				if (list.get(i).getStartDate() != null) {
 					editor.putLong(KEYS_DATE[i], list.get(i).getStartDate());
 				}
+				if (list.get(i).getName() != null) {
+					editor.putString(KEYS_NAME[i], list.get(i).getName());
+				}
+				
 			}
 		}
 		// データの保存
@@ -56,5 +62,11 @@ public class CompanyPreferences {
 		}
 		return null;
 	}
-
+	
+	public static String getName(int i) {
+		if (pref != null && i < 3) {
+			return pref.getString(KEYS_NAME[i], null);
+		}
+		return null;
+	}
 }
