@@ -103,7 +103,7 @@ public class CompanyAdapter extends BaseAdapter {
 					+ cal.get(Calendar.DATE) + " "
 					+ week_name[(cal.get(Calendar.DAY_OF_WEEK) - 1)]);
 			tv = (TextView) convertView.findViewById(R.id.mypage_company_time);
-			tv.setText(sdf.format(cal.getTime()) + "~");
+			tv.setText(sdf.format(cal.getTime()) + " ~");
 		}
 		imgbtn.setOnClickListener(new OnClickListener() {
 			@Override
