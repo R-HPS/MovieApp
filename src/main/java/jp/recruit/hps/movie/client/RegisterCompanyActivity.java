@@ -3,6 +3,8 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,24 +56,24 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TimePicker;
 
-public class RegisterCompanyActivity extends Activity{
-	//登録するData
+public class RegisterCompanyActivity extends Activity {
+	// 登録するData
 	private String mName;
 	private String mSection;
 	private String mPhase;
 	private String mDate;
 	private Long mTime;
-	
-	Map<String,Map<String,SelectionV1Dto>> mInterviewMap;
-	
+
+	Map<String, Map<String, SelectionV1Dto>> mInterviewMap;
+
 	CompanySearchAdapter adapter;
-	
+
 	String tmpTime;
 	String tmpDate;
-	
+
 	List<String> mSectionArray;
 	List<String> mPhaseArray;
-	
+
 	// UI references.
 	private TextView mNameView;
 	private TextView mDateView;
@@ -81,32 +83,32 @@ public class RegisterCompanyActivity extends Activity{
 	private ImageView mCancelButton;
 	private TextView mSectionText;
 	private TextView mPhaseText;
-	
-	
+
 	private String selectionKey;
 	String userKey;
-	
+
 	AlertDialog mDateDialog;
 	AlertDialog companyDialog;
 	Button button;
-	
+
 	CompanyV1Dto company;
-	//dialog用
+	// dialog用
 	ListView listView;
 	ProgressBar progressBar;
 	EditText companytext;
 	TextView nothing;
 	GetCompanySerchAsyncTask mSearchTask;
-	
+
 	private static final String SUCCESS = CommonConstant.SUCCESS;
-	
+
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
-	
+
 	SelectionRegisterTask mAuthTask;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_company);
@@ -119,162 +121,177 @@ public class RegisterCompanyActivity extends Activity{
 
 	private void getUserKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
-		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
+		SharedPreferences pref = getSharedPreferences(
+				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);
 	}
 
 	private void setButtons() {
 		// TODO 自動生成されたメソッド・スタブ
-		mNameView  = (TextView)findViewById(R.id.register_company_name);
+		mNameView = (TextView) findViewById(R.id.register_company_name);
 		mNameView.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
 				setCompanyDialog();
 			}
 
-			
 		});
-		//会社部門のspinnerのセット
-		mSectionText = (TextView)findViewById(R.id.register_company_section);
-		mPhaseText = (TextView)findViewById(R.id.register_company_phase);
-		mSectionSpinner  = (Spinner)this.findViewById(R.id.register_company_section_spinner);
-		//会社の選考段階のspinnerセット
-		mPhaseSpinner = (Spinner)this.findViewById(R.id.register_company_phase_spinner);
-		//面接受ける日にちのセット
-		mDateView = (TextView)findViewById(R.id.register_company_time_text);
+		// 会社部門のspinnerのセット
+		mSectionText = (TextView) findViewById(R.id.register_company_section);
+		mPhaseText = (TextView) findViewById(R.id.register_company_phase);
+		mSectionSpinner = (Spinner) this
+				.findViewById(R.id.register_company_section_spinner);
+		// 会社の選考段階のspinnerセット
+		mPhaseSpinner = (Spinner) this
+				.findViewById(R.id.register_company_phase_spinner);
+		// 面接受ける日にちのセット
+		mDateView = (TextView) findViewById(R.id.register_company_time_text);
 		mDateView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				setDial();
 			}
 		});
-		//情報を登録するボタンをセット
-		mRegistButton = (ImageView)findViewById(R.id.register_company_registbtn);
+		// 情報を登録するボタンをセット
+		mRegistButton = (ImageView) findViewById(R.id.register_company_registbtn);
 		mRegistButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
 				setSelection();
 			}
 		});
-		
-		//cancelして戻るボタンをセット
-				mCancelButton = (ImageView)findViewById(R.id.register_company_cancelbtn);
-				mCancelButton.setOnClickListener(new View.OnClickListener() {
-					
+
+		// cancelして戻るボタンをセット
+		mCancelButton = (ImageView) findViewById(R.id.register_company_cancelbtn);
+		mCancelButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO 自動生成されたメソッド・スタブ
+				finish();
+			}
+		});
+	}
+
+	private void setCompanyDialog() {
+		// TODO 自動生成されたメソッド・スタブ
+		// コンテキストからインフレータを取得
+		LayoutInflater inflater = LayoutInflater.from(this);
+		// レイアウトXMLからビュー(レイアウト)をインフレート
+		final View companyDialogView = inflater.inflate(
+				R.layout.register_company_dialog, null);
+		// 内容の登録
+		listView = (ListView) companyDialogView
+				.findViewById(R.id.register_company_name_list);
+		companytext = (EditText) companyDialogView
+				.findViewById(R.id.register_company_select_text);
+		progressBar = (ProgressBar) companyDialogView
+				.findViewById(R.id.register_company_search_progress);
+		nothing = (TextView) companyDialogView
+				.findViewById(R.id.register_company_name_nothing);
+
+		companyDialog = new AlertDialog.Builder(this)
+				.setView(companyDialogView)
+				.setTitle(R.string.register_company_name_set)
+				.setPositiveButton(R.string.register_company_set_title,
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO 自動生成されたメソッド・スタブ
+								company = (CompanyV1Dto) adapter
+										.getItem(listView
+												.getCheckedItemPosition());
+								mNameView.setText(company.getName());
+								new GetCompanyListAsyncTask(
+										RegisterCompanyActivity.this)
+										.execute(company.getKey());
+							}
+						})
+				.setNegativeButton(R.string.register_company_cancel_title, null)
+				.show();
+		button = companyDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+		button.setEnabled(false);
+		companyDialog.findViewById(R.id.register_company_serchbtn)
+				.setOnClickListener(new View.OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
 						// TODO 自動生成されたメソッド・スタブ
-						finish();
+						button.setEnabled(false);
+						nothing.setVisibility(View.GONE);
+						listView.setVisibility(View.GONE);
+						progressBar.setVisibility(View.VISIBLE);
+						mSearchTask = new GetCompanySerchAsyncTask(
+								RegisterCompanyActivity.this);
+						mSearchTask.execute(companytext.getText().toString());
 					}
 				});
-	}
-	
-	private void setCompanyDialog() {
-		// TODO 自動生成されたメソッド・スタブ
-		//コンテキストからインフレータを取得
-		LayoutInflater inflater = LayoutInflater.from(this);
-		//レイアウトXMLからビュー(レイアウト)をインフレート
-		final View companyDialogView = inflater.inflate(R.layout.register_company_dialog, null);
-		//内容の登録
-		listView = (ListView)companyDialogView.findViewById(R.id.register_company_name_list);
-		companytext = (EditText)companyDialogView.findViewById(R.id.register_company_select_text);
-		progressBar = (ProgressBar)companyDialogView.findViewById(R.id.register_company_search_progress);
-		nothing = (TextView)companyDialogView.findViewById(R.id.register_company_name_nothing);
-		
-		companyDialog = new AlertDialog.Builder(this)
-		.setView(companyDialogView)
-		.setTitle(R.string.register_company_name_set)
-		.setPositiveButton(R.string.register_company_set_title, new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO 自動生成されたメソッド・スタブ
-						company=(CompanyV1Dto) adapter.getItem(listView.getCheckedItemPosition());
-						mNameView.setText(company.getName());
-						new GetCompanyListAsyncTask(RegisterCompanyActivity.this).execute(company.getKey());
-					}
-				})
-		.setNegativeButton(R.string.register_company_cancel_title, null).show();
-		button = companyDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-	    button.setEnabled(false);
-		companyDialog.findViewById(R.id.register_company_serchbtn)
-			.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO 自動生成されたメソッド・スタブ
-					button.setEnabled(false);
-					nothing.setVisibility(View.GONE);
-					listView.setVisibility(View.GONE);
-					progressBar.setVisibility(View.VISIBLE);
-					mSearchTask = new GetCompanySerchAsyncTask(RegisterCompanyActivity.this);
-					mSearchTask.execute(companytext.getText().toString());
-				}
-			});
 
 	}
-	
+
 	private void setSelection() {
 		if (mAuthTask != null) {
 			return;
 		}
-		
+
 		// TODO 自動生成されたメソッド・スタブ
 		// Reset errors.
 		mNameView.setError(null);
 		mDateView.setError(null);
-		
 
-		// Store values at the time of the login attempt.		
-	//	mName= mNameView.getText().toString();
+		// Store values at the time of the login attempt.
+		// mName= mNameView.getText().toString();
 		mName = mNameView.getText().toString();
 		mDate = mDateView.getText().toString();
-		boolean cancel =false;
-		
-		if(TextUtils.isEmpty(mName)){
+		boolean cancel = false;
+
+		if (TextUtils.isEmpty(mName)) {
 			mNameView.setError(getString(R.string.error_field_required));
 			cancel = true;
 		}
-		
-		if(TextUtils.isEmpty(mDate)){
+
+		if (TextUtils.isEmpty(mDate)) {
 			mDateView.setError(getString(R.string.error_field_required));
 			cancel = true;
-		}else{
-			String date =mDateView.getText().toString();
+		} else {
+			String date = mDateView.getText().toString();
 			mTime = setCal(date);
 		}
 
-		if(mSectionSpinner.getTag()!=null){
+		if (mSectionSpinner.getTag() != null) {
 			mSection = mSectionSpinner.getTag().toString();
-		}else {
+		} else {
 			mSectionText.setError(getString(R.string.error_field_required));
-			cancel=true;
+			cancel = true;
 		}
-		if(mPhaseSpinner.getTag()!=null){		
+		if (mPhaseSpinner.getTag() != null) {
 			mPhase = mPhaseSpinner.getTag().toString();
-		}else{
+		} else {
 			mPhaseText.setError(getString(R.string.error_field_required));
-			cancel=true;					
+			cancel = true;
 		}
-		
+
 		if (cancel) {
 			// There was an error; don't attempt register
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
 			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
-			mRegisterStatusMessageView.setText(R.string.register_progress_signing_up);
+			mRegisterStatusMessageView
+					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
 			mAuthTask = new SelectionRegisterTask();
 			mAuthTask.execute((Void) null);
 		}
 	}
-	
+
 	/**
 	 * Shows the progress UI and hides the register form.
 	 */
@@ -293,8 +310,9 @@ public class RegisterCompanyActivity extends Activity{
 					.setListener(new AnimatorListenerAdapter() {
 						@Override
 						public void onAnimationEnd(Animator animation) {
-							mRegisterStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
+							mRegisterStatusView
+									.setVisibility(show ? View.VISIBLE
+											: View.GONE);
 						}
 					});
 
@@ -315,10 +333,10 @@ public class RegisterCompanyActivity extends Activity{
 			mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
 	}
-	
-	//companyKeyからselectionを取得
+
+	// companyKeyからselectionを取得
 	public class GetCompanyListAsyncTask extends
-	AsyncTask<String, Integer, Boolean> {
+			AsyncTask<String, Integer, Boolean> {
 		private List<SelectionV1Dto> list;
 
 		public GetCompanyListAsyncTask(Context context) {
@@ -330,7 +348,8 @@ public class RegisterCompanyActivity extends Activity{
 			SelectionEndpoint endpoint = RemoteApi.getSelectionEndpoint();
 			try {
 				SelectionV1DtoCollection collection = endpoint
-						.selectionV1EndPoint().getCompanySelections(query).execute();
+						.selectionV1EndPoint().getCompanySelections(query)
+						.execute();
 				if (collection != null && collection.getItems() != null) {
 					list = collection.getItems();
 				} else {
@@ -346,33 +365,33 @@ public class RegisterCompanyActivity extends Activity{
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				mInterviewMap = new HashMap<String,Map<String,SelectionV1Dto>>();
+				mInterviewMap = new HashMap<String, Map<String, SelectionV1Dto>>();
 				mSectionArray = new ArrayList<String>();
-				for(SelectionV1Dto dto: list  ){
+				for (SelectionV1Dto dto : list) {
 					String tmpSection = dto.getSection();
-					String tmpPhase =dto.getPhase();
-					Map<String,SelectionV1Dto> tmpMap;
+					String tmpPhase = dto.getPhase();
+					Map<String, SelectionV1Dto> tmpMap;
 
-					if(mInterviewMap.containsKey(tmpSection)) {
+					if (mInterviewMap.containsKey(tmpSection)) {
 						tmpMap = mInterviewMap.get(tmpSection);
 					} else {
-						tmpMap = new HashMap<String,SelectionV1Dto>();
+						tmpMap = new HashMap<String, SelectionV1Dto>();
 					}
 					tmpMap.put(tmpPhase, dto);
 					mInterviewMap.put(tmpSection, tmpMap);
 				}
-				for(String section :mInterviewMap.keySet()){
-				mSectionArray.add(section);
+				for (String section : mInterviewMap.keySet()) {
+					mSectionArray.add(section);
 				}
-				
-				
+
 				setSpinner(mSectionSpinner, mSectionArray);
 			}
 		}
-	}	
+	}
+
 	/**
-	 * Represents an asynchronous registration task used to authenticate
-	 * the user.
+	 * Represents an asynchronous registration task used to authenticate the
+	 * user.
 	 */
 	public class SelectionRegisterTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
@@ -380,17 +399,17 @@ public class RegisterCompanyActivity extends Activity{
 
 			try {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
-				InsertInterview register = endpoint.interviewV1EndPoint().insertInterview(userKey, selectionKey, mTime);
+				InsertInterview register = endpoint.interviewV1EndPoint()
+						.insertInterview(userKey, selectionKey, mTime);
 				ResultV1Dto result = register.execute();
 
-				
 				if (SUCCESS.equals(result.getResult())) {
 					return true;
 				} else {
 					return false;
 				}
 			} catch (Exception e) {
-				
+
 				return false;
 			}
 		}
@@ -402,7 +421,8 @@ public class RegisterCompanyActivity extends Activity{
 
 			if (success) {
 				Log.d("DEBUG", "register success");
-				startActivity(new Intent(RegisterCompanyActivity.this, TopActivity.class));
+				startActivity(new Intent(RegisterCompanyActivity.this,
+						TopActivity.class));
 				finish();
 			}
 		}
@@ -417,50 +437,61 @@ public class RegisterCompanyActivity extends Activity{
 	private Long setCal(String strDate) {
 		// TODO 自動生成されたメソッド・スタブ
 
-		    Calendar cal = Calendar.getInstance();
-		    cal.setLenient(false);
+		Calendar cal = Calendar.getInstance();
+		cal.setLenient(false);
 
-		    int yyyy = Integer.parseInt(strDate.substring(0,4));
-		    int MM = Integer.parseInt(strDate.substring(5,7));
-		    int dd = Integer.parseInt(strDate.substring(8,10));
-		    int HH = cal.get(Calendar.HOUR_OF_DAY);
-		    int mm = cal.get(Calendar.MINUTE);
-		    cal.clear();
-		    cal.set(yyyy,MM-1,dd);
-		            HH = Integer.parseInt(strDate.substring(11,13));
-		            mm = Integer.parseInt(strDate.substring(14,16));
-		            cal.set(Calendar.HOUR_OF_DAY,HH);
-		            cal.set(Calendar.MINUTE,mm);
-		    return cal.getTimeInMillis();
+		int yyyy = Integer.parseInt(strDate.substring(0, 4));
+		int MM = Integer.parseInt(strDate.substring(5, 7));
+		int dd = Integer.parseInt(strDate.substring(8, 10));
+		int HH = cal.get(Calendar.HOUR_OF_DAY);
+		int mm = cal.get(Calendar.MINUTE);
+		cal.clear();
+		cal.set(yyyy, MM - 1, dd);
+		HH = Integer.parseInt(strDate.substring(11, 13));
+		mm = Integer.parseInt(strDate.substring(14, 16));
+		cal.set(Calendar.HOUR_OF_DAY, HH);
+		cal.set(Calendar.MINUTE, mm);
+		return cal.getTimeInMillis();
 	}
 
-	private void setSpinner(Spinner spinner,List<String> arr){
-		  
-		  ArrayAdapter<String> adapter =
-		  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
-		  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		  spinner.setAdapter(adapter);
-		  spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-	            //Spinner�̃h���b�v�_�E���A�C�e�����I�����ꂽ��
-	            public void onItemSelected(AdapterView<?> parent, View viw, int position, long arg3) {
-	                Spinner spinner = (Spinner)parent;
-	                String item = (String)spinner.getSelectedItem();
-	                spinner.setTag(item);
-	                if(spinner==mSectionSpinner){
-		                mPhaseArray = new ArrayList<String>();
-		                for(String phase : mInterviewMap.get(item).keySet()){
-		                	mPhaseArray.add(phase);
-		                }
-		                setSpinner(mPhaseSpinner, mPhaseArray);
-	                }
-	            }
-	            public void onNothingSelected(AdapterView<?> parent) {
-	            }});
-		  spinner.setSelection(0);
-		}
-	private void setDial(){
+	private void setSpinner(Spinner spinner, List<String> arr) {
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, arr);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			// Spinner�̃h���b�v�_�E���A�C�e�����I�����ꂽ��
+			public void onItemSelected(AdapterView<?> parent, View viw,
+					int position, long arg3) {
+				Spinner spinner = (Spinner) parent;
+				String item = (String) spinner.getSelectedItem();
+				spinner.setTag(item);
+				if (spinner == mSectionSpinner) {
+					mPhaseArray = new ArrayList<String>();
+					for (String phase : mInterviewMap.get(item).keySet()) {
+						mPhaseArray.add(phase);
+					}
+					Collections.sort(mPhaseArray, new Comparator<String>() {
+
+						@Override
+						public int compare(String lhs, String rhs) {
+							return lhs.compareTo(rhs);
+						}
+					});
+					setSpinner(mPhaseSpinner, mPhaseArray);
+				}
+			}
+
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
+		spinner.setSelection(0);
+	}
+
+	private void setDial() {
 		// ダイアログに表示する日時を取得する
-		mDateView =(TextView)findViewById(R.id.register_company_time_text);
+		mDateView = (TextView) findViewById(R.id.register_company_time_text);
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
 		int monthOfYear = calendar.get(Calendar.MONTH);
@@ -469,39 +500,43 @@ public class RegisterCompanyActivity extends Activity{
 		int minute = calendar.get(Calendar.MINUTE);
 
 		// 2つのpickerを併せたビューを作る
-		DatePicker datePicker = new DatePicker(this);                   // (1)
-		TimePicker timePicker = new TimePicker(this);                   // (2)
+		DatePicker datePicker = new DatePicker(this); // (1)
+		TimePicker timePicker = new TimePicker(this); // (2)
 
-		LinearLayout view = new LinearLayout(this);                     // (3)
-		view.setOrientation(LinearLayout.VERTICAL);                     // (4)
-		view.addView(datePicker);                                       // (5)
-		view.addView(timePicker);                                       // (6)
+		LinearLayout view = new LinearLayout(this); // (3)
+		view.setOrientation(LinearLayout.VERTICAL); // (4)
+		view.addView(datePicker); // (5)
+		view.addView(timePicker); // (6)
 
 		// 日時を設定するビューを使ったダイアログを生成する
-		mDateDialog = new AlertDialog.Builder(this)              // (7)
-		.setView(view)                                          // (8)
-		.setTitle(
-				String.format(getString(R.string.date_time_format),
-						calendar, calendar))
-						.setPositiveButton(R.string.register_company_set_title, new DateSetHandler(view,
-								mDateView))                                  // (9)
-								.setNegativeButton(R.string.register_company_cancel_title, null).show();
-	
-		// pickerに値が変化したことを検知するハンドラーを設定する
-		DateChangedHandler handler = new DateChangedHandler(mDateDialog);    // (10)
+		mDateDialog = new AlertDialog.Builder(this)
+				// (7)
+				.setView(view)
+				// (8)
+				.setTitle(
+						String.format(getString(R.string.date_time_format),
+								calendar, calendar))
+				.setPositiveButton(R.string.register_company_set_title,
+						new DateSetHandler(view, mDateView))
+				// (9)
+				.setNegativeButton(R.string.register_company_cancel_title, null)
+				.show();
 
-		datePicker.init(year, monthOfYear, dayOfMonth, handler);        // (11)
-		timePicker.setCurrentHour(hourOfDay);                           // (12)
-		timePicker.setCurrentMinute(minute);                            // (13)
-		timePicker.setOnTimeChangedListener(handler);                   // (14)
-		timePicker.setIs24HourView(true);                               // (15)
+		// pickerに値が変化したことを検知するハンドラーを設定する
+		DateChangedHandler handler = new DateChangedHandler(mDateDialog); // (10)
+
+		datePicker.init(year, monthOfYear, dayOfMonth, handler); // (11)
+		timePicker.setCurrentHour(hourOfDay); // (12)
+		timePicker.setCurrentMinute(minute); // (13)
+		timePicker.setOnTimeChangedListener(handler); // (14)
+		timePicker.setIs24HourView(true); // (15)
 	}
 
 	/**
 	 * 日時が変更されたときの処理をするハンドラー
 	 */
 	private class DateChangedHandler implements
-	DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+			DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 		private AlertDialog dialog;
 		private Calendar calendar = Calendar.getInstance();
 
@@ -522,7 +557,6 @@ public class RegisterCompanyActivity extends Activity{
 			calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			calendar.set(Calendar.MINUTE, minute);
 
-
 			dialog.setTitle(String.format(getString(R.string.date_time_format),
 					calendar));
 		}
@@ -541,23 +575,22 @@ public class RegisterCompanyActivity extends Activity{
 		}
 
 		@Override
-		public void onClick(DialogInterface dialog, int which) {        // (17)
-			DatePicker datePicker = (DatePicker) view.getChildAt(0);    // (18)
-			TimePicker timePicker = (TimePicker) view.getChildAt(1);    // (19)
+		public void onClick(DialogInterface dialog, int which) { // (17)
+			DatePicker datePicker = (DatePicker) view.getChildAt(0); // (18)
+			TimePicker timePicker = (TimePicker) view.getChildAt(1); // (19)
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(datePicker.getYear(), datePicker.getMonth(),
 					datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
 					timePicker.getCurrentMinute());
 
-
 			date.setText(String.format(getString(R.string.date_time_format),
 					calendar));
 		}
 	}
-	
+
 	public class GetCompanySerchAsyncTask extends
-	AsyncTask<String, Integer, Boolean> {
+			AsyncTask<String, Integer, Boolean> {
 		private final Context context;
 		private List<CompanyV1Dto> list;
 
@@ -588,20 +621,20 @@ public class RegisterCompanyActivity extends Activity{
 		protected void onPostExecute(Boolean result) {
 			if (result) {
 				progressBar.setVisibility(View.GONE);
-				adapter = new CompanySearchAdapter(context,list);
+				adapter = new CompanySearchAdapter(context, list);
 				listView.setVisibility(View.VISIBLE);
 				listView.setAdapter(adapter);
-		        // 単一選択モードにする
-		        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-		        // デフォルト値をセットする
-		        listView.setItemChecked(0, true);
-			    button.setEnabled(true);
-		        
-			}else{
+				// 単一選択モードにする
+				listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+				// デフォルト値をセットする
+				listView.setItemChecked(0, true);
+				button.setEnabled(true);
+
+			} else {
 				progressBar.setVisibility(View.GONE);
 				nothing.setVisibility(View.VISIBLE);
 			}
-			
+
 		}
 	}
 }
