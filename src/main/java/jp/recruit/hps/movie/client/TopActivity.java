@@ -35,6 +35,7 @@ public class TopActivity extends Activity {
 			"yyyy年MM月dd日HH時mm分", Locale.JAPAN);
 	GetCompanyListAsyncTask mLoadSelectionTask;
 	String userKey;
+	CompanyAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +148,9 @@ public class TopActivity extends Activity {
 				ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
 				prog.setVisibility(View.GONE);
 				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
-				lv.setAdapter(new CompanyAdapter(context, list));
+				adapter = new CompanyAdapter(context,list);
+				lv.setAdapter(adapter);
+				adapter.notifyDataSetChanged();
 				lv.setVisibility(View.VISIBLE);
 				CompanyPriferences company = new CompanyPriferences(context,
 						list);
