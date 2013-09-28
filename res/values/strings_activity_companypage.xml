@@ -4,7 +4,9 @@
     <string name="companytime" formatted="false">平均&lt;font color=\"red\"&gt;%d&lt;/font&gt;分</string>
     <string name="companycategory">面接・%s</string>
     <string name="atomosphereMeter">%d</string>
-    
-    
-    
+    <string name="indivisual">個人面接</string>
+    <string name="group">グループ面接</string>
+    <string name="group_dis">グループ\nディスカッション</string>
+    <string name="appaku_meter_percent">%s％</string>
+    <string name="null_text">BATONがありません。</string>
 </resources>

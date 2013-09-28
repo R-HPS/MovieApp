@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
-import android.widget.RadioButton;
  
 public class QuestionCustomItemView extends FrameLayout implements Checkable {
  

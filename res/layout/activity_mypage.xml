@@ -1,91 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:weightSum="10" >
 
     <ImageView
         android:id="@+id/mypage_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/mypage_head_02"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:contentDescription="@string/desc"
-        />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:src="@drawable/mypage_head_02" />
+
+    <LinearLayout
         android:id="@+id/mypage_topline_layout"
-        android:layout_alignParentLeft="true"
-		android:layout_alignParentRight="true"
-		android:layout_below="@+id/mypage_title"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal" 
+        android:baselineAligned="true"
+        android:weightSum="16">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="11"
+            android:weightSum="3" >
             <ImageView
-		        android:id="@+id/mypage_topline"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:src="@drawable/mypage00_toplines_02"
-		        android:adjustViewBounds="true"
-		        android:contentDescription="@string/desc"
-	        />
-            <TextView 
-                android:id="@+id/nowtime"
+                android:id="@+id/mypage_topline"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
-                android:text="@string/exampletext"
-                android:textColor="@color/recruit_black"
-                />
-    </FrameLayout>
-            
-    
-    
+                android:adjustViewBounds="true"
+                android:layout_weight="1"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/mypage01__time_title" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" 
+                android:layout_weight="2">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/mypage01__time_frame" />
+
+                <TextView
+                    android:id="@+id/nowtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/exampletext"
+                    android:textColor="@color/recruit_black" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:weightSum="3" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:layout_weight="1"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/mypage01__batonpoint_title" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" 
+                android:layout_weight="2">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/mypage01__batonpoint_frame" />
+
+                <TextView
+                    android:id="@+id/nowpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/exampletext"
+                    android:textColor="@color/recruit_black" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
     <ProgressBar
-		android:id="@+id/mypage_progressBar"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		style="?android:attr/progressBarStyle"
-		android:layout_below="@+id/mypage_topline_layout"
-	    android:layout_above="@+id/newregistbtn"
-	    android:layout_centerHorizontal="true"
-      />      
-	<TextView 
-	    android:id="@+id/mypage_company_null_text"
+        android:id="@+id/mypage_progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/mypage_topline_layout"
-        android:layout_above="@+id/newregistbtn"
+        />
+
+    <TextView
+        android:id="@+id/mypage_company_null_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/mypage_company_null"
         android:textSize="15sp"
-        android:visibility="gone"
-	    />
+        android:visibility="gone" />
+
     <ListView
         android:id="@+id/mypage_company_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/mypage_topline_layout"
-        android:layout_above="@+id/newregistbtn"
         android:divider="@null"
-        android:visibility="gone"
-        >
-
+        android:visibility="gone" >
     </ListView>
-    
-
-	    <ImageView 
-	        android:layout_alignParentBottom="true"
-		    android:layout_width="match_parent"
-	        android:layout_height="50dp"
-	        android:src="@drawable/mypage_newevent"
-	        android:id="@+id/newregistbtn"
-	        android:contentDescription="@string/desc"
-        />
+</LinearLayout>
+    <ImageView
+        android:id="@+id/newregistbtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/mypage_newevent" />
 
 
-</RelativeLayout>
+</LinearLayout>
