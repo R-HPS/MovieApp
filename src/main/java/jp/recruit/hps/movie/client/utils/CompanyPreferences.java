@@ -1,0 +1,60 @@
+package jp.recruit.hps.movie.client.utils;
+
+import java.util.List;
+import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+public class CompanyPreferences {
+	private static final String KEYS_KEY[] = { "comapanyKey1",
+			"comapanyKey2", "comapanyKey3" };
+	private static final String KEYS_DATE[] = { "comapanyDate1",
+			"comapanyDate2", "comapanyDate3" };
+	
+	private static final int COUNT = 3;
+
+	static SharedPreferences pref;
+	static SharedPreferences.Editor editor;
+
+	public static void setCompanyData(Context context, List<CompanyV1Dto> list) {
+		pref = context.getSharedPreferences(CommonUtils.STRING_PREF_KEY,
+				Activity.MODE_PRIVATE);
+		editor = pref.edit();
+		int count = COUNT;
+		if (list.size() < 3) {
+			count = list.size();
+		}
+
+		for (int i = 0; i < count; i++) {
+			if (list.get(i) != null) {
+				// Editor に値を代入
+				if (list.get(i).getName() != null) {
+					editor.putString(KEYS_KEY[i], list.get(i).getKey());
+				}
+				if (list.get(i).getStartDate() != null) {
+					editor.putLong(KEYS_DATE[i], list.get(i).getStartDate());
+				}
+			}
+		}
+		// データの保存
+		editor.commit();
+	}
+
+	public static String getKey(int i) {
+		if (pref != null && i < 3) {
+			return pref.getString(KEYS_KEY[i], null);
+		}
+		return null;
+	}
+	
+
+	public static Long getTime(int i) {
+		if (pref != null && i < 3) {
+			return pref.getLong(KEYS_DATE[i], -1l);
+		}
+		return null;
+	}
+
+}

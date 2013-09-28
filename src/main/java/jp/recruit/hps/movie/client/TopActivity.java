@@ -11,7 +11,6 @@ import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.services.UpdateClockService;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
-import jp.recruit.hps.movie.client.utils.CompanyPriferences;
 import jp.recruit.hps.movie.client.utils.UpdateClockReceiver;
 import android.app.Activity;
 import android.content.Context;
@@ -152,9 +151,6 @@ public class TopActivity extends Activity {
 				lv.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
 				lv.setVisibility(View.VISIBLE);
-				CompanyPriferences company = new CompanyPriferences(context,
-						list);
-				company.setCompanyData();
 			} else {
 				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
 				findViewById(R.id.mypage_company_null_text).setVisibility(
