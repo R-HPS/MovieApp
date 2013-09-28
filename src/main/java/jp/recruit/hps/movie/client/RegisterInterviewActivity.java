@@ -1,7 +1,8 @@
 package jp.recruit.hps.movie.client;
 
+
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
@@ -25,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -41,7 +43,7 @@ public class RegisterInterviewActivity extends Activity {
 	int mCategory;
 	int mAtmosphere;
 	
-	
+	ListView lv;
 	
 	//UI
 	Spinner mCategorySpinner;
@@ -49,47 +51,58 @@ public class RegisterInterviewActivity extends Activity {
 	ImageView mEasyAtmosphere;
 	ImageView mNormalAtmosphere;
 	ImageView mHardAtmosphere;
-
+	LinearLayout mQuestionListLayout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_companypage);
+		setContentView(R.layout.activity_register_interview);
 		Intent i = getIntent();
 		selectionKey = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
 		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
 		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
-
+		setButton();
 		new GetQuestionListAsyncTask(this).execute(selectionKey);
 	}
-	
-	private void setSpinner(Spinner spinner,List<String> arr){
-		  
-		  ArrayAdapter<String> adapter =
-		  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
-		  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		  spinner.setAdapter(adapter);
-		  spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-	            //Spinner�̃h���b�v�_�E���A�C�e�����I�����ꂽ��
-	            public void onItemSelected(AdapterView<?> parent, View viw, int position, long arg3) {
-	                Spinner spinner = (Spinner)parent;
-	                String item = (String)spinner.getSelectedItem();
-	                spinner.setTag(item);
-	            }
-	            public void onNothingSelected(AdapterView<?> parent) {
-	            }});
-		  spinner.setSelection(0);
+
+	private void setSpinner(Spinner spinner){
+		if(spinner==mTimeSpinner){
+			ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(this,R.array.register_interview_time_spinner_set,
+					android.R.layout.simple_spinner_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinner.setAdapter(adapter);
 		}
+		else{
+			ArrayAdapter<CharSequence> adapter =ArrayAdapter.createFromResource(this,R.array.register_interview_category_spinner_set,
+					android.R.layout.simple_spinner_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+			spinner.setAdapter(adapter);
+		}
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+			public void onItemSelected(AdapterView<?> parent, View viw, int arg2, long arg3) {
+				Spinner spinner = (Spinner)parent;
+				String item = (String)spinner.getSelectedItem();
+				spinner.setTag(item);
+			}
+			public void onNothingSelected(AdapterView<?> parent) {
+			}});
+		spinner.setSelection(0);
+	}
 	
 	public void setButton(){
-		mCategorySpinner = (Spinner)findViewById(R.id.register_interview_category_spinner);
 		mTimeSpinner = (Spinner)findViewById(R.id.register_interview_time_spinner);
+		mCategorySpinner = (Spinner)findViewById(R.id.register_interview_category_spinner);
+		setSpinner(mTimeSpinner);
+		setSpinner(mCategorySpinner);
 		mEasyAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_easy);
 		mNormalAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_normal);
 		mHardAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_hard);
+		mQuestionListLayout = (LinearLayout)findViewById(R.id.register_question_list_layout);
+		
 		Button btn = (Button)findViewById(R.id.add_list_btn);
-		btn.setVisibility(View.VISIBLE);
+		
 		btn.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
@@ -142,12 +155,12 @@ public class RegisterInterviewActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			if (result) {
 				ProgressBar prog =(ProgressBar)findViewById
-						(R.id.register_question_progressBar);
+						(R.id.register_question_progress_layout);
 				prog.setVisibility(View.GONE);
 				adapter.addList(question);
 				//アダプタに対してデータが変更したことを知らせる
 				adapter.notifyDataSetChanged();
-				setButton();
+				
 			}
 		}
 
@@ -183,15 +196,17 @@ public class RegisterInterviewActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
+			findViewById(R.id.register_question_progress_layout).setVisibility(View.GONE);
+			mQuestionListLayout.setVisibility(View.VISIBLE);
 			if (result) {
 				findViewById(R.id.register_question_progress_layout).setVisibility(View.GONE);
-				
-				ListView lv = (ListView)findViewById(R.id.register_question_list);
-				lv.setVisibility(View.VISIBLE);
+				mQuestionListLayout.setVisibility(View.VISIBLE);
+				lv = (ListView)findViewById(R.id.register_question_list);
 				findViewById(R.id.register_add_list_layout).setVisibility(View.VISIBLE);
 				adapter = new QuestionAdapter(context,list);
 				lv.setAdapter(adapter);
-				setButton();
+			}else{
+				findViewById(R.id.register_question_list_null_text).setVisibility(View.VISIBLE);
 			}
 		}
 	}
