@@ -4,18 +4,32 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import jp.recruit.hps.movie.client.RegisterActivity.UserRegisterTask;
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
+import jp.recruit.hps.movie.common.CommonConstant;
+
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
+import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint.RegisterV1Endpoint.Register;
+import com.appspot.hps_movie.registerEndpoint.model.RegisterResultV1Dto;
+import com.google.api.client.util.Lists;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,13 +84,22 @@ public class RegisterCompanyActivity extends Activity{
 	TextView nothing;
 	GetCompanySerchAsyncTask mSearchTask;
 	
+	private static final String SUCCESS = CommonConstant.SUCCESS;
 	
+	private View mRegisterFormView;
+	private View mRegisterStatusView;
+	private TextView mRegisterStatusMessageView;
+	
+	SelectionRegisterTask mAuthTask;
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		// TODO 自動生成されたコンストラクター・スタブ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_company);
 		setButtons();
+		mRegisterFormView = findViewById(R.id.register_form);
+		mRegisterStatusView = findViewById(R.id.register_status);
+		mRegisterStatusMessageView = (TextView) findViewById(R.id.register_status_message);
 	}
 
 	private void setButtons() {
@@ -98,7 +121,8 @@ public class RegisterCompanyActivity extends Activity{
 		setSpinner(mSectionSpinner,arr);
 		//会社の選考段階のspinnerセット
 		mPhaseSpinner = (Spinner)this.findViewById(R.id.register_company_phase_spinner);
-//		setSpinner(mPhaseSpinner,arr);
+		String[] phases = getResources().getStringArray(R.array.register_company_phase_str_arr);
+		setSpinner(mPhaseSpinner,phases);
 		
 		//面接受ける日にちのセット
 		mDateView = (TextView)findViewById(R.id.register_company_time_text);
@@ -177,6 +201,10 @@ public class RegisterCompanyActivity extends Activity{
 	}
 	
 	private void setSelection() {
+		if (mAuthTask != null) {
+			return;
+		}
+		
 		// TODO 自動生成されたメソッド・スタブ
 		// Reset errors.
 		mNameView.setError(null);
@@ -214,7 +242,104 @@ public class RegisterCompanyActivity extends Activity{
 		}else{
 			cancel=true;					
 		}
+		
+		if (cancel) {
+			// There was an error; don't attempt register
+		} else {
+			// Show a progress spinner, and kick off a background task to
+			// perform the user register attempt.
+			mRegisterStatusMessageView.setText(R.string.register_progress_signing_up);
+			showProgress(true);
+			mAuthTask = new SelectionRegisterTask();
+			mAuthTask.execute((Void) null);
+		}
+	}
+	
+	/**
+	 * Shows the progress UI and hides the register form.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+	private void showProgress(final boolean show) {
+		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+		// for very easy animations. If available, use these APIs to fade-in
+		// the progress spinner.
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+			int shortAnimTime = getResources().getInteger(
+					android.R.integer.config_shortAnimTime);
 
+			mRegisterStatusView.setVisibility(View.VISIBLE);
+			mRegisterStatusView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 1 : 0)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mRegisterStatusView.setVisibility(show ? View.VISIBLE
+									: View.GONE);
+						}
+					});
+
+			mRegisterFormView.setVisibility(View.VISIBLE);
+			mRegisterFormView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 0 : 1)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							mRegisterFormView.setVisibility(show ? View.GONE
+									: View.VISIBLE);
+						}
+					});
+		} else {
+			// The ViewPropertyAnimator APIs are not available, so simply show
+			// and hide the relevant UI components.
+			mRegisterStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+			mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+		}
+	}
+	
+	/**
+	 * Represents an asynchronous registration task used to authenticate
+	 * the user.
+	 */
+	public class SelectionRegisterTask extends AsyncTask<Void, Void, Boolean> {
+		@Override
+		protected Boolean doInBackground(Void... args) {
+
+			try {
+				RegisterEndpoint endpoint = RemoteApi.getRegisterEndpoint();
+				Register register = endpoint.registerV1Endpoint().register(
+						mName, mPhase, mPasswordAgain);
+				RegisterResultV1Dto result = register.execute();
+
+				
+				if (SUCCESS.equals(result.getResult())) {
+					return true;
+				} else {
+					setErrorMessage(result);
+					return false;
+				}
+			} catch (Exception e) {
+				
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			mAuthTask = null;
+			showProgress(false);
+
+			if (success) {
+				Log.d("DEBUG", "register success");
+				startActivity(new Intent(RegisterCompanyActivity.this, TopActivity.class));
+				finish();
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			mAuthTask = null;
+			showProgress(false);
+		}
 	}
 
 	private Long setCal(String strDate) {

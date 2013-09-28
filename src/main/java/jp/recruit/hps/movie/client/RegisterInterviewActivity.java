@@ -15,18 +15,36 @@ import jp.recruit.hps.movie.common.CommonConstant;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 public class RegisterInterviewActivity extends Activity {
 	private QuestionAdapter adapter;
 	String selectionKey;
 	String userKey;
 	private static String SUCCESS = CommonConstant.SUCCESS;
+	
+	//データ保存
+	int mTime;
+	int mCategory;
+	int mAtmosphere;
+	
+	
+	
+	//UI
+	Spinner mCategorySpinner;
+	Spinner mTimeSpinner;
+	ImageView mEasyAtmosphere;
+	ImageView mNormalAtmosphere;
+	ImageView mHardAtmosphere;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +54,18 @@ public class RegisterInterviewActivity extends Activity {
 		Intent i = getIntent();
 		selectionKey = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
-		userKey = i
-				.getStringExtra(CommonUtils.STRING_EXTRA_USER_KEY);
+		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
 
 		new GetQuestionListAsyncTask(this).execute(selectionKey);
 	}
 	
 	public void setButton(){
+		mCategorySpinner = (Spinner)findViewById(R.id.register_interview_category_spinner);
+		mTimeSpinner = (Spinner)findViewById(R.id.register_interview_time_spinner);
+		mEasyAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_easy);
+		mNormalAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_normal);
+		mHardAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_hard);
 		Button btn = (Button)findViewById(R.id.add_list_btn);
 		btn.setVisibility(View.VISIBLE);
 		btn.setOnClickListener(
@@ -66,6 +89,8 @@ public class RegisterInterviewActivity extends Activity {
 						});
 					}
 				});
+		
+		
 	}
 
 	public class SetQuestionAsyncTask extends
@@ -149,6 +174,16 @@ public class RegisterInterviewActivity extends Activity {
 		}
 	}
 	
+	 @Override
+	  public boolean dispatchKeyEvent(KeyEvent event) {
+	    // TODO Auto-generated method stub
+	    if(event.getAction() == KeyEvent.ACTION_DOWN) {
+	      if(event.getKeyCode() == KeyEvent.KEYCODE_BACK) {  // BACKキー
+	        return true;
+	      }
+	    }
+	    return super.dispatchKeyEvent(event);
+	  }
 	
 }
 

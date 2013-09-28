@@ -2,97 +2,213 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
     android:background="@drawable/background"
-    android:weightSum="8"
-      
-    >
-    
-	<LinearLayout
-	    android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/register_question_progress_layout"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        android:gravity="center"
-        
-	    >
-	    <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="18" >
 
-	</LinearLayout>
-        
-    <ListView 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/serve00_title" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/register_question_list"
         android:layout_weight="3"
-		android:visibility="gone"      
-        />
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <FrameLayout
+            android:id="@+id/register_time_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/serve00_time" />
+            <Spinner 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/register_interview_time_spinner"
+                />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/register_category_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/serve00_style" />
+            <Spinner 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/register_interview_category_spinner"
+                />
+        </FrameLayout>
+    </LinearLayout>
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/register_add_list_layout"
-        android:layout_weight="1"
-        android:visibility="gone" 
-        >
-	    <Button
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:id="@+id/add_list_btn"
-	        android:text="@string/question_add"
-	        />
-	    <!-- 入力モードのとき -->
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:id="@+id/register_add_text_layout"
-	        android:visibility="gone">
-		    <EditText
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:hint="@string/question_hint"
-		        android:layout_gravity="left"
-		        android:id="@+id/edit_add_question"
-		        />
-		    <Button 
-		        android:layout_width="wrap_content"
-		        android:layout_height="match_parent"
-		        android:layout_gravity="right"
-		        android:id="@+id/add_question_send_btn"
-		        
-		        />
-	    </LinearLayout>
-	    
-	    <!-- 質問送信中 -->
-	    <ProgressBar
-			android:id="@+id/register_question_progressBar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			style="?android:attr/progressBarStyle"
-		    android:layout_gravity="center"
-		    android:visibility="gone"/>
-    </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:id="@+id/register_atmosphere_layout"
-        android:layout_weight="1"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/serve00_atmosphere" />
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+				android:adjustViewBounds="true"
+				android:src="@drawable/buttons01_serve_easy"
+				android:contentDescription="@string/desc"
+				android:layout_weight="1"
+				android:id="@+id/register_interview_atmosphre_easy"
+				/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+				android:adjustViewBounds="true"
+				android:src="@drawable/buttons01_serve_normal"
+				android:contentDescription="@string/desc"
+				android:id="@+id/register_interview_atmosphre_normal"
+				android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+				android:adjustViewBounds="true"
+				android:src="@drawable/buttons01_serve_hard"
+				android:contentDescription="@string/desc"
+				android:id="@+id/register_interview_atmosphre_hard"
+				android:layout_weight="1"/>
+        </LinearLayout>
+    </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/register_category_layout"
+        android:layout_weight="9" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/serve00_question" />
+        <!-- load中 -->
+
+        <LinearLayout
+            android:id="@+id/register_question_progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/register_question_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:weightSum="9" >
+			<View 
+			    android:layout_width="match_parent"
+			    android:layout_height="0dp"
+			    android:layout_weight="1"
+			    />
+            <ListView
+                android:id="@+id/register_question_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6" />
+
+            <FrameLayout
+                android:id="@+id/register_add_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2" >
+
+                <Button
+                    android:id="@+id/add_list_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/question_add" />
+                <!-- 入力モードのとき -->
+
+                <LinearLayout
+                    android:id="@+id/register_add_text_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" >
+
+                    <EditText
+                        android:id="@+id/edit_add_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:hint="@string/question_hint" />
+
+                    <Button
+                        android:id="@+id/add_question_send_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right" />
+                </LinearLayout>
+
+                <!-- 質問登録中 -->
+
+                <ProgressBar
+                    android:id="@+id/register_question_progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/register_date_layout"
-        android:layout_weight="1"
-        />
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/serve00_submit" />
 
 </LinearLayout>
