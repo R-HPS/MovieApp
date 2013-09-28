@@ -56,7 +56,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TimePicker;
 
-public class RegisterCompanyActivity extends Activity {
+public class RegisterCompanyActivity extends HPSActivity {
 	// 登録するData
 	private String mName;
 	private String mSection;

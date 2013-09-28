@@ -13,11 +13,14 @@ public class HPSActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 	}
 
 	@Override
 	protected void onResume() {
+		
 		int current = -1;
+		
 		for (int i = 0; i < 3; i++) {
 			if (CompanyPreferences.getTime(i) != -1l
 					&& CompanyPreferences.getTime(i) < System

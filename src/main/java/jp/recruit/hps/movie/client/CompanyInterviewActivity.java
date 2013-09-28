@@ -25,7 +25,7 @@ import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
 
 
-public class CompanyInterviewActivity extends Activity {
+public class CompanyInterviewActivity extends HPSActivity {
 	String selectionKey;
 	String userKey;
 	ListView lv;

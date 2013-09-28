@@ -29,7 +29,7 @@ import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
 
-public class TopActivity extends Activity {
+public class TopActivity extends HPSActivity {
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy年MM月dd日HH時mm分", Locale.JAPAN);
 	GetCompanyListAsyncTask mLoadSelectionTask;
