@@ -35,12 +35,27 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/desc"
                 android:src="@drawable/serve00_time" />
-            <Spinner 
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/register_interview_time_spinner"
-                />
+                android:orientation="horizontal"
+                >
+
+                <Spinner
+                    android:id="@+id/register_interview_time_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     />
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_interview_time_minutes"
+                    android:textColor="@color/recruit_black"
+                    />
+            </LinearLayout>
+
         </FrameLayout>
 
         <FrameLayout

@@ -1,6 +1,7 @@
 package jp.recruit.hps.movie.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
@@ -20,11 +21,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class RegisterInterviewActivity extends Activity {
 	private QuestionAdapter adapter;
@@ -59,6 +63,24 @@ public class RegisterInterviewActivity extends Activity {
 
 		new GetQuestionListAsyncTask(this).execute(selectionKey);
 	}
+	
+	private void setSpinner(Spinner spinner,List<String> arr){
+		  
+		  ArrayAdapter<String> adapter =
+		  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
+		  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		  spinner.setAdapter(adapter);
+		  spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+	            //Spinner�̃h���b�v�_�E���A�C�e�����I�����ꂽ��
+	            public void onItemSelected(AdapterView<?> parent, View viw, int position, long arg3) {
+	                Spinner spinner = (Spinner)parent;
+	                String item = (String)spinner.getSelectedItem();
+	                spinner.setTag(item);
+	            }
+	            public void onNothingSelected(AdapterView<?> parent) {
+	            }});
+		  spinner.setSelection(0);
+		}
 	
 	public void setButton(){
 		mCategorySpinner = (Spinner)findViewById(R.id.register_interview_category_spinner);
