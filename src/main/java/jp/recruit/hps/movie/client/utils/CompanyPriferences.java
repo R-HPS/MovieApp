@@ -32,7 +32,7 @@ public class CompanyPriferences {
 		pref = context.getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
 		// Editor の設定
 		editor = pref.edit();
-		for(int i=0;i<3;i++){
+		for(int i=0;i<mList.size();i++){
 			if(mList.get(i)!=null){
 				// Editor に値を代入
 				if(mList.get(i).getName()!=null){

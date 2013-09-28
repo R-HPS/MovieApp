@@ -3,18 +3,21 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jp.recruit.hps.movie.client.api.RemoteApi;
+import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
 import jp.recruit.hps.movie.common.CommonConstant;
 
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
-import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
-import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint.RegisterV1Endpoint.Register;
-import com.appspot.hps_movie.registerEndpoint.model.RegisterResultV1Dto;
+import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
+import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.InsertInterview;
+import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1DtoCollection;
@@ -26,6 +29,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,13 +62,15 @@ public class RegisterCompanyActivity extends Activity{
 	private String mDate;
 	private Long mTime;
 	
+	Map<String,Map<String,SelectionV1Dto>> mInterviewMap;
+	
 	CompanySearchAdapter adapter;
 	
 	String tmpTime;
 	String tmpDate;
 	
-	ArrayList<String> mSectionArray;
-	ArrayList<String> mPhaseArray;
+	List<String> mSectionArray;
+	List<String> mPhaseArray;
 	
 	// UI references.
 	private TextView mNameView;
@@ -73,9 +79,13 @@ public class RegisterCompanyActivity extends Activity{
 	private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
 	private ImageView mCancelButton;
-
+	private TextView mSectionText;
+	private TextView mPhaseText;
+	
+	
 	private String selectionKey;
-
+	String userKey;
+	
 	AlertDialog mDateDialog;
 	AlertDialog companyDialog;
 	Button button;
@@ -101,9 +111,16 @@ public class RegisterCompanyActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_company);
 		setButtons();
-		mRegisterFormView = findViewById(R.id.register_form);
-		mRegisterStatusView = findViewById(R.id.register_status);
-		mRegisterStatusMessageView = (TextView) findViewById(R.id.register_status_message);
+		mRegisterFormView = findViewById(R.id.register_company_form);
+		mRegisterStatusView = findViewById(R.id.register_company_status);
+		mRegisterStatusMessageView = (TextView) findViewById(R.id.register_company_status_message);
+		getUserKey();
+	}
+
+	private void getUserKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
 	}
 
 	private void setButtons() {
@@ -120,14 +137,11 @@ public class RegisterCompanyActivity extends Activity{
 			
 		});
 		//会社部門のspinnerのセット
+		mSectionText = (TextView)findViewById(R.id.register_company_section);
+		mPhaseText = (TextView)findViewById(R.id.register_company_phase);
 		mSectionSpinner  = (Spinner)this.findViewById(R.id.register_company_section_spinner);
-		String arr[]={"a","b","c"};
-	//	setSpinner(mSectionSpinner,);
 		//会社の選考段階のspinnerセット
 		mPhaseSpinner = (Spinner)this.findViewById(R.id.register_company_phase_spinner);
-		String[] phases = getResources().getStringArray(R.array.register_company_phase_str_arr);
-	//	setSpinner(mPhaseSpinner,phases);
-		
 		//面接受ける日にちのセット
 		mDateView = (TextView)findViewById(R.id.register_company_time_text);
 		mDateView.setOnClickListener(new OnClickListener() {
@@ -221,11 +235,9 @@ public class RegisterCompanyActivity extends Activity{
 		mName = mNameView.getText().toString();
 		mDate = mDateView.getText().toString();
 		boolean cancel =false;
-		View focusView =null;
 		
 		if(TextUtils.isEmpty(mName)){
 			mNameView.setError(getString(R.string.error_field_required));
-			focusView = mNameView;
 			cancel = true;
 		}
 		
@@ -237,14 +249,16 @@ public class RegisterCompanyActivity extends Activity{
 			mTime = setCal(date);
 		}
 
-		if(mSectionSpinner.getTag().toString()!=null){
+		if(mSectionSpinner.getTag()!=null){
 			mSection = mSectionSpinner.getTag().toString();
 		}else {
+			mSectionText.setError(getString(R.string.error_field_required));
 			cancel=true;
 		}
-		if(mPhaseSpinner.getTag().toString()!=null){		
+		if(mPhaseSpinner.getTag()!=null){		
 			mPhase = mPhaseSpinner.getTag().toString();
 		}else{
+			mPhaseText.setError(getString(R.string.error_field_required));
 			cancel=true;					
 		}
 		
@@ -253,6 +267,7 @@ public class RegisterCompanyActivity extends Activity{
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
+			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
 			mRegisterStatusMessageView.setText(R.string.register_progress_signing_up);
 			showProgress(true);
 			mAuthTask = new SelectionRegisterTask();
@@ -304,11 +319,9 @@ public class RegisterCompanyActivity extends Activity{
 	//companyKeyからselectionを取得
 	public class GetCompanyListAsyncTask extends
 	AsyncTask<String, Integer, Boolean> {
-		private final Context context;
 		private List<SelectionV1Dto> list;
 
 		public GetCompanyListAsyncTask(Context context) {
-			this.context = context;
 		}
 
 		@Override
@@ -333,11 +346,26 @@ public class RegisterCompanyActivity extends Activity{
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				mInterviewMap = new HashMap<String,Map<String,SelectionV1Dto>>();
+				mSectionArray = new ArrayList<String>();
 				for(SelectionV1Dto dto: list  ){
-					mSectionArray.add(dto.getSection());
-					mPhaseArray.add(dto.getPhase());
+					String tmpSection = dto.getSection();
+					String tmpPhase =dto.getPhase();
+					Map<String,SelectionV1Dto> tmpMap;
+
+					if(mInterviewMap.containsKey(tmpSection)) {
+						tmpMap = mInterviewMap.get(tmpSection);
+					} else {
+						tmpMap = new HashMap<String,SelectionV1Dto>();
+					}
+					tmpMap.put(tmpPhase, dto);
+					mInterviewMap.put(tmpSection, tmpMap);
 				}
-				setSpinner(mPhaseSpinner, mPhaseArray);
+				for(String section :mInterviewMap.keySet()){
+				mSectionArray.add(section);
+				}
+				
+				
 				setSpinner(mSectionSpinner, mSectionArray);
 			}
 		}
@@ -351,10 +379,9 @@ public class RegisterCompanyActivity extends Activity{
 		protected Boolean doInBackground(Void... args) {
 
 			try {
-				RegisterEndpoint endpoint = RemoteApi.getRegisterEndpoint();
-				Register register = endpoint.registerV1Endpoint().register(
-						mName, mPhase, mName);
-				RegisterResultV1Dto result = register.execute();
+				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
+				InsertInterview register = endpoint.interviewV1EndPoint().insertInterview(userKey, selectionKey, mTime);
+				ResultV1Dto result = register.execute();
 
 				
 				if (SUCCESS.equals(result.getResult())) {
@@ -407,7 +434,7 @@ public class RegisterCompanyActivity extends Activity{
 		    return cal.getTimeInMillis();
 	}
 
-	private void setSpinner(Spinner spinner,ArrayList<String> arr){
+	private void setSpinner(Spinner spinner,List<String> arr){
 		  
 		  ArrayAdapter<String> adapter =
 		  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
@@ -419,6 +446,13 @@ public class RegisterCompanyActivity extends Activity{
 	                Spinner spinner = (Spinner)parent;
 	                String item = (String)spinner.getSelectedItem();
 	                spinner.setTag(item);
+	                if(spinner==mSectionSpinner){
+		                mPhaseArray = new ArrayList<String>();
+		                for(String phase : mInterviewMap.get(item).keySet()){
+		                	mPhaseArray.add(phase);
+		                }
+		                setSpinner(mPhaseSpinner, mPhaseArray);
+	                }
 	            }
 	            public void onNothingSelected(AdapterView<?> parent) {
 	            }});

@@ -26,7 +26,7 @@ import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 
 public class TopActivity extends Activity {
 	GetCompanyListAsyncTask mLoadSelectionTask;
-	String userkey;
+	String userKey;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,20 +48,22 @@ public class TopActivity extends Activity {
 		super.onResume();
 		setNowTime();
 		checkCompanyTime();
-		String userKey =getUserKey();
+		getUserKey();
 		if(userKey==null){
 			startActivity(new Intent(this,LoginActivity.class));
 			Toast.makeText( this, R.string.mypage_userkey_error, Toast.LENGTH_SHORT ).show();
 			finish();
 		}
+		findViewById(R.id.mypage_company_null_text).setVisibility(View.GONE);
+		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
 		mLoadSelectionTask = new GetCompanyListAsyncTask(this);
-		mLoadSelectionTask.execute(CommonUtils.TEST_USER_KEY);//userKey
+		mLoadSelectionTask.execute(userKey);
 	}
 
-	private String getUserKey() {
+	private void getUserKey() {
 		// TODO 自動生成されたメソッド・スタブ
 		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
-		return pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
+		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
 	}
 
 	private void checkCompanyTime() {
