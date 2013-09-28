@@ -54,25 +54,12 @@ public class QuestionAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.company, null);
-		}
-		ImageButton imgbtn = (ImageButton) convertView.findViewById(R.id.company_name_button);
-		if(position!=0){
-			imgbtn.setBackgroundResource(R.drawable.mypage00_schedules_before);
-		}else{
-			imgbtn.setBackgroundResource(R.drawable.mypage00_schedules_after);
+			convertView = inflater.inflate(R.layout.register_question_list_inflater, null);
 		}
 		if(getName(position)!=null){
-			TextView tv = (TextView) convertView.findViewById(R.id.mypage_company_name);
+			TextView tv = (TextView) convertView.findViewById(R.id.questionText);
 			tv.setText(getName(position));
 		}
-
-		imgbtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-			
-			}
-		});
 		return convertView;
 	}
 	

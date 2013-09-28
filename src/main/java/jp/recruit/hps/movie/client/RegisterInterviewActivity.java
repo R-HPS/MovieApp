@@ -25,12 +25,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TextView;
 
 public class RegisterInterviewActivity extends Activity {
 	private QuestionAdapter adapter;
@@ -42,7 +44,7 @@ public class RegisterInterviewActivity extends Activity {
 	int mTime;
 	int mCategory;
 	int mAtmosphere;
-	
+	Button btn;
 	ListView lv;
 	
 	//UI
@@ -52,6 +54,10 @@ public class RegisterInterviewActivity extends Activity {
 	ImageView mNormalAtmosphere;
 	ImageView mHardAtmosphere;
 	LinearLayout mQuestionListLayout;
+	
+	//質問追加UI
+	EditText edit;
+	TextView nullQuestion;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -101,17 +107,17 @@ public class RegisterInterviewActivity extends Activity {
 		mHardAtmosphere = (ImageView)findViewById(R.id.register_interview_atmosphre_hard);
 		mQuestionListLayout = (LinearLayout)findViewById(R.id.register_question_list_layout);
 		
-		Button btn = (Button)findViewById(R.id.add_list_btn);
+		btn = (Button)findViewById(R.id.add_list_btn);
 		
 		btn.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
-
+					edit = (EditText)findViewById(R.id.edit_add_question);
 						findViewById(R.id.add_list_btn).setVisibility(View.GONE);
 						findViewById(R.id.register_add_text_layout)
 						.setVisibility(View.VISIBLE);
 						findViewById(R.id.add_question_send_btn).setOnClickListener(new View.OnClickListener() {
-
+							
 							@Override
 							public void onClick(View v) {
 								// TODO 自動生成されたメソッド・スタブ
@@ -120,6 +126,7 @@ public class RegisterInterviewActivity extends Activity {
 								ProgressBar prog =(ProgressBar)findViewById
 										(R.id.register_question_progressBar);
 								prog.setVisibility(View.VISIBLE);
+								new SetQuestionAsyncTask().execute(edit.getText().toString());
 							}	
 						});
 					}
@@ -154,13 +161,16 @@ public class RegisterInterviewActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				
 				ProgressBar prog =(ProgressBar)findViewById
-						(R.id.register_question_progress_layout);
+						(R.id.register_question_progressBar);
 				prog.setVisibility(View.GONE);
+				nullQuestion.setVisibility(View.GONE);
 				adapter.addList(question);
 				//アダプタに対してデータが変更したことを知らせる
 				adapter.notifyDataSetChanged();
-				
+				findViewById(R.id.register_add_text_layout).setVisibility(View.GONE);
+				btn.setVisibility(View.VISIBLE);
 			}
 		}
 
@@ -196,17 +206,20 @@ public class RegisterInterviewActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
+			nullQuestion = (TextView)findViewById(R.id.register_question_list_null_text);
 			findViewById(R.id.register_question_progress_layout).setVisibility(View.GONE);
 			mQuestionListLayout.setVisibility(View.VISIBLE);
+			adapter = new QuestionAdapter(context,list);
 			if (result) {
 				findViewById(R.id.register_question_progress_layout).setVisibility(View.GONE);
 				mQuestionListLayout.setVisibility(View.VISIBLE);
 				lv = (ListView)findViewById(R.id.register_question_list);
+				lv.setVisibility(View.VISIBLE);
 				findViewById(R.id.register_add_list_layout).setVisibility(View.VISIBLE);
-				adapter = new QuestionAdapter(context,list);
+				
 				lv.setAdapter(adapter);
 			}else{
-				findViewById(R.id.register_question_list_null_text).setVisibility(View.VISIBLE);
+				nullQuestion.setVisibility(View.VISIBLE);
 			}
 		}
 	}
