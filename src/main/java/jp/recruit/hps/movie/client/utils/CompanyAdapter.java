@@ -71,6 +71,10 @@ public class CompanyAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	public boolean getWasRead(int position){
+		return list.get(position).getWasRead();
+	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -116,6 +120,8 @@ public class CompanyAdapter extends BaseAdapter {
 						getName(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE,
 						getPhase(position));
+				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_READ, 
+						getWasRead(position));
 				context.startActivity(intent);
 			}
 		});

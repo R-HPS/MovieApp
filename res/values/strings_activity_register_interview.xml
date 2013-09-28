@@ -2,8 +2,16 @@
 <resources>
     <string name="question_hint">新しい質問を入力してください。</string>
     <string name="question_add">新しい質問を追加する。</string>
+    <string name="question_add_title">質問追加画面</string>
+    <string name="question_add_positive">追加する</string>
+    <string name="question_add_negative">キャンセル</string>
     <string name="question_null">質問が一つもありません。</string>
     <string name="register_interview_time_minutes">分</string>
+    <string name="register_interview_category_indi">個人面接</string>
+    <string name="register_interview_category_group">グループ面接</string>
+    <string name="register_interview_category_groupdis">グループディスカッション</string>
+    <string name="register_interview_question_check_null">質問は一つ以上選択してください。</string>
+    <string name="register_interview_show">別の企業情報を見るためにBATONをつなぎましょう。</string>
     <string-array name="register_interview_time_spinner_set">
         <item >10分</item>
         <item >20分</item>

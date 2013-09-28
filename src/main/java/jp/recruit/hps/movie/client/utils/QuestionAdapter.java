@@ -6,10 +6,9 @@ import jp.recruit.hps.movie.client.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.questionEndpoint.model.QuestionV1Dto;
@@ -54,12 +53,14 @@ public class QuestionAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.register_question_list_inflater, null);
+			convertView = inflater.inflate(R.layout.question_list_view_item, null);
 		}
 		if(getName(position)!=null){
-			TextView tv = (TextView) convertView.findViewById(R.id.questionText);
+			TextView tv = (TextView) convertView.findViewById(R.id.question_text_view1);
 			tv.setText(getName(position));
 		}
+		CheckBox check = (CheckBox) convertView.findViewById(R.id.check_box);
+		check.getTag(position);
 		return convertView;
 	}
 	

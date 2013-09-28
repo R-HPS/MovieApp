@@ -11,6 +11,7 @@ import jp.recruit.hps.movie.client.utils.InterviewAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -25,23 +26,32 @@ import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
 
 
 public class CompanyInterviewActivity extends Activity {
+	String selectionKey;
+	String userKey;
+	boolean wasRead;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
 			setContentView(R.layout.activity_companypage);
 			Intent i = getIntent();
-			final String selectionKey = i
+			selectionKey = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
-			new GetInterviewListAsyncTask(this).execute(selectionKey);
+			
+			SharedPreferences pref = getSharedPreferences(
+					CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+			userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);
 			final String companyName = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
 			final String companyPhase = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE);
+			wasRead = i
+					.getExtras().getBoolean(CommonUtils.STRING_EXTRA_COMPANY_READ);
 			TextView tv = (TextView)findViewById(R.id.companyname);
 			tv.setText(companyName);
 			tv = (TextView)findViewById(R.id.companyphase);
 			tv.setText(companyPhase);
+			new GetInterviewListAsyncTask(this).execute(selectionKey);
 		}
 		
 		
@@ -61,7 +71,7 @@ public class CompanyInterviewActivity extends Activity {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
 				try {
 					interview= endpoint
-							.interviewV1EndPoint().getInterviews(query).execute();//.searchInterview(query).execute();
+							.interviewV1EndPoint().getInterview(userKey, selectionKey, wasRead).execute();//.searchInterview(query).execute();
 
 				} catch (IOException e) {
 					e.printStackTrace();

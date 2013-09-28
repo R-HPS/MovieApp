@@ -100,12 +100,13 @@ public class RegisterCompanyActivity extends Activity {
 	GetCompanySerchAsyncTask mSearchTask;
 
 	private static final String SUCCESS = CommonConstant.SUCCESS;
-
+	SelectionRegisterTask mAuthTask;
+	
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
 
-	SelectionRegisterTask mAuthTask;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +246,8 @@ public class RegisterCompanyActivity extends Activity {
 		// Reset errors.
 		mNameView.setError(null);
 		mDateView.setError(null);
+		mSectionText.setError(null);
+		mPhaseText.setError(null);
 
 		// Store values at the time of the login attempt.
 		// mName= mNameView.getText().toString();
@@ -284,6 +287,13 @@ public class RegisterCompanyActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
 			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
+			
+//			/*実験*/
+//			Intent i = new Intent(RegisterCompanyActivity.this,
+//					RegisterInterviewActivity.class);
+//			i.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
+//					selectionKey);
+//			startActivity(i);
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
@@ -423,6 +433,8 @@ public class RegisterCompanyActivity extends Activity {
 				Log.d("DEBUG", "register success");
 				startActivity(new Intent(RegisterCompanyActivity.this,
 						TopActivity.class));
+				
+				
 				finish();
 			}
 		}
