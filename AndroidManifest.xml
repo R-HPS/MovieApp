@@ -38,13 +38,12 @@
             android:name=".RecordActivity"
             android:label="@string/rec_movie" >
         </activity>
-        
         <activity
             android:name=".TopActivity"
             android:label="@string/top"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -73,42 +72,43 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/view_interview" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/view_interview"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/view_interview" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/view_interview"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".RegisteredActivity"
-            android:label="@string/view_interview" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/view_interview"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".CompanyInterviewActivity"
-            android:label="@string/view_interview" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/view_interview"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".RegisterInterviewActivity"
-            android:label="@string/register_interview_page" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/register_interview_page"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".RegisterCompanyActivity"
-            android:label="@string/register_company_page" 
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:label="@string/register_company_page"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        
-        
+
+        <service android:name=".services.UpdateClockService" >
+        </service>
     </application>
 
 </manifest>
