@@ -60,7 +60,7 @@ public class CompanyPreferences {
 		if (pref != null && i < 3) {
 			return pref.getLong(KEYS_DATE[i], -1l);
 		}
-		return null;
+		return -1l;
 	}
 	
 	public static String getName(int i) {
