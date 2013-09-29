@@ -69,4 +69,13 @@ public class CompanyPreferences {
 		}
 		return null;
 	}
+	
+	public static void cleanPref(int i){
+		if(pref !=null&& i<3){
+			
+			pref.edit().remove(KEYS_DATE[i]).commit();
+			pref.edit().remove(KEYS_KEY[i]).commit();
+			pref.edit().remove(KEYS_NAME[i]).commit();
+		}
+	}
 }

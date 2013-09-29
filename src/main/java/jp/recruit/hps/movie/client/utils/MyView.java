@@ -24,12 +24,13 @@ public class MyView extends View {
 	protected void onDraw(Canvas canvas) {
 		paint.setStrokeWidth(2);// 太さを2に
 		if (percent >= 50) {
-			paint.setColor(Color.argb(255, 255, 0, 0));// 赤セット
+			paint.setColor(Color.parseColor("#dd768e"));// 赤セット
 		}else if(percent<20){
-			paint.setColor(Color.argb(255, 255, 0, 0));// 赤セット
+			paint.setColor(Color.parseColor("#daa000"));// 黄セット
 		}else{
-			paint.setColor(Color.argb(255, 255, 0, 0));// 赤セット
+			paint.setColor(Color.parseColor("#00a29a"));// 青セット
 		}
+		paint.setAlpha(122);
 		canvas.drawRect(0, 0, mMeter, 100, paint);// 四角形描画
 
 	}

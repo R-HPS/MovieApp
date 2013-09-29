@@ -11,6 +11,7 @@ import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.services.UpdateClockService;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
+import jp.recruit.hps.movie.client.utils.CompanyPreferences;
 import jp.recruit.hps.movie.client.utils.UpdateClockReceiver;
 import android.app.Activity;
 import android.content.Context;
@@ -144,6 +145,8 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				
+				CompanyPreferences.setCompanyData(TopActivity.this, list);
 				ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
 				prog.setVisibility(View.GONE);
 				ListView lv = (ListView) findViewById(R.id.mypage_company_list);

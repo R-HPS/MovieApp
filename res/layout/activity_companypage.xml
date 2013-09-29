@@ -77,6 +77,7 @@
 	    android:text="@string/null_text"
 	    android:textSize="15sp"
 	    android:layout_gravity="top"
+	    android:visibility="gone"
 	    />
 	</ScrollView>
     <FrameLayout

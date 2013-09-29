@@ -1,6 +1,7 @@
 package jp.recruit.hps.movie.client;
 
 import jp.recruit.hps.movie.client.utils.CommonUtils;
+import jp.recruit.hps.movie.client.utils.CompanyPreferences;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		new CompanyPreferences();
 		if(sharedCheck()){
 			Intent intent = new Intent(this,TopActivity.class);
 			startActivity(intent);

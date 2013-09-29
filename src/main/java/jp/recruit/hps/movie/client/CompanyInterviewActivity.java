@@ -3,8 +3,6 @@ package jp.recruit.hps.movie.client;
 
 
 import java.io.IOException;
-import java.util.List;
-
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.InterviewAdapter;
@@ -16,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,8 +52,6 @@ public class CompanyInterviewActivity extends HPSActivity {
 			new GetInterviewListAsyncTask(this).execute(selectionKey);
 		}
 		
-		
-
 		public class GetInterviewListAsyncTask extends
 				AsyncTask<String, Integer, Boolean> {
 			private final Context context;
@@ -68,7 +63,6 @@ public class CompanyInterviewActivity extends HPSActivity {
 
 			@Override
 			protected Boolean doInBackground(String... queries) {
-				String query = queries[0];
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
 				try {
 					interview= endpoint
@@ -100,7 +94,7 @@ public class CompanyInterviewActivity extends HPSActivity {
 					lv.setVisibility(View.VISIBLE);
 					
 				}else{
-					findViewById(R.id.companypage_text_scroll).setVisibility(View.VISIBLE);
+					findViewById(R.id.null_text).setVisibility(View.VISIBLE);
 				}
 				
 			}
@@ -135,27 +129,6 @@ public class CompanyInterviewActivity extends HPSActivity {
 				appaku.setProgress(meter);
 			}
 			
-//			//Textにセット
-//			private void setText() {
-//				// TODO 自動生成されたメソッド・スタブ
-//				//Atmosphereをセット
-//				for(int i=0;i<TEXT_VIEWS.length;i++){
-//					TextView text = (TextView)findViewById(TEXT_VIEWS[i]);
-//					int score = checkAtmosphere(i);
-//					String s = String.format(getText(R.string.atomosphereMeter).toString(), score);
-//					text.setText(Html.fromHtml(s));
-//				}
-//				//面接時間をセット
-//					TextView text = (TextView)findViewById(R.id.timetext);
-//					int score = checkCompanyTime();
-//					String s = String.format(getText(R.string.companytime).toString(), score);
-//					text.setText(Html.fromHtml(s));
-//				//面接形式をセット
-//					text = (TextView)findViewById(R.id.categorytext);
-//					String style = checkCompanyCategory();
-//					s = String.format(getText(R.string.companycategory).toString(), style);
-//					text.setText(Html.fromHtml(s));
-//			}
 
 		}
 

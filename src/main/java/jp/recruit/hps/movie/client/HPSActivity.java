@@ -18,10 +18,10 @@ public class HPSActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		
+		super.onResume();
 		int current = -1;
 		
-		for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 			if (CompanyPreferences.getTime(i) != -1l
 					&& CompanyPreferences.getTime(i) < System
 							.currentTimeMillis()) {
@@ -36,11 +36,12 @@ public class HPSActivity extends Activity {
 		cal.set(Calendar.MILLISECOND, 0);
 		if (current != -1
 				&& CompanyPreferences.getTime(current) < cal.getTimeInMillis()) {
-			Intent intent = new Intent(this, RegisterCompanyActivity.class);
+			Intent intent = new Intent(this, RegisterInterviewActivity.class);
 			intent.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
 					CompanyPreferences.getKey(current));
 			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME, 
 					CompanyPreferences.getName(current));
+			CompanyPreferences.cleanPref(current);
 			startActivity(intent);
 			finish();
 		}

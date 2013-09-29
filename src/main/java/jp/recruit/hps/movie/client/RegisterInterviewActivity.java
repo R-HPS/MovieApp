@@ -421,7 +421,7 @@ public class RegisterInterviewActivity extends Activity {
 			cancel=true;
 			Toast.makeText( this, R.string.register_interview_question_check_null, Toast.LENGTH_SHORT ).show();
 		}else{
-			questions = new StringListContainer();
+		questions = new StringListContainer();
 			questions.setList(questionKeyList);
 		}
 		if (mTimeSpinner.getTag() != null) {
