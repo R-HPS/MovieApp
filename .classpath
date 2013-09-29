@@ -13,5 +13,6 @@
 	<classpathentry kind="src" path="endpoint-libs/libloginEndpoint-v1/loginEndpoint/loginendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libregisterEndpoint-v1/registerEndpoint/registerendpoint-v1-generated-source"/>
 	<classpathentry kind="src" path="endpoint-libs/libquestionEndpoint-v1/questionEndpoint/questionendpoint-v1-generated-source"/>
-	
+	<classpathentry kind="src" path="endpoint-libs/libuserEndpoint-v1/userEndpoint/userendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libarchiveEndpoint-v1/archiveEndpoint/archiveendpoint-v1-generated-source"/>
 </classpath>

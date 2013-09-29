@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.userEndpoint.UserEndpoint;
+import com.appspot.hps_movie.userEndpoint.model.PointV1Dto;
 
 public class TopActivity extends HPSActivity {
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
@@ -36,17 +38,18 @@ public class TopActivity extends HPSActivity {
 	GetCompanyListAsyncTask mLoadSelectionTask;
 	String userKey;
 	CompanyAdapter adapter;
-
+	TextView pointText;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		UpdateClockReceiver receiver = new UpdateClockReceiver();
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("UPDATE_CLOCK");
 		registerReceiver(receiver, intentFilter);
 
 		setContentView(R.layout.activity_mypage);
+		pointText = (TextView)findViewById(R.id.nowpoint);
 		findViewById(R.id.newregistbtn).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -69,9 +72,9 @@ public class TopActivity extends HPSActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-	
+
 		new UpdateClockService().startResident(this);
-		
+
 		setNowTime();
 		checkCompanyTime();
 		getUserKey();
@@ -81,6 +84,7 @@ public class TopActivity extends HPSActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
+		new GetPointListAsyncTask().execute();
 		findViewById(R.id.mypage_company_null_text).setVisibility(View.GONE);
 		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
 		mLoadSelectionTask = new GetCompanyListAsyncTask(this);
@@ -145,12 +149,12 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				
+
 				CompanyPreferences.setCompanyData(TopActivity.this, list);
 				ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
 				prog.setVisibility(View.GONE);
 				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
-				adapter = new CompanyAdapter(context,list);
+				adapter = new CompanyAdapter(context, list);
 				lv.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
 				lv.setVisibility(View.VISIBLE);
@@ -158,6 +162,39 @@ public class TopActivity extends HPSActivity {
 				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
 				findViewById(R.id.mypage_company_null_text).setVisibility(
 						View.VISIBLE);
+			}
+			
+		}
+	}
+
+	public class GetPointListAsyncTask extends
+			AsyncTask<String, Integer, Boolean> {
+		private PointV1Dto point;
+
+		@Override
+		protected Boolean doInBackground(String... queries) {
+			UserEndpoint endpoint = RemoteApi.getUserEndpoint();
+			try {
+				PointV1Dto collection = endpoint
+						.userV1Endpoint().login(userKey).execute();
+				if (collection != null) {
+					point = collection;
+				} else {
+					return false;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+					
+					pointText.setText(point.getValue().toString());
+			} else {
 			}
 		}
 	}

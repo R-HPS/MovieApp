@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 
+import com.appspot.hps_movie.archiveEndpoint.ArchiveEndpoint;
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
+import com.appspot.hps_movie.userEndpoint.UserEndpoint;
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
@@ -87,6 +89,26 @@ public class RemoteApi {
 	
 	public static QuestionEndpoint getQuestionEndpoint() {
 		QuestionEndpoint.Builder endpointBuilder = new QuestionEndpoint.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				new HttpRequestInitializer() {
+					public void initialize(HttpRequest httpRequest) {
+					}
+				});
+		return updateBuilder(endpointBuilder).build();
+	}
+	
+	public static UserEndpoint getUserEndpoint() {
+		UserEndpoint.Builder endpointBuilder = new UserEndpoint.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				new HttpRequestInitializer() {
+					public void initialize(HttpRequest httpRequest) {
+					}
+				});
+		return updateBuilder(endpointBuilder).build();
+	}
+	
+	public static ArchiveEndpoint getArchiveEndpoint() {
+		ArchiveEndpoint.Builder endpointBuilder = new ArchiveEndpoint.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					public void initialize(HttpRequest httpRequest) {

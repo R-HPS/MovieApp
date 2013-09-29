@@ -22,7 +22,7 @@ import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
 
 
-public class CompanyInterviewActivity extends HPSActivity {
+public class CompanyInterviewActivity extends Activity {
 	String selectionKey;
 	String userKey;
 	ListView lv;
