@@ -31,10 +31,10 @@ public class CompanyInterviewActivity extends Activity {
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
-			setContentView(R.layout.image_view);
-		}
-}
-		/*	Intent i = getIntent();
+//			setContentView(R.layout.image_view);
+//		}
+//}
+			Intent i = getIntent();
 			selectionKey = i
 					.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
 			
@@ -135,4 +135,3 @@ public class CompanyInterviewActivity extends Activity {
 		}
 
 }
-*/
