@@ -57,7 +57,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/exampletext"
                     android:textColor="@color/recruit_black" />
             </FrameLayout>
         </LinearLayout>
@@ -95,7 +94,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/exampletext"
                     android:textColor="@color/recruit_black" />
             </FrameLayout>
         </LinearLayout>

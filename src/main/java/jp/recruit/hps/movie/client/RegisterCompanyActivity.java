@@ -102,6 +102,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private static final String SUCCESS = CommonConstant.SUCCESS;
 	SelectionRegisterTask mAuthTask;
 	
+	
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
@@ -212,7 +213,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 								mNameView.setText(company.getName());
 								new GetCompanyListAsyncTask(
 										RegisterCompanyActivity.this)
-										.execute(company.getKey());
+								.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,company.getKey());
 							}
 						})
 				.setNegativeButton(R.string.register_company_cancel_title, null)
@@ -225,13 +226,16 @@ public class RegisterCompanyActivity extends HPSActivity {
 					@Override
 					public void onClick(View v) {
 						// TODO 自動生成されたメソッド・スタブ
+						if(mSearchTask==null){
 						button.setEnabled(false);
 						nothing.setVisibility(View.GONE);
 						listView.setVisibility(View.GONE);
 						progressBar.setVisibility(View.VISIBLE);
+						
 						mSearchTask = new GetCompanySerchAsyncTask(
 								RegisterCompanyActivity.this);
-						mSearchTask.execute(companytext.getText().toString());
+						mSearchTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,companytext.getText().toString());
+						}
 					}
 				});
 
@@ -298,7 +302,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
 			mAuthTask = new SelectionRegisterTask();
-			mAuthTask.execute((Void) null);
+			mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void) null);
 		}
 	}
 
@@ -646,7 +650,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 				progressBar.setVisibility(View.GONE);
 				nothing.setVisibility(View.VISIBLE);
 			}
-
+			mSearchTask=null;
 		}
 	}
 }

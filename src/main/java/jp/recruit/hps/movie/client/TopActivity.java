@@ -84,11 +84,11 @@ public class TopActivity extends HPSActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-		new GetPointListAsyncTask().execute();
+		new GetPointListAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		findViewById(R.id.mypage_company_null_text).setVisibility(View.GONE);
 		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
-		mLoadSelectionTask = new GetCompanyListAsyncTask(this);
-		mLoadSelectionTask.execute(userKey);
+		mLoadSelectionTask = new GetCompanyListAsyncTask(TopActivity.this);
+		mLoadSelectionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,userKey);
 	}
 
 	private void getUserKey() {
@@ -194,6 +194,7 @@ public class TopActivity extends HPSActivity {
 			if (result) {
 					
 					pointText.setText(point.getValue().toString());
+
 			} else {
 			}
 		}

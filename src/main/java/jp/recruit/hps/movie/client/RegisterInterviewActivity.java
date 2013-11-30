@@ -52,16 +52,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterInterviewActivity extends Activity {
-	private QuestionAdapter adapter;
+	private QuestionAdapter adapter = null;
 	String selectionKey;
 	String userKey;
-	//送信用
+	// 送信用
 	InterviewRegisterTask mAuthTask;
 	private static String SUCCESS = CommonConstant.SUCCESS;
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
-	
+
 	// データ保存
 	int mTime;
 	int mCategory;
@@ -86,10 +86,9 @@ public class RegisterInterviewActivity extends Activity {
 	// 質問追加UI
 	EditText edit;
 	TextView nullQuestion;
-	
-	
-	
+
 	List<String> questionKeyList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -99,7 +98,7 @@ public class RegisterInterviewActivity extends Activity {
 		selectionKey = i.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
 		String companyName = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME);
-		TextView name = (TextView)findViewById(R.id.register_interview_companyname);
+		TextView name = (TextView) findViewById(R.id.register_interview_companyname);
 		name.setText(companyName);
 		SharedPreferences pref = getSharedPreferences(
 				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
@@ -108,7 +107,8 @@ public class RegisterInterviewActivity extends Activity {
 		mRegisterStatusView = findViewById(R.id.register_interview_status);
 		mRegisterStatusMessageView = (TextView) findViewById(R.id.register_interview_status_message);
 		setButton();
-		new GetQuestionListAsyncTask(this).execute(selectionKey);
+		new GetQuestionListAsyncTask(this).executeOnExecutor(
+				AsyncTask.THREAD_POOL_EXECUTOR, selectionKey);
 	}
 
 	private void setSpinner(Spinner spinner) {
@@ -149,12 +149,13 @@ public class RegisterInterviewActivity extends Activity {
 			List<Integer> checked = new ArrayList<Integer>();
 
 			for (int i = 0; i < positions.size(); i++) {
-			    if(positions.valueAt(i)){
-			        checked.add(positions.keyAt(i));
-			    }
+				if (positions.valueAt(i)) {
+					checked.add(positions.keyAt(i));
+				}
 			}
 			for (int i = 0; i < checked.size(); i++) {
-				QuestionV1Dto question = (QuestionV1Dto) adapter.getItem(checked.get(i));
+				QuestionV1Dto question = (QuestionV1Dto) adapter
+						.getItem(checked.get(i));
 				questionKeyList.add(question.getKey());
 			}
 		}
@@ -172,9 +173,9 @@ public class RegisterInterviewActivity extends Activity {
 		mHardAtmosphere = (ImageView) findViewById(R.id.register_interview_atmosphre_hard);
 		mHardAtmosphere.setOnClickListener(clickatmosphere);
 		mQuestionListLayout = (LinearLayout) findViewById(R.id.register_question_list_layout);
-		mInterviewSendButton = (ImageView)findViewById(R.id.register_interview_send_button);
+		mInterviewSendButton = (ImageView) findViewById(R.id.register_interview_send_button);
 		mInterviewSendButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO 自動生成されたメソッド・スタブ
@@ -183,37 +184,42 @@ public class RegisterInterviewActivity extends Activity {
 		});
 		setSendButton();
 	}
+
 	private View.OnClickListener clickatmosphere = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			// TODO 自動生成されたメソッド・スタブ
-			
+
 			setAtmosphereButton(v.getId());
 		}
 	};
-	public void setAtmosphereButton(int id){
+
+	public void setAtmosphereButton(int id) {
 		mEasyAtmosphere.setImageResource(R.drawable.buttons01_serve_easy);
 		mNormalAtmosphere.setImageResource(R.drawable.buttons01_serve_normal);
 		mHardAtmosphere.setImageResource(R.drawable.buttons01_serve_hard);
-		switch (id){
+		switch (id) {
 		case R.id.register_interview_atmosphre_easy:
 			mAtmosphere = 0;
-			mEasyAtmosphere.setImageResource(R.drawable.buttons01_serve_easy_after);
+			mEasyAtmosphere
+					.setImageResource(R.drawable.buttons01_serve_easy_after);
 			break;
 		case R.id.register_interview_atmosphre_normal:
 			mAtmosphere = 1;
-			mNormalAtmosphere.setImageResource(R.drawable.buttons01_serve_normal_after);
+			mNormalAtmosphere
+					.setImageResource(R.drawable.buttons01_serve_normal_after);
 			break;
 		case R.id.register_interview_atmosphre_hard:
 			mAtmosphere = 2;
-			mHardAtmosphere.setImageResource(R.drawable.buttons01_serve_hard_after);
+			mHardAtmosphere
+					.setImageResource(R.drawable.buttons01_serve_hard_after);
 			break;
-		
+
 		}
-		
+
 	}
-	
+
 	public void setSendButton() {
 		btn = (Button) findViewById(R.id.add_list_btn);
 		btn.setVisibility(View.VISIBLE);
@@ -245,8 +251,10 @@ public class RegisterInterviewActivity extends Activity {
 											ProgressBar prog = (ProgressBar) findViewById(R.id.register_question_progressBar);
 											prog.setVisibility(View.VISIBLE);
 											new SetQuestionAsyncTask()
-													.execute(mAddEdit.getText()
-															.toString());
+													.executeOnExecutor(
+															AsyncTask.THREAD_POOL_EXECUTOR,
+															mAddEdit.getText()
+																	.toString());
 										}
 									}
 								})
@@ -290,9 +298,25 @@ public class RegisterInterviewActivity extends Activity {
 				ProgressBar prog = (ProgressBar) findViewById(R.id.register_question_progressBar);
 				prog.setVisibility(View.GONE);
 				nullQuestion.setVisibility(View.GONE);
-				adapter.addList(question);
-				// アダプタに対してデータが変更したことを知らせる
-				adapter.notifyDataSetChanged();
+				if (adapter != null) {
+					adapter.addList(question);
+					// アダプタに対してデータが変更したことを知らせる
+					adapter.notifyDataSetChanged();
+				} else {
+					List<QuestionV1Dto> list = new ArrayList<QuestionV1Dto>();
+					list.add(question);
+					adapter = new QuestionAdapter(
+							RegisterInterviewActivity.this, list);
+					mQuestionListLayout.setVisibility(View.VISIBLE);
+					lv = (ListView) findViewById(R.id.register_question_list);
+					lv.setVisibility(View.VISIBLE);
+					findViewById(R.id.register_add_list_layout).setVisibility(
+							View.VISIBLE);
+					lv.setAdapter(adapter);
+					// 単一選択モードにする
+					lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+				}
 
 			}
 		}
@@ -333,8 +357,9 @@ public class RegisterInterviewActivity extends Activity {
 			findViewById(R.id.register_question_progress_layout).setVisibility(
 					View.GONE);
 			mQuestionListLayout.setVisibility(View.VISIBLE);
-			adapter = new QuestionAdapter(context, list);
+
 			if (result) {
+				adapter = new QuestionAdapter(context, list);
 				findViewById(R.id.register_question_progress_layout)
 						.setVisibility(View.GONE);
 				mQuestionListLayout.setVisibility(View.VISIBLE);
@@ -351,7 +376,7 @@ public class RegisterInterviewActivity extends Activity {
 			}
 		}
 	}
-	
+
 	/**
 	 * Shows the progress UI and hides the register form.
 	 */
@@ -404,7 +429,7 @@ public class RegisterInterviewActivity extends Activity {
 		}
 		return super.dispatchKeyEvent(event);
 	}
-	
+
 	private void setInterview() {
 		if (mAuthTask != null) {
 			return;
@@ -416,24 +441,30 @@ public class RegisterInterviewActivity extends Activity {
 		// Store values at the time of the login attempt.
 		// mName= mNameView.getText().toString();
 		boolean cancel = false;
-
-		if(questionKeyList.isEmpty()){
-			cancel=true;
-			Toast.makeText( this, R.string.register_interview_question_check_null, Toast.LENGTH_SHORT ).show();
+		if (adapter != null) {
+			if (questionKeyList.isEmpty()) {
+				cancel = true;
+				Toast.makeText(this,
+						R.string.register_interview_question_check_null,
+						Toast.LENGTH_SHORT).show();
+			} else {
+				questions = new StringListContainer();
+				questions.setList(questionKeyList);
+			}
+			if (mTimeSpinner.getTag() != null) {
+				String tmpTime = mTimeSpinner.getTag().toString();
+				mTime = Integer.valueOf(tmpTime.substring(0,
+						tmpTime.length() - 1));
+			} else {
+				cancel = true;
+			}
+			if (mCategorySpinner.getTag() != null) {
+				String tmpCategory = mCategorySpinner.getTag().toString();
+				checkCategory(tmpCategory);
+			} else {
+				cancel = true;
+			}
 		}else{
-		questions = new StringListContainer();
-			questions.setList(questionKeyList);
-		}
-		if (mTimeSpinner.getTag() != null) {
-			String tmpTime= mTimeSpinner.getTag().toString();
-			mTime = Integer.valueOf(tmpTime.substring(0,tmpTime.length() - 1)); 
-		} else {
-			cancel = true;
-		}
-		if (mCategorySpinner.getTag() != null) {
-			String tmpCategory = mCategorySpinner.getTag().toString();
-			checkCategory(tmpCategory);
-		} else {
 			cancel = true;
 		}
 
@@ -442,8 +473,8 @@ public class RegisterInterviewActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
-			
-			/*実験*/
+
+			/* 実験 */
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
@@ -451,19 +482,19 @@ public class RegisterInterviewActivity extends Activity {
 			mAuthTask.execute((Void) null);
 		}
 	}
-	
-	
-	
+
 	private void checkCategory(String tmpCategory) {
 		// TODO 自動生成されたメソッド・スタブ
-		if(tmpCategory.equals(getResources().getString(R.string.register_interview_category_indi))){
+		if (tmpCategory.equals(getResources().getString(
+				R.string.register_interview_category_indi))) {
 			mCategory = 0;
-		}else if(tmpCategory.equals(getResources().getString(R.string.register_interview_category_group))){
+		} else if (tmpCategory.equals(getResources().getString(
+				R.string.register_interview_category_group))) {
 			mCategory = 1;
-		}else {
+		} else {
 			mCategory = 2;
 		}
-		
+
 	}
 
 	/**
@@ -477,7 +508,8 @@ public class RegisterInterviewActivity extends Activity {
 			try {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
 				UpdateInterview register = endpoint.interviewV1EndPoint()
-						.updateInterview(userKey, selectionKey, mTime, mAtmosphere,mCategory ,questions );
+						.updateInterview(userKey, selectionKey, mTime,
+								mAtmosphere, mCategory, questions);
 				ResultV1Dto result = register.execute();
 
 				if (SUCCESS.equals(result.getResult())) {
@@ -510,7 +542,5 @@ public class RegisterInterviewActivity extends Activity {
 			showProgress(false);
 		}
 	}
-	
-	
 
 }
