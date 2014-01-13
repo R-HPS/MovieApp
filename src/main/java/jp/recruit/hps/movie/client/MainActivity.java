@@ -14,13 +14,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		new CompanyPreferences();
-//		if(sharedCheck()){
-//			Intent intent = new Intent(this,TopActivity.class);
-//			startActivity(intent);
-//		}else{
+		if(sharedCheck()){
+			Intent intent = new Intent(this,TopActivity.class);
+			startActivity(intent);
+		}else{
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
-//		}
+		}
 		finish();
 	}
 	
