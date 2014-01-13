@@ -141,4 +141,5 @@
     <color name="mediumslateblue">#FF7b68ee</color>
     <color name="recruit_black">#6d6d6d</color>
     <color name="recruit_red">#bc4268</color>
+    <color name="bank_back">#ebeaeb</color>
 </resources>

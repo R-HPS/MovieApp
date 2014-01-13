@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/bank_back"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="@drawable/background"
         android:visibility="gone" >
 
         <ProgressBar
@@ -36,60 +36,70 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background" >
+        android:background="@color/bank_back" >
 
         <LinearLayout
-            style="@style/LoginFormContainer"
-            android:orientation="vertical" 
-            android:gravity="center_horizontal">
-			
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baton_logo_03"
-                android:contentDescription="@string/desc"
-                />
-            <EditText
-                android:layout_marginTop="30dp"
-                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <ImageView
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/login_button_11"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/desc"
-                 />
+                android:scaleType="fitXY"
+                android:src="@drawable/header" />
 
-            <ImageView
-                android:id="@+id/go_to_register_from_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/login_signup"
-                android:contentDescription="@string/desc"
-              />
+            <LinearLayout
+                style="@style/LoginFormContainer"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/logo" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_signin" />
+
+                <ImageView
+                    android:id="@+id/go_to_register_from_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    android:src="@drawable/btn_signup" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
 </merge>
-
