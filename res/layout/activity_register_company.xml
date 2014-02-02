@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:background="@color/bank_back"
     android:gravity="center_horizontal"
-    android:background="@drawable/background"
-	>    
-        <!-- Register progress -->
+    android:orientation="vertical" >
+
+    <!-- Register progress -->
 
     <LinearLayout
         android:id="@+id/register_company_status"
@@ -33,112 +32,137 @@
             android:text="@string/register_progress_signing_up"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/register_company_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:weightSum="10" >
+        android:weightSum="12" >
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/register01_title" 
-            android:layout_weight="1"/>
+            android:layout_weight="2"
+            android:background="@drawable/header" >
 
-			<LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:gravity="center_horizontal"
-			    android:orientation="vertical" 
-			    android:layout_weight="2">
+            <TextView
+                android:id="@+id/mypage_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:text="新規選考登録"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </FrameLayout>
 
-        <TextView
-            android:id="@+id/register_company_name_panel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/register_company_name"
-            android:textColor="@color/recruit_black" />
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/register_company_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableBottom="@drawable/register_companyname"
-            android:textColor="@color/recruit_black" />
-		</LinearLayout>
-		
-		<LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:gravity="center_horizontal"
-			    android:orientation="vertical" 
-			    android:layout_weight="2">	
-        <TextView
-            android:id="@+id/register_company_section"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/register_company_section"
-            android:textColor="@color/recruit_black" />
+            <TextView
+                android:id="@+id/register_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_company_name"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/register_company_section_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/register_company_name_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/input" />
         </LinearLayout>
 
-		<LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:gravity="center_horizontal"
-			    android:orientation="vertical" 
-			    android:layout_weight="2">
-        <TextView
-            android:id="@+id/register_company_phase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/register_company_phase"
-            android:textColor="@color/recruit_black" />
-
-        <Spinner
-            android:id="@+id/register_company_phase_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-		</LinearLayout>
         <LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:gravity="center_horizontal"
-			    android:orientation="vertical" 
-			    android:layout_weight="2">
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/register_company_time"
-            android:textColor="@color/recruit_black" />
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/register_company_time_text"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/register_company_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/register_company_section"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/register_company_section_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/input" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableBottom="@drawable/register00_comany_schedule"
-            android:textColor="@color/recruit_black"
-            android:textSize="20sp" />
-	</LinearLayout>
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/register_company_phase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/register_company_phase"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/register_company_phase_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/input" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/register_company_time"
+                android:textColor="@color/recruit_black" />
+
+            <TextView
+                android:id="@+id/register_company_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableBottom="@drawable/register00_comany_schedule"
+                android:textColor="@color/recruit_black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_weight="1" >
+            android:weightSum="2" >
 
             <ImageView
                 android:id="@+id/register_company_registbtn"
@@ -156,6 +180,6 @@
                 android:contentDescription="@string/desc"
                 android:src="@drawable/register00_cancelbutton_09" />
         </LinearLayout>
+    </LinearLayout>
 
-	</LinearLayout>
 </LinearLayout>

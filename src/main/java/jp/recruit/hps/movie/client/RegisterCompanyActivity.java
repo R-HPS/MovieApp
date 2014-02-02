@@ -23,6 +23,7 @@ import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1Dto;
 import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1DtoCollection;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -38,9 +39,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,12 +74,14 @@ public class RegisterCompanyActivity extends HPSActivity {
 	String tmpTime;
 	String tmpDate;
 
+	List<String> mNameArray;
 	List<String> mSectionArray;
 	List<String> mPhaseArray;
 
 	// UI references.
 	private TextView mNameView;
 	private TextView mDateView;
+	private Spinner mNameSpinner;
 	private Spinner mSectionSpinner;
 	private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
@@ -101,13 +106,10 @@ public class RegisterCompanyActivity extends HPSActivity {
 
 	private static final String SUCCESS = CommonConstant.SUCCESS;
 	SelectionRegisterTask mAuthTask;
-	
-	
+
 	private View mRegisterFormView;
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
-
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -131,18 +133,24 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private void setButtons() {
 		// TODO 自動生成されたメソッド・スタブ
 		mNameView = (TextView) findViewById(R.id.register_company_name);
-		mNameView.setOnClickListener(new View.OnClickListener() {
+		mNameSpinner = (Spinner) this
+				.findViewById(R.id.register_company_name_spinner);
+		mNameSpinner.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
-			public void onClick(View v) {
-				// TODO 自動生成されたメソッド・スタブ
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				// TODO Auto-generated method stub
+				if (companyDialog != null)
+					return true;
 				setCompanyDialog();
+				return false;
 			}
 
 		});
 		// 会社部門のspinnerのセット
 		mSectionText = (TextView) findViewById(R.id.register_company_section);
 		mPhaseText = (TextView) findViewById(R.id.register_company_phase);
+
 		mSectionSpinner = (Spinner) this
 				.findViewById(R.id.register_company_section_spinner);
 		// 会社の選考段階のspinnerセット
@@ -210,14 +218,29 @@ public class RegisterCompanyActivity extends HPSActivity {
 								company = (CompanyV1Dto) adapter
 										.getItem(listView
 												.getCheckedItemPosition());
-								mNameView.setText(company.getName());
+								mNameArray = new ArrayList<String>();
+								mNameArray.add(company.getName());
+								setSpinner(mNameSpinner, mNameArray);
+								// mNameView.setText(company.getName());
 								new GetCompanyListAsyncTask(
 										RegisterCompanyActivity.this)
-								.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,company.getKey());
+										.executeOnExecutor(
+												AsyncTask.THREAD_POOL_EXECUTOR,
+												company.getKey());
+								companyDialog = null;
 							}
 						})
-				.setNegativeButton(R.string.register_company_cancel_title, null)
-				.show();
+				.setNegativeButton(R.string.register_company_cancel_title,
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								companyDialog.dismiss();
+								companyDialog = null;
+							}
+						}).show();
+		companyDialog.setCanceledOnTouchOutside(false);
 		button = companyDialog.getButton(DialogInterface.BUTTON_POSITIVE);
 		button.setEnabled(false);
 		companyDialog.findViewById(R.id.register_company_serchbtn)
@@ -226,15 +249,19 @@ public class RegisterCompanyActivity extends HPSActivity {
 					@Override
 					public void onClick(View v) {
 						// TODO 自動生成されたメソッド・スタブ
-						if(mSearchTask==null){
-						button.setEnabled(false);
-						nothing.setVisibility(View.GONE);
-						listView.setVisibility(View.GONE);
-						progressBar.setVisibility(View.VISIBLE);
-						
-						mSearchTask = new GetCompanySerchAsyncTask(
-								RegisterCompanyActivity.this);
-						mSearchTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,companytext.getText().toString());
+						if (mSearchTask == null) {
+							InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			                imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+							button.setEnabled(false);
+							nothing.setVisibility(View.GONE);
+							listView.setVisibility(View.GONE);
+							progressBar.setVisibility(View.VISIBLE);
+
+							mSearchTask = new GetCompanySerchAsyncTask(
+									RegisterCompanyActivity.this);
+							mSearchTask.executeOnExecutor(
+									AsyncTask.THREAD_POOL_EXECUTOR, companytext
+											.getText().toString());
 						}
 					}
 				});
@@ -255,11 +282,13 @@ public class RegisterCompanyActivity extends HPSActivity {
 
 		// Store values at the time of the login attempt.
 		// mName= mNameView.getText().toString();
-		mName = mNameView.getText().toString();
+		// mName = mNameView.getText().toString();
 		mDate = mDateView.getText().toString();
 		boolean cancel = false;
 
-		if (TextUtils.isEmpty(mName)) {
+		if (mNameSpinner.getTag() != null) {
+			mName = mNameSpinner.getTag().toString();
+		} else {
 			mNameView.setError(getString(R.string.error_field_required));
 			cancel = true;
 		}
@@ -291,18 +320,19 @@ public class RegisterCompanyActivity extends HPSActivity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
 			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
-			
-//			/*実験*/
-//			Intent i = new Intent(RegisterCompanyActivity.this,
-//					RegisterInterviewActivity.class);
-//			i.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
-//					selectionKey);
-//			startActivity(i);
+
+			// /*実験*/
+			// Intent i = new Intent(RegisterCompanyActivity.this,
+			// RegisterInterviewActivity.class);
+			// i.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
+			// selectionKey);
+			// startActivity(i);
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
 			mAuthTask = new SelectionRegisterTask();
-			mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void) null);
+			mAuthTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+					(Void) null);
 		}
 	}
 
@@ -437,8 +467,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 				Log.d("DEBUG", "register success");
 				startActivity(new Intent(RegisterCompanyActivity.this,
 						TopActivity.class));
-				
-				
+
 				finish();
 			}
 		}
@@ -545,7 +574,6 @@ public class RegisterCompanyActivity extends HPSActivity {
 		timePicker.setCurrentHour(hourOfDay); // (12)
 		timePicker.setCurrentMinute(minute); // (13)
 		timePicker.setOnTimeChangedListener(handler); // (14)
-		timePicker.setIs24HourView(true); // (15)
 	}
 
 	/**
@@ -596,6 +624,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 			TimePicker timePicker = (TimePicker) view.getChildAt(1); // (19)
 
 			Calendar calendar = Calendar.getInstance();
+
 			calendar.set(datePicker.getYear(), datePicker.getMonth(),
 					datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
 					timePicker.getCurrentMinute());
@@ -650,7 +679,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 				progressBar.setVisibility(View.GONE);
 				nothing.setVisibility(View.VISIBLE);
 			}
-			mSearchTask=null;
+			mSearchTask = null;
 		}
 	}
 }
