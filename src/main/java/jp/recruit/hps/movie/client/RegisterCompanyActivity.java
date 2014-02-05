@@ -36,12 +36,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
@@ -82,12 +80,13 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private TextView mNameView;
 	private TextView mDateView;
 	private Spinner mNameSpinner;
+	private Spinner mDateSpinner;
 	private Spinner mSectionSpinner;
 	private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
 	private ImageView mCancelButton;
-	private TextView mSectionText;
-	private TextView mPhaseText;
+//	private TextView mSectionText;
+//	private TextView mPhaseText;
 
 	private String selectionKey;
 	String userKey;
@@ -147,24 +146,32 @@ public class RegisterCompanyActivity extends HPSActivity {
 			}
 
 		});
-		// 会社部門のspinnerのセット
-		mSectionText = (TextView) findViewById(R.id.register_company_section);
-		mPhaseText = (TextView) findViewById(R.id.register_company_phase);
-
-		mSectionSpinner = (Spinner) this
-				.findViewById(R.id.register_company_section_spinner);
-		// 会社の選考段階のspinnerセット
-		mPhaseSpinner = (Spinner) this
-				.findViewById(R.id.register_company_phase_spinner);
+//		// 会社部門のspinnerのセット
+//		mSectionText = (TextView) findViewById(R.id.register_company_section);
+//		mPhaseText = (TextView) findViewById(R.id.register_company_phase);
+//
+//		mSectionSpinner = (Spinner) this
+//				.findViewById(R.id.register_company_section_spinner);
+//		// 会社の選考段階のspinnerセット
+//		mPhaseSpinner = (Spinner) this
+//				.findViewById(R.id.register_company_phase_spinner);
 		// 面接受ける日にちのセット
-		mDateView = (TextView) findViewById(R.id.register_company_time_text);
-		mDateView.setOnClickListener(new OnClickListener() {
+		mDateView = (TextView)findViewById(R.id.register_company_time);
+		mDateSpinner = (Spinner) this
+				.findViewById(R.id.register_company_time_text);
+		mDateSpinner.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
-			public void onClick(View v) {
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				// TODO Auto-generated method stub
+				if (mDateDialog != null)
+					return true;
 				setDial();
+				return false;
 			}
+
 		});
+		
 		// 情報を登録するボタンをセット
 		mRegistButton = (ImageView) findViewById(R.id.register_company_registbtn);
 		mRegistButton.setOnClickListener(new View.OnClickListener() {
@@ -277,13 +284,15 @@ public class RegisterCompanyActivity extends HPSActivity {
 		// Reset errors.
 		mNameView.setError(null);
 		mDateView.setError(null);
-		mSectionText.setError(null);
-		mPhaseText.setError(null);
+		mSection = "a";
+		mPhase = "a";
+//		mSectionText.setError(null);
+//		mPhaseText.setError(null);
 
 		// Store values at the time of the login attempt.
 		// mName= mNameView.getText().toString();
 		// mName = mNameView.getText().toString();
-		mDate = mDateView.getText().toString();
+//		mDate = mDateView.getText().toString();
 		boolean cancel = false;
 
 		if (mNameSpinner.getTag() != null) {
@@ -293,26 +302,29 @@ public class RegisterCompanyActivity extends HPSActivity {
 			cancel = true;
 		}
 
-		if (TextUtils.isEmpty(mDate)) {
+		if (mDateSpinner.getTag() != null) {
+			String date = mDateSpinner.getTag().toString();
+			mTime = setCal(date);
+		} else {
 			mDateView.setError(getString(R.string.error_field_required));
 			cancel = true;
-		} else {
-			String date = mDateView.getText().toString();
-			mTime = setCal(date);
 		}
-
-		if (mSectionSpinner.getTag() != null) {
+		
+		
+		/*選考と分野の登録は現在使わないため、消去*/
+/*		if (mSectionSpinner.getTag() != null) {
 			mSection = mSectionSpinner.getTag().toString();
 		} else {
 			mSectionText.setError(getString(R.string.error_field_required));
 			cancel = true;
 		}
+	
 		if (mPhaseSpinner.getTag() != null) {
 			mPhase = mPhaseSpinner.getTag().toString();
 		} else {
 			mPhaseText.setError(getString(R.string.error_field_required));
 			cancel = true;
-		}
+		}*/
 
 		if (cancel) {
 			// There was an error; don't attempt register
@@ -320,13 +332,6 @@ public class RegisterCompanyActivity extends HPSActivity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
 			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
-
-			// /*実験*/
-			// Intent i = new Intent(RegisterCompanyActivity.this,
-			// RegisterInterviewActivity.class);
-			// i.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
-			// selectionKey);
-			// startActivity(i);
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
@@ -536,7 +541,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 
 	private void setDial() {
 		// ダイアログに表示する日時を取得する
-		mDateView = (TextView) findViewById(R.id.register_company_time_text);
+//		mDateView = (TextView) findViewById(R.id.register_company_time_text);
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
 		int monthOfYear = calendar.get(Calendar.MONTH);
@@ -562,11 +567,19 @@ public class RegisterCompanyActivity extends HPSActivity {
 						String.format(getString(R.string.date_time_format),
 								calendar, calendar))
 				.setPositiveButton(R.string.register_company_set_title,
-						new DateSetHandler(view, mDateView))
+						new DateSetHandler(view))
 				// (9)
-				.setNegativeButton(R.string.register_company_cancel_title, null)
-				.show();
+				.setNegativeButton(R.string.register_company_cancel_title,new DialogInterface.OnClickListener() {
 
+					@Override
+					public void onClick(DialogInterface dialog,
+							int which) {
+						mDateDialog.dismiss();
+						mDateDialog = null;
+					}
+				})
+				.show();
+		mDateDialog.setCanceledOnTouchOutside(false);
 		// pickerに値が変化したことを検知するハンドラーを設定する
 		DateChangedHandler handler = new DateChangedHandler(mDateDialog); // (10)
 
@@ -611,11 +624,9 @@ public class RegisterCompanyActivity extends HPSActivity {
 	 */
 	private class DateSetHandler implements DialogInterface.OnClickListener { // (16)
 		private ViewGroup view;
-		private TextView date;
 
-		public DateSetHandler(ViewGroup view, TextView date) {
+		public DateSetHandler(ViewGroup view) {
 			this.view = view;
-			this.date = date;
 		}
 
 		@Override
@@ -628,9 +639,13 @@ public class RegisterCompanyActivity extends HPSActivity {
 			calendar.set(datePicker.getYear(), datePicker.getMonth(),
 					datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
 					timePicker.getCurrentMinute());
-
-			date.setText(String.format(getString(R.string.date_time_format),
+			List<String> mDateArray = new ArrayList<String>();
+			mDateArray.add(String.format(getString(R.string.date_time_format),
 					calendar));
+			setSpinner(mDateSpinner, mDateArray);
+			mDateDialog = null;
+//			date.setText(String.format(getString(R.string.date_time_format),
+//					calendar));
 		}
 	}
 
