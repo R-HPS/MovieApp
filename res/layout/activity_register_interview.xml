@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/bank_back"
     android:orientation="vertical" >
 
     <!-- Register progress -->
@@ -31,148 +31,37 @@
             android:text="@string/register_progress_signing_up"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-	
-    
+
     <LinearLayout
+        android:id="@+id/register_interview_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:id="@+id/register_interview_form"
-        android:weightSum="18" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/serve00_title" />
-		<LinearLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="0dp"
-		    android:layout_weight="1"
-		    android:layout_gravity="center"
-		    android:orientation="vertical"
-		    >
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/companytime"
-		        android:textSize="20dp"
-		        
-		        android:id="@+id/register_interview_companyname"
-		        />
-		    
-		</LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2" >
-
-            <FrameLayout
-                android:id="@+id/register_time_layout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:src="@drawable/serve00_time" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal" >
-
-                    <Spinner
-                        android:id="@+id/register_interview_time_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/register_category_layout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:src="@drawable/serve00_style" />
-
-                <Spinner
-                    android:id="@+id/register_interview_category_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-            </FrameLayout>
-        </LinearLayout>
+        android:weightSum="10" >
 
         <FrameLayout
-            android:id="@+id/register_atmosphere_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" >
+            android:layout_weight="1"
+            android:background="@drawable/header" >
 
-            <ImageView
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/register_interview_title_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/desc"
-                android:src="@drawable/serve00_atmosphere" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:weightSum="3" >
-
-                <ImageView
-                    android:id="@+id/register_interview_atmosphre_easy"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:src="@drawable/buttons01_serve_easy" />
-
-                <ImageView
-                    android:id="@+id/register_interview_atmosphre_normal"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:src="@drawable/buttons01_serve_normal" />
-
-                <ImageView
-                    android:id="@+id/register_interview_atmosphre_hard"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/desc"
-                    android:src="@drawable/buttons01_serve_hard" />
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif-light"
+                android:text=""
+                android:textColor="@color/white"
+                android:maxLines="1"
+            android:textSize="20sp"  />
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9" >
+            android:layout_weight="8" >
 
             <ImageView
                 android:layout_width="match_parent"

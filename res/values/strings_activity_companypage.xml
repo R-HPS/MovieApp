@@ -8,5 +8,5 @@
     <string name="group">グループ面接</string>
     <string name="group_dis">グループ\nディスカッション</string>
     <string name="appaku_meter_percent">%s％</string>
-    <string name="null_text">BATONがありません。</string>
+    <string name="null_text">読み込めませんでした。</string>
 </resources>

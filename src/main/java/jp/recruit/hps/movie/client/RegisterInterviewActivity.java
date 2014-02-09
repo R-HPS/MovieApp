@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
-import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.UpdateInterview;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.UpdateInterviewQuestions;
 import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
 import com.appspot.hps_movie.interviewEndpoint.model.StringListContainer;
@@ -38,9 +37,6 @@ import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,13 +44,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterInterviewActivity extends Activity {
 	private QuestionAdapter adapter = null;
-	String selectionKey;
+	String interviewKey;
+	String companyKey;
 	String userKey;
 	// 送信用
 	InterviewRegisterTask mAuthTask;
@@ -96,10 +92,11 @@ public class RegisterInterviewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_interview);
 		Intent i = getIntent();
-		selectionKey = i.getStringExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY);
+		interviewKey = i.getStringExtra(CommonUtils.STRING_EXTRA_INTERVIEW_KEY);
+		companyKey = i.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_KEY);
 		String companyName = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME);
-		TextView name = (TextView) findViewById(R.id.register_interview_companyname);
+		TextView name = (TextView) findViewById(R.id.register_interview_title_text);
 		name.setText(companyName);
 		SharedPreferences pref = getSharedPreferences(
 				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
@@ -109,38 +106,7 @@ public class RegisterInterviewActivity extends Activity {
 		mRegisterStatusMessageView = (TextView) findViewById(R.id.register_interview_status_message);
 		setButton();
 		new GetQuestionListAsyncTask(this).executeOnExecutor(
-				AsyncTask.THREAD_POOL_EXECUTOR, selectionKey);
-	}
-
-	private void setSpinner(Spinner spinner) {
-		if (spinner == mTimeSpinner) {
-			ArrayAdapter<CharSequence> adapter = ArrayAdapter
-					.createFromResource(this,
-							R.array.register_interview_time_spinner_set,
-							android.R.layout.simple_spinner_item);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinner.setAdapter(adapter);
-		} else {
-			ArrayAdapter<CharSequence> adapter = ArrayAdapter
-					.createFromResource(this,
-							R.array.register_interview_category_spinner_set,
-							android.R.layout.simple_spinner_item);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spinner.setAdapter(adapter);
-		}
-
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View viw,
-					int arg2, long arg3) {
-				Spinner spinner = (Spinner) parent;
-				String item = (String) spinner.getSelectedItem();
-				spinner.setTag(item);
-			}
-
-			public void onNothingSelected(AdapterView<?> parent) {
-			}
-		});
-		spinner.setSelection(0);
+				AsyncTask.THREAD_POOL_EXECUTOR, companyKey);
 	}
 
 	public void getCheckdList() {
@@ -163,16 +129,7 @@ public class RegisterInterviewActivity extends Activity {
 	}
 
 	public void setButton() {
-		mTimeSpinner = (Spinner) findViewById(R.id.register_interview_time_spinner);
-		mCategorySpinner = (Spinner) findViewById(R.id.register_interview_category_spinner);
-		setSpinner(mTimeSpinner);
-		setSpinner(mCategorySpinner);
-		mEasyAtmosphere = (ImageView) findViewById(R.id.register_interview_atmosphre_easy);
-		mEasyAtmosphere.setOnClickListener(clickatmosphere);
-		mNormalAtmosphere = (ImageView) findViewById(R.id.register_interview_atmosphre_normal);
-		mNormalAtmosphere.setOnClickListener(clickatmosphere);
-		mHardAtmosphere = (ImageView) findViewById(R.id.register_interview_atmosphre_hard);
-		mHardAtmosphere.setOnClickListener(clickatmosphere);
+
 		mQuestionListLayout = (LinearLayout) findViewById(R.id.register_question_list_layout);
 		mInterviewSendButton = (ImageView) findViewById(R.id.register_interview_send_button);
 		mInterviewSendButton.setOnClickListener(new View.OnClickListener() {
@@ -184,41 +141,6 @@ public class RegisterInterviewActivity extends Activity {
 			}
 		});
 		setSendButton();
-	}
-
-	private View.OnClickListener clickatmosphere = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			// TODO 自動生成されたメソッド・スタブ
-
-			setAtmosphereButton(v.getId());
-		}
-	};
-
-	public void setAtmosphereButton(int id) {
-		mEasyAtmosphere.setImageResource(R.drawable.buttons01_serve_easy);
-		mNormalAtmosphere.setImageResource(R.drawable.buttons01_serve_normal);
-		mHardAtmosphere.setImageResource(R.drawable.buttons01_serve_hard);
-		switch (id) {
-		case R.id.register_interview_atmosphre_easy:
-			mAtmosphere = 0;
-			mEasyAtmosphere
-					.setImageResource(R.drawable.buttons01_serve_easy_after);
-			break;
-		case R.id.register_interview_atmosphre_normal:
-			mAtmosphere = 1;
-			mNormalAtmosphere
-					.setImageResource(R.drawable.buttons01_serve_normal_after);
-			break;
-		case R.id.register_interview_atmosphre_hard:
-			mAtmosphere = 2;
-			mHardAtmosphere
-					.setImageResource(R.drawable.buttons01_serve_hard_after);
-			break;
-
-		}
-
 	}
 
 	public void setSendButton() {
@@ -266,6 +188,10 @@ public class RegisterInterviewActivity extends Activity {
 
 	}
 
+	/*
+	 * 質問をリストで表示する
+	 * 引数　userKey,interviewKey
+	 */
 	public class SetQuestionAsyncTask extends
 			AsyncTask<String, Integer, Boolean> {
 		QuestionV1Dto question;
@@ -277,7 +203,7 @@ public class RegisterInterviewActivity extends Activity {
 			try {
 				QuestionEndpoint endpoint = RemoteApi.getQuestionEndpoint();
 				CreateQuestion createQuestion = endpoint.questionV1EndPoint()
-						.createQuestion(userKey, selectionKey, params[0]);
+						.createQuestion(interviewKey, params[0]);
 				QuestionResultV1Dto result = createQuestion.execute();
 				if (SUCCESS.equals(result.getResult())) {
 					question = result.getQuestion();
@@ -452,19 +378,7 @@ public class RegisterInterviewActivity extends Activity {
 				questions = new StringListContainer();
 				questions.setList(questionKeyList);
 			}
-			if (mTimeSpinner.getTag() != null) {
-				String tmpTime = mTimeSpinner.getTag().toString();
-				mTime = Integer.valueOf(tmpTime.substring(0,
-						tmpTime.length() - 1));
-			} else {
-				cancel = true;
-			}
-			if (mCategorySpinner.getTag() != null) {
-				String tmpCategory = mCategorySpinner.getTag().toString();
-				checkCategory(tmpCategory);
-			} else {
-				cancel = true;
-			}
+
 		} else {
 			cancel = true;
 		}
@@ -484,20 +398,6 @@ public class RegisterInterviewActivity extends Activity {
 		}
 	}
 
-	private void checkCategory(String tmpCategory) {
-		// TODO 自動生成されたメソッド・スタブ
-		if (tmpCategory.equals(getResources().getString(
-				R.string.register_interview_category_indi))) {
-			mCategory = 0;
-		} else if (tmpCategory.equals(getResources().getString(
-				R.string.register_interview_category_group))) {
-			mCategory = 1;
-		} else {
-			mCategory = 2;
-		}
-
-	}
-
 	/**
 	 * Represents an asynchronous registration task used to authenticate the
 	 * user.
@@ -508,9 +408,9 @@ public class RegisterInterviewActivity extends Activity {
 
 			try {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
-				UpdateInterviewQuestions register = endpoint.interviewV1EndPoint()
-						.updateInterviewQuestions(userKey, selectionKey,
-								questions);
+				UpdateInterviewQuestions register = endpoint
+						.interviewV1EndPoint().updateInterviewQuestions(
+								interviewKey, questions);
 				ResultV1Dto result = register.execute();
 
 				if (SUCCESS.equals(result.getResult())) {

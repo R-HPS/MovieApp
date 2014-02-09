@@ -1,221 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
-	
+    android:background="@color/bank_back"
+    android:orientation="vertical"
+    android:weightSum="10" >
 
-    <ImageView
-        android:id="@+id/headimage"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/receive_head_02" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/header" >
+
+        <TextView
+            android:id="@+id/company_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-light"
+            android:text=""
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:textSize="20sp" />
+    </FrameLayout>
 
     <ListView
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/changelist"
-        android:layout_below="@+id/companystatus"
-        android:layout_centerHorizontal="true"
+        android:layout_weight="6"
         android:divider="@null"
         android:dividerHeight="10dp"
         android:paddingTop="5dp"
         android:visibility="gone" >
     </ListView>
 
-    <FrameLayout
-        android:id="@+id/company_title"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/company_null_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headimage"
-        android:layout_centerHorizontal="true" >
-
-        <ImageView
-            android:id="@+id/company_title_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/receive_company_title_02" />
-
-        <TextView
-            android:id="@+id/companyname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/exampletext"
-            android:textColor="@color/recruit_black" />
-
-        <TextView
-            android:id="@+id/companyphase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="18dp"
-            android:text="@string/exampletext"
-            android:textColor="@color/recruit_black" />
-    </FrameLayout>
-    <ScrollView 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/companypage_text_scroll"
-        android:layout_below="@+id/company_title"
-        android:layout_above="@+id/changelist"
-      	android:visibility="gone"
-        
-        >
-	<TextView
-	    android:id="@+id/null_text"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/null_text"
-	    android:textSize="15sp"
-	    android:layout_gravity="top"
-	    android:visibility="gone"
-	    />
-	</ScrollView>
-    <FrameLayout
-        android:id="@+id/companystatus"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/company_title"
-        android:visibility="gone" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/desc"
-            android:src="@drawable/receive00_status_02" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="3" >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="12" >
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="6" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/desc"
-                        android:src="@drawable/receive01_appakudoooooo" />
-
-                    <ProgressBar
-                        android:id="@+id/appaku_bar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:progress="100" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:gravity="center_vertical" >
-
-                    <TextView
-                        android:id="@+id/company_atmosphere_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="@string/search" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.00"
-                android:gravity="center" >
-
-                <TextView
-                    android:id="@+id/timetext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@string/companytime"
-                    android:textColor="@color/recruit_black" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.00" >
-
-                <TextView
-                    android:id="@+id/categorytext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:maxLines="1"
-                    android:text="@string/companycategory"
-                    android:textColor="@color/recruit_black" />
-            </RelativeLayout>
-        </LinearLayout>
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/changelist"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
-        <ImageButton
-            android:id="@+id/realtimebtn"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/desc" />
-
-        <ImageButton
-            android:id="@+id/backyardbtn"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/desc" />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/null_text"
+        android:textColor="@color/black"
+        android:textSize="20sp" 
+        android:visibility="gone"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-    
+        android:layout_gravity="center" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -26,6 +26,7 @@ public class HPSActivity extends Activity {
 					&& CompanyPreferences.getTime(i) < System
 							.currentTimeMillis()) {
 				current = i;
+				break;
 			}
 		}
 		Calendar cal = Calendar.getInstance();
@@ -37,8 +38,10 @@ public class HPSActivity extends Activity {
 		if (current != -1
 				&& CompanyPreferences.getTime(current) < cal.getTimeInMillis()) {
 			Intent intent = new Intent(this, RegisterInterviewActivity.class);
-			intent.putExtra(CommonUtils.STRING_EXTRA_SELECTION_KEY,
-					CompanyPreferences.getKey(current));
+			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_KEY,
+					CompanyPreferences.getcompanyKey(current));
+			intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEW_KEY,
+					CompanyPreferences.getinterviewKey(current));
 			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME, 
 					CompanyPreferences.getName(current));
 			CompanyPreferences.cleanPref(current);

@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 public class CompanyPreferences {
 	private static final String KEYS_KEY[] = { "comapanyKey1",
 			"comapanyKey2", "comapanyKey3" };
+	private static final String KEYS_INTERVIEW_KEY[] = { "interviewKey1",
+		"interviewKey2", "interviewKey3" };
 	private static final String KEYS_DATE[] = { "comapanyDate1",
 			"comapanyDate2", "comapanyDate3" };
 	private static final String KEYS_NAME[] = { "comapanyName1",
@@ -33,6 +35,9 @@ public class CompanyPreferences {
 		for (int i = 0; i < count; i++) {
 			if (list.get(i) != null) {
 				// Editor に値を代入
+				if (list.get(i).getInterviewKey() != null) {
+					editor.putString(KEYS_INTERVIEW_KEY[i], list.get(i).getInterviewKey());
+				}
 				if (list.get(i).getKey() != null) {
 					editor.putString(KEYS_KEY[i], list.get(i).getKey());
 				}
@@ -49,9 +54,16 @@ public class CompanyPreferences {
 		editor.commit();
 	}
 
-	public static String getKey(int i) {
+	public static String getcompanyKey(int i) {
 		if (pref != null && i < 3) {
 			return pref.getString(KEYS_KEY[i], null);
+		}
+		return null;
+	}
+	
+	public static String getinterviewKey(int i) {
+		if (pref != null && i < 3) {
+			return pref.getString(KEYS_INTERVIEW_KEY[i], null);
 		}
 		return null;
 	}
