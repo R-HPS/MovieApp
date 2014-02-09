@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
+
 import jp.recruit.hps.movie.client.CompanyInterviewActivity;
 import jp.recruit.hps.movie.client.R;
 import android.annotation.SuppressLint;
@@ -16,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
 
 public class CompanyAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
@@ -49,9 +49,9 @@ public class CompanyAdapter extends BaseAdapter {
 		return list.get(position).getName();
 	}
 
-	public String getPhase(int position) {
-		return list.get(position).getPhase();
-	}
+//	public String getPhase(int position) {
+//		return list.get(position).getPhase();
+//	}
 
 	public Calendar getDate(int position) {
 		Calendar cal = Calendar.getInstance();
@@ -93,11 +93,11 @@ public class CompanyAdapter extends BaseAdapter {
 					.findViewById(R.id.mypage_company_name);
 			tv.setText(getName(position));
 		}
-		if (getPhase(position) != null) {
-			TextView tv = (TextView) convertView
-					.findViewById(R.id.mypage_company_phase);
-			tv.setText(getPhase(position));
-		}
+//		if (getPhase(position) != null) {
+//			TextView tv = (TextView) convertView
+//					.findViewById(R.id.mypage_company_phase);
+//			tv.setText(getPhase(position));
+//		}
 		if (getDate(position) != null) {
 			TextView tv = (TextView) convertView
 					.findViewById(R.id.mypage_company_date);
@@ -118,8 +118,8 @@ public class CompanyAdapter extends BaseAdapter {
 						getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
-				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE,
-						getPhase(position));
+//				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE,
+//						getPhase(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_READ, 
 						getWasRead(position));
 				context.startActivity(intent);

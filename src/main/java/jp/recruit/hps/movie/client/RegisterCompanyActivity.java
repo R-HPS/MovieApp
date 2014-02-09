@@ -3,12 +3,7 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
@@ -20,10 +15,6 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.InsertInterview;
 import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
-import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
-import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1Dto;
-import com.appspot.hps_movie.selectionEndpoint.model.SelectionV1DtoCollection;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -65,7 +56,8 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private String mDate;
 	private Long mTime;
 
-	Map<String, Map<String, SelectionV1Dto>> mInterviewMap;
+	//selectionあったとき
+//	Map<String, Map<String, SelectionV1Dto>> mInterviewMap;
 
 	CompanySearchAdapter adapter;
 
@@ -81,13 +73,13 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private TextView mDateView;
 	private Spinner mNameSpinner;
 	private Spinner mDateSpinner;
-	private Spinner mSectionSpinner;
-	private Spinner mPhaseSpinner;
+//	private Spinner mSectionSpinner;
+//	private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
 	private ImageView mCancelButton;
 
 
-	private String selectionKey;
+	private String companyKey;
 	String userKey;
 
 	AlertDialog mDateDialog;
@@ -216,6 +208,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 												.getCheckedItemPosition());
 								mNameArray = new ArrayList<String>();
 								mNameArray.add(company.getName());
+								companyKey = company.getKey();
 								setSpinner(mNameSpinner, mNameArray);
 								// mNameView.setText(company.getName());
 								companyDialog = null;
@@ -292,7 +285,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
-			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
+//			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
@@ -357,7 +350,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 			try {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
 				InsertInterview register = endpoint.interviewV1EndPoint()
-						.insertInterview(userKey, selectionKey, mTime);
+						.insertInterview(userKey, companyKey, mTime);
 				ResultV1Dto result = register.execute();
 
 				if (SUCCESS.equals(result.getResult())) {
@@ -425,6 +418,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 				Spinner spinner = (Spinner) parent;
 				String item = (String) spinner.getSelectedItem();
 				spinner.setTag(item);
+				/*
 				if (spinner == mSectionSpinner) {
 					mPhaseArray = new ArrayList<String>();
 					for (String phase : mInterviewMap.get(item).keySet()) {
@@ -438,7 +432,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 						}
 					});
 					setSpinner(mPhaseSpinner, mPhaseArray);
-				}
+				}*/
 			}
 
 			public void onNothingSelected(AdapterView<?> parent) {
@@ -588,6 +582,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				if(list!=null){
 				progressBar.setVisibility(View.GONE);
 				adapter = new CompanySearchAdapter(context, list);
 				listView.setVisibility(View.VISIBLE);
@@ -597,6 +592,10 @@ public class RegisterCompanyActivity extends HPSActivity {
 				// デフォルト値をセットする
 				listView.setItemChecked(0, true);
 				button.setEnabled(true);
+				}else{
+					progressBar.setVisibility(View.GONE);
+					nothing.setVisibility(View.VISIBLE);
+				}
 
 			} else {
 				progressBar.setVisibility(View.GONE);

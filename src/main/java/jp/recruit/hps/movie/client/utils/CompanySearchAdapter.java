@@ -26,7 +26,8 @@ public class CompanySearchAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return list.size();
+		
+		return list != null?list.size():0;
 	}
 
 	@Override
@@ -38,9 +39,9 @@ public class CompanySearchAdapter extends BaseAdapter {
 		return list.get(position).getName();
 	}
 	
-	public String getPhase(int position){
-		return list.get(position).getPhase();
-	}
+//	public String getPhase(int position){
+//		return list.get(position).getPhase();
+//	}
 	
 	public String getKey(int position) {
 		return list.get(position).getKey();

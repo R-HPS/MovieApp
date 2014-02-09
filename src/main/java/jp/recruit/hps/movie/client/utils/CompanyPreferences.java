@@ -1,7 +1,8 @@
 package jp.recruit.hps.movie.client.utils;
 
 import java.util.List;
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
+
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 
 import android.app.Activity;
 import android.content.Context;

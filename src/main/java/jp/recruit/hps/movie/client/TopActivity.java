@@ -26,9 +26,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1Dto;
-import com.appspot.hps_movie.selectionEndpoint.model.CompanyV1DtoCollection;
+import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
+import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.userEndpoint.UserEndpoint;
 import com.appspot.hps_movie.userEndpoint.model.PointV1Dto;
 
@@ -130,10 +130,10 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected Boolean doInBackground(String... queries) {
 			String query = queries[0];
-			SelectionEndpoint endpoint = RemoteApi.getSelectionEndpoint();
+			CompanyEndpoint endpoint = RemoteApi.getCompanyEndpoint();
 			try {
 				CompanyV1DtoCollection collection = endpoint
-						.selectionV1EndPoint().getSelections(query).execute();
+						.companyV1EndPoint().getCompanyList(query).execute();
 				if (collection != null && collection.getItems() != null) {
 					list = collection.getItems();
 				} else {

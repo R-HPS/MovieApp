@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.UpdateInterview;
+import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.UpdateInterviewQuestions;
 import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
 import com.appspot.hps_movie.interviewEndpoint.model.StringListContainer;
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
@@ -464,7 +465,7 @@ public class RegisterInterviewActivity extends Activity {
 			} else {
 				cancel = true;
 			}
-		}else{
+		} else {
 			cancel = true;
 		}
 
@@ -507,9 +508,9 @@ public class RegisterInterviewActivity extends Activity {
 
 			try {
 				InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
-				UpdateInterview register = endpoint.interviewV1EndPoint()
-						.updateInterview(userKey, selectionKey, mTime,
-								mAtmosphere, mCategory, questions);
+				UpdateInterviewQuestions register = endpoint.interviewV1EndPoint()
+						.updateInterviewQuestions(userKey, selectionKey,
+								questions);
 				ResultV1Dto result = register.execute();
 
 				if (SUCCESS.equals(result.getResult())) {

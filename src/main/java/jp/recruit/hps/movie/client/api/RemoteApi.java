@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 
-import com.appspot.hps_movie.archiveEndpoint.ArchiveEndpoint;
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
-import com.appspot.hps_movie.selectionEndpoint.SelectionEndpoint;
 import com.appspot.hps_movie.userEndpoint.UserEndpoint;
 import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
 import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint;
@@ -58,15 +56,15 @@ public class RemoteApi {
 		return updateBuilder(endpointBuilder).build();
 	}
 	
-	public static SelectionEndpoint getSelectionEndpoint() {
-		SelectionEndpoint.Builder endpointBuilder = new SelectionEndpoint.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				new HttpRequestInitializer() {
-					public void initialize(HttpRequest httpRequest) {
-					}
-				});
-		return updateBuilder(endpointBuilder).build();
-	}
+//	public static SelectionEndpoint getSelectionEndpoint() {
+//		SelectionEndpoint.Builder endpointBuilder = new SelectionEndpoint.Builder(
+//				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//				new HttpRequestInitializer() {
+//					public void initialize(HttpRequest httpRequest) {
+//					}
+//				});
+//		return updateBuilder(endpointBuilder).build();
+//	}
 	public static LoginEndpoint getLoginEndpoint() {
 		LoginEndpoint.Builder endpointBuilder = new LoginEndpoint.Builder(
 				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -107,13 +105,13 @@ public class RemoteApi {
 		return updateBuilder(endpointBuilder).build();
 	}
 	
-	public static ArchiveEndpoint getArchiveEndpoint() {
-		ArchiveEndpoint.Builder endpointBuilder = new ArchiveEndpoint.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				new HttpRequestInitializer() {
-					public void initialize(HttpRequest httpRequest) {
-					}
-				});
-		return updateBuilder(endpointBuilder).build();
-	}
+//	public static ArchiveEndpoint getArchiveEndpoint() {
+//		ArchiveEndpoint.Builder endpointBuilder = new ArchiveEndpoint.Builder(
+//				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//				new HttpRequestInitializer() {
+//					public void initialize(HttpRequest httpRequest) {
+//					}
+//				});
+//		return updateBuilder(endpointBuilder).build();
+//	}
 }
