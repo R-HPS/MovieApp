@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-light"
+            android:maxLines="1"
             android:text=""
             android:textColor="@color/white"
-            android:maxLines="1"
             android:textSize="20sp" />
     </FrameLayout>
 
@@ -28,12 +28,20 @@
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
+        android:layout_weight="7"
         android:divider="@null"
         android:dividerHeight="10dp"
         android:paddingTop="5dp"
         android:visibility="gone" >
     </ListView>
+
+    <ImageView
+        android:id="@+id/companypage_cancelbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/btn_can" />
 
     <TextView
         android:id="@+id/company_null_text"
@@ -43,9 +51,8 @@
         android:fontFamily="sans-serif-light"
         android:text="@string/null_text"
         android:textColor="@color/black"
-        android:textSize="20sp" 
-        android:visibility="gone"
-        />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -53,5 +60,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+    <!-- 広告を表示 -->
+
+    <net.nend.android.NendAdView
+        android:id="@+id/ad"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        NendApiKey="5e8782e34362b4df7f985b9017246cb28397ebf2"
+        NendSpotId="137322" />
 
 </LinearLayout>

@@ -23,9 +23,9 @@ public class MyView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		paint.setStrokeWidth(2);// 太さを2に
-		if (percent >= 50) {
+		if (percent >= 60) {
 			paint.setColor(Color.parseColor("#dd768e"));// 赤セット
-		}else if(percent<20){
+		}else if(percent>=30){
 			paint.setColor(Color.parseColor("#daa000"));// 黄セット
 		}else{
 			paint.setColor(Color.parseColor("#00a29a"));// 青セット

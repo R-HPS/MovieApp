@@ -84,9 +84,9 @@ public class CompanyAdapter extends BaseAdapter {
 		ImageButton imgbtn = (ImageButton) convertView
 				.findViewById(R.id.company_name_button);
 		if (position != 0) {
-			imgbtn.setBackgroundResource(R.drawable.mypage00_schedules_before);
+			imgbtn.setBackgroundResource(R.drawable.cn_back);
 		} else {
-			imgbtn.setBackgroundResource(R.drawable.mypage00_schedules_after);
+			imgbtn.setBackgroundResource(R.drawable.cn_back);
 		}
 		if (getName(position) != null) {
 			TextView tv = (TextView) convertView

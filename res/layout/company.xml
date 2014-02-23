@@ -37,10 +37,10 @@
 		        android:text="@string/exampletext"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="5dp"
-		        android:textColor="@color/recruit_black"
+		        android:textColor="@color/black"
 		        android:id="@+id/mypage_company_name"
 		        />
-
+<!-- 
 		    <TextView
 		        android:id="@+id/mypage_company_phase"
 		        android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
 		        android:layout_marginRight="3dp"
 		        android:textSize="12sp"
 		        android:text="@string/exampletext" />
-
+ -->
 		    <TextView
 		        android:id="@+id/mypage_company_date"
 		        android:layout_width="wrap_content"

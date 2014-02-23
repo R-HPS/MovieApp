@@ -61,6 +61,7 @@ public class TopActivity extends HPSActivity {
 						startActivity(i);
 					}
 				});
+		
 	}
 
 	@Override
@@ -199,4 +200,5 @@ public class TopActivity extends HPSActivity {
 			}
 		}
 	}
+	
 }

@@ -64,7 +64,7 @@ public class InterviewAdapter extends BaseAdapter {
 		DisplayMetrics metrics = new DisplayMetrics();  
 		((CompanyInterviewActivity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		int viewWidth = (int)metrics.widthPixels;
-		int paintWidth = viewWidth*percent;
+		int paintWidth = viewWidth*percent/100;
 		MyView myView = new MyView(context,paintWidth,percent);
 		v.addView(myView);
 //		tv.setText(getQuestion(position));
