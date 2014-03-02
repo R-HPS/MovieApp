@@ -24,24 +24,21 @@
             android:textSize="20sp" />
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/listView2"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:divider="@null"
-        android:dividerHeight="10dp"
-        android:paddingTop="5dp"
-        android:visibility="gone" >
-    </ListView>
+        android:layout_height="0dp"
+        android:layout_weight="7" >
 
-    <ImageView
-        android:id="@+id/companypage_cancelbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/btn_can" />
+        <ListView
+            android:id="@+id/listView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="10dp"
+            android:paddingTop="5dp"
+            android:visibility="gone" >
+        </ListView>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/company_null_text"
@@ -60,12 +57,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/companypage_cancelbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_weight="1"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/btn_can" />
+
     <!-- 広告を表示 -->
 
     <net.nend.android.NendAdView
         android:id="@+id/ad"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="bottom"
         NendApiKey="5e8782e34362b4df7f985b9017246cb28397ebf2"
         NendSpotId="137322" />
 

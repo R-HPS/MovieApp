@@ -12,12 +12,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.model.InterviewV1Dto;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class CompanyInterviewActivity extends HPSActivity {
 	String selectionKey;
@@ -37,11 +39,22 @@ public class CompanyInterviewActivity extends HPSActivity {
 		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);
 		final String companyName = i
 				.getStringExtra(CommonUtils.STRING_EXTRA_FILE_NAME);
-		
+
 		wasRead = i.getExtras().getBoolean(
 				CommonUtils.STRING_EXTRA_COMPANY_READ);
-		 TextView tv = (TextView) findViewById(R.id.company_title_text);
-		 tv.setText(companyName);
+		TextView tv = (TextView) findViewById(R.id.company_title_text);
+		tv.setText(companyName);
+		ImageView cancelBtn = (ImageView) findViewById(R.id.companypage_cancelbtn);
+		cancelBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(CompanyInterviewActivity.this,
+						TopActivity.class);
+				startActivity(i);
+			}
+		});
 		// tv = (TextView) findViewById(R.id.companyphase);
 		// tv.setText(companyPhase);
 		new GetInterviewListAsyncTask(this).execute(selectionKey);
@@ -83,10 +96,22 @@ public class CompanyInterviewActivity extends HPSActivity {
 					lv.setVisibility(View.VISIBLE);
 				}
 			} else {
-				findViewById(R.id.company_null_text).setVisibility(View.VISIBLE);
+				findViewById(R.id.company_null_text)
+						.setVisibility(View.VISIBLE);
 			}
 		}
-
-		
 	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+
 }

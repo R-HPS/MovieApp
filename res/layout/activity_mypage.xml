@@ -35,10 +35,11 @@
 
         <ImageView
             android:id="@+id/mypage_topline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:contentDescription="@string/desc"
+            android:scaleType="fitXY"
             android:src="@drawable/status" />
 
         <FrameLayout
@@ -47,6 +48,7 @@
 
             <TextView
                 android:id="@+id/nowtime"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
@@ -55,6 +57,7 @@
 
             <TextView
                 android:id="@+id/nowpoint"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"

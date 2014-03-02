@@ -13,6 +13,7 @@ import com.appspot.hps_movie.questionEndpoint.QuestionEndpoint.QuestionV1EndPoin
 import com.appspot.hps_movie.questionEndpoint.model.QuestionResultV1Dto;
 import com.appspot.hps_movie.questionEndpoint.model.QuestionV1Dto;
 import com.appspot.hps_movie.questionEndpoint.model.QuestionV1DtoCollection;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import jp.recruit.hps.movie.client.utils.QuestionAdapter;
 import jp.recruit.hps.movie.client.api.RemoteApi;
@@ -189,8 +190,7 @@ public class RegisterInterviewActivity extends Activity {
 	}
 
 	/*
-	 * 質問をリストで表示する
-	 * 引数　userKey,interviewKey
+	 * 質問をリストで表示する 引数　userKey,interviewKey
 	 */
 	public class SetQuestionAsyncTask extends
 			AsyncTask<String, Integer, Boolean> {
@@ -444,4 +444,15 @@ public class RegisterInterviewActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 }

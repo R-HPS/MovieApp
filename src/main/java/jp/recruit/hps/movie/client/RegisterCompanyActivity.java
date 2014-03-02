@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanySearchAdapter;
@@ -15,6 +16,8 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint;
 import com.appspot.hps_movie.interviewEndpoint.InterviewEndpoint.InterviewV1EndPoint.InsertInterview;
 import com.appspot.hps_movie.interviewEndpoint.model.ResultV1Dto;
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -56,8 +59,8 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private String mDate;
 	private Long mTime;
 
-	//selectionあったとき
-//	Map<String, Map<String, SelectionV1Dto>> mInterviewMap;
+	// selectionあったとき
+	// Map<String, Map<String, SelectionV1Dto>> mInterviewMap;
 
 	CompanySearchAdapter adapter;
 
@@ -73,11 +76,10 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private TextView mDateView;
 	private Spinner mNameSpinner;
 	private Spinner mDateSpinner;
-//	private Spinner mSectionSpinner;
-//	private Spinner mPhaseSpinner;
+	// private Spinner mSectionSpinner;
+	// private Spinner mPhaseSpinner;
 	private ImageView mRegistButton;
 	private ImageView mCancelButton;
-
 
 	private String companyKey;
 	String userKey;
@@ -285,7 +287,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
-//			selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
+			// selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();
 			mRegisterStatusMessageView
 					.setText(R.string.register_progress_signing_up);
 			showProgress(true);
@@ -336,8 +338,6 @@ public class RegisterCompanyActivity extends HPSActivity {
 			mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
 	}
-
-
 
 	/**
 	 * Represents an asynchronous registration task used to authenticate the
@@ -419,20 +419,15 @@ public class RegisterCompanyActivity extends HPSActivity {
 				String item = (String) spinner.getSelectedItem();
 				spinner.setTag(item);
 				/*
-				if (spinner == mSectionSpinner) {
-					mPhaseArray = new ArrayList<String>();
-					for (String phase : mInterviewMap.get(item).keySet()) {
-						mPhaseArray.add(phase);
-					}
-					Collections.sort(mPhaseArray, new Comparator<String>() {
-
-						@Override
-						public int compare(String lhs, String rhs) {
-							return lhs.compareTo(rhs);
-						}
-					});
-					setSpinner(mPhaseSpinner, mPhaseArray);
-				}*/
+				 * if (spinner == mSectionSpinner) { mPhaseArray = new
+				 * ArrayList<String>(); for (String phase :
+				 * mInterviewMap.get(item).keySet()) { mPhaseArray.add(phase); }
+				 * Collections.sort(mPhaseArray, new Comparator<String>() {
+				 * 
+				 * @Override public int compare(String lhs, String rhs) { return
+				 * lhs.compareTo(rhs); } }); setSpinner(mPhaseSpinner,
+				 * mPhaseArray); }
+				 */
 			}
 
 			public void onNothingSelected(AdapterView<?> parent) {
@@ -582,17 +577,17 @@ public class RegisterCompanyActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				if(list!=null){
-				progressBar.setVisibility(View.GONE);
-				adapter = new CompanySearchAdapter(context, list);
-				listView.setVisibility(View.VISIBLE);
-				listView.setAdapter(adapter);
-				// 単一選択モードにする
-				listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-				// デフォルト値をセットする
-				listView.setItemChecked(0, true);
-				button.setEnabled(true);
-				}else{
+				if (list != null) {
+					progressBar.setVisibility(View.GONE);
+					adapter = new CompanySearchAdapter(context, list);
+					listView.setVisibility(View.VISIBLE);
+					listView.setAdapter(adapter);
+					// 単一選択モードにする
+					listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+					// デフォルト値をセットする
+					listView.setItemChecked(0, true);
+					button.setEnabled(true);
+				} else {
 					progressBar.setVisibility(View.GONE);
 					nothing.setVisibility(View.VISIBLE);
 				}
@@ -603,5 +598,17 @@ public class RegisterCompanyActivity extends HPSActivity {
 			}
 			mSearchTask = null;
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

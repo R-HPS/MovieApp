@@ -19,6 +19,8 @@ public class InterviewAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<QuestionWithCountV1Dto> list;
 	private Context context;
+	private boolean checked = false;
+	
 
 	public InterviewAdapter(Context context, List<QuestionWithCountV1Dto> list) {
 		super();
@@ -55,6 +57,7 @@ public class InterviewAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.company_list_inflater, null);
 		}
+		checked = true;
 		FrameLayout v = (FrameLayout)convertView.findViewById(R.id.question_meter);
 		TextView tv = (TextView) convertView.findViewById(R.id.interview_list_question);
 		tv.setText(getQuestion(position));
@@ -67,17 +70,6 @@ public class InterviewAdapter extends BaseAdapter {
 		int paintWidth = viewWidth*percent/100;
 		MyView myView = new MyView(context,paintWidth,percent);
 		v.addView(myView);
-//		tv.setText(getQuestion(position));
-//		ImageView img = (ImageView) convertView.findViewById(R.id.receive_listview);
-//		if(getAtmosphere(position)!=){
-//			if(getAtmosphere(position)==0){
-//				img.setImageResource(R.drawable.receive00_item_blue);
-//			}else if(getAtmosphere(position)==1){
-//				img.setImageResource(R.drawable.receive00_item_green);
-//			}else{
-//				img.setImageResource(R.drawable.receive00_item_red);
-//			}
-//		}
 		return convertView;
 	}
 }

@@ -68,7 +68,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignBottom="@+id/company_name_button"
-		        android:layout_alignRight="@+id/mypage_company_phase"
+		        android:layout_alignParentRight="true"
 		        android:textSize="12sp"
 		        android:textColor="@color/recruit_red"
 		        android:text="@string/exampletext" />

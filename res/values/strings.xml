@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HPSMovie</string>
+    <string name="app_name">面接バンク</string>
     <string name="action_settings">設定</string>
     <string name="top">TOP</string>
     <string name="movie_list">動画一覧</string>

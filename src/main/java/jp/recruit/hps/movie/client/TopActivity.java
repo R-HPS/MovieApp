@@ -31,6 +31,7 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.appspot.hps_movie.userEndpoint.UserEndpoint;
 import com.appspot.hps_movie.userEndpoint.model.PointV1Dto;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class TopActivity extends HPSActivity {
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
@@ -39,6 +40,7 @@ public class TopActivity extends HPSActivity {
 	String userKey;
 	CompanyAdapter adapter;
 	TextView pointText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class TopActivity extends HPSActivity {
 		registerReceiver(receiver, intentFilter);
 
 		setContentView(R.layout.activity_mypage);
-		pointText = (TextView)findViewById(R.id.nowpoint);
+		pointText = (TextView) findViewById(R.id.nowpoint);
 		findViewById(R.id.newregistbtn).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -61,12 +63,13 @@ public class TopActivity extends HPSActivity {
 						startActivity(i);
 					}
 				});
-		
+
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 		UpdateClockService.stopResidentIfActive(this);
 	}
 
@@ -85,11 +88,13 @@ public class TopActivity extends HPSActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-		new GetPointListAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		new GetPointListAsyncTask()
+				.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		findViewById(R.id.mypage_company_null_text).setVisibility(View.GONE);
 		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
 		mLoadSelectionTask = new GetCompanyListAsyncTask(TopActivity.this);
-		mLoadSelectionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,userKey);
+		mLoadSelectionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+				userKey);
 	}
 
 	private void getUserKey() {
@@ -164,7 +169,7 @@ public class TopActivity extends HPSActivity {
 				findViewById(R.id.mypage_company_null_text).setVisibility(
 						View.VISIBLE);
 			}
-			
+
 		}
 	}
 
@@ -176,8 +181,8 @@ public class TopActivity extends HPSActivity {
 		protected Boolean doInBackground(String... queries) {
 			UserEndpoint endpoint = RemoteApi.getUserEndpoint();
 			try {
-				PointV1Dto collection = endpoint
-						.userV1Endpoint().login(userKey).execute();
+				PointV1Dto collection = endpoint.userV1Endpoint()
+						.login(userKey).execute();
 				if (collection != null) {
 					point = collection;
 				} else {
@@ -193,12 +198,18 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-					
-					pointText.setText(point.getValue().toString());
+
+				pointText.setText(point.getValue().toString());
 
 			} else {
 			}
 		}
 	}
-	
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
 }
