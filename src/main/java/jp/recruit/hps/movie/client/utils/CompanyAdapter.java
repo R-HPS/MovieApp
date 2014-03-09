@@ -72,9 +72,9 @@ public class CompanyAdapter extends BaseAdapter {
 		return position;
 	}
 	
-	public boolean getWasRead(int position){
-		return list.get(position).getWasRead();
-	}
+//	public boolean getWasRead(int position){
+//		return list.get(position).getWasRead();
+//	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {

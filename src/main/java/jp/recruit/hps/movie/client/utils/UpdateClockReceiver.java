@@ -9,8 +9,8 @@ public class UpdateClockReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if (context.getClass() == TopActivity.class) {
-			((TopActivity) context).setNowTime();
-		}
+//		if (context.getClass() == TopActivity.class) {
+//			((TopActivity) context).setNowTime();
+//		}
 	}
 }

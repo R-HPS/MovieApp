@@ -3,7 +3,6 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -12,11 +11,9 @@ import jp.recruit.hps.movie.client.services.UpdateClockService;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
 import jp.recruit.hps.movie.client.utils.CompanyPreferences;
-import jp.recruit.hps.movie.client.utils.UpdateClockReceiver;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,8 +26,6 @@ import android.widget.Toast;
 import com.appspot.hps_movie.companyEndpoint.CompanyEndpoint;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1Dto;
 import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
-import com.appspot.hps_movie.userEndpoint.UserEndpoint;
-import com.appspot.hps_movie.userEndpoint.model.PointV1Dto;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class TopActivity extends HPSActivity {
@@ -39,19 +34,23 @@ public class TopActivity extends HPSActivity {
 	GetCompanyListAsyncTask mLoadSelectionTask;
 	String userKey;
 	CompanyAdapter adapter;
+	CompanyAdapter newAdapter;
 	TextView pointText;
+	boolean newList = false;
+	boolean isLoaded = false;
+	boolean isNewLoaded = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		UpdateClockReceiver receiver = new UpdateClockReceiver();
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("UPDATE_CLOCK");
-		registerReceiver(receiver, intentFilter);
+		// UpdateClockReceiver receiver = new UpdateClockReceiver();
+		// IntentFilter intentFilter = new IntentFilter();
+		// intentFilter.addAction("UPDATE_CLOCK");
+		// registerReceiver(receiver, intentFilter);
 
 		setContentView(R.layout.activity_mypage);
-		pointText = (TextView) findViewById(R.id.nowpoint);
+		// pointText = (TextView) findViewById(R.id.nowpoint);
 		findViewById(R.id.newregistbtn).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -79,7 +78,7 @@ public class TopActivity extends HPSActivity {
 
 		new UpdateClockService().startResident(this);
 
-		setNowTime();
+		// setNowTime();
 		checkCompanyTime();
 		getUserKey();
 		if (userKey == null) {
@@ -88,8 +87,8 @@ public class TopActivity extends HPSActivity {
 					Toast.LENGTH_SHORT).show();
 			finish();
 		}
-		new GetPointListAsyncTask()
-				.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		// new GetPointListAsyncTask()
+		// .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		findViewById(R.id.mypage_company_null_text).setVisibility(View.GONE);
 		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
 		mLoadSelectionTask = new GetCompanyListAsyncTask(TopActivity.this);
@@ -119,10 +118,10 @@ public class TopActivity extends HPSActivity {
 		}
 	}
 
-	public void setNowTime() {
-		TextView dateText = (TextView) findViewById(R.id.nowtime);
-		dateText.setText(sdf.format(new Date()));
-	}
+	// public void setNowTime() {
+	// TextView dateText = (TextView) findViewById(R.id.nowtime);
+	// dateText.setText(sdf.format(new Date()));
+	// }
 
 	public class GetCompanyListAsyncTask extends
 			AsyncTask<String, Integer, Boolean> {
@@ -155,15 +154,18 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
+				isLoaded = true;
+				if (!newList) {
+					CompanyPreferences.setCompanyData(TopActivity.this, list);
+					ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
+					prog.setVisibility(View.GONE);
+					ListView lv = (ListView) findViewById(R.id.mypage_company_list);
+					adapter = new CompanyAdapter(context, list);
+					lv.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
+					lv.setVisibility(View.VISIBLE);
+				}
 
-				CompanyPreferences.setCompanyData(TopActivity.this, list);
-				ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
-				prog.setVisibility(View.GONE);
-				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
-				adapter = new CompanyAdapter(context, list);
-				lv.setAdapter(adapter);
-				adapter.notifyDataSetChanged();
-				lv.setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
 				findViewById(R.id.mypage_company_null_text).setVisibility(
@@ -173,18 +175,23 @@ public class TopActivity extends HPSActivity {
 		}
 	}
 
-	public class GetPointListAsyncTask extends
+	public class GetNewCompanyListAsyncTask extends
 			AsyncTask<String, Integer, Boolean> {
-		private PointV1Dto point;
+		private final Context context;
+		private List<CompanyV1Dto> list;
+
+		public GetNewCompanyListAsyncTask(Context context) {
+			this.context = context;
+		}
 
 		@Override
 		protected Boolean doInBackground(String... queries) {
-			UserEndpoint endpoint = RemoteApi.getUserEndpoint();
+			CompanyEndpoint endpoint = RemoteApi.getCompanyEndpoint();
 			try {
-				PointV1Dto collection = endpoint.userV1Endpoint()
-						.login(userKey).execute();
-				if (collection != null) {
-					point = collection;
+				CompanyV1DtoCollection collection = endpoint
+						.companyV1EndPoint().getPopularCompanyList().execute();
+				if (collection != null && collection.getItems() != null) {
+					list = collection.getItems();
 				} else {
 					return false;
 				}
@@ -198,13 +205,57 @@ public class TopActivity extends HPSActivity {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-
-				pointText.setText(point.getValue().toString());
-
+				isNewLoaded = true;
+				if (newList) {
+					CompanyPreferences.setCompanyData(TopActivity.this, list);
+					ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
+					prog.setVisibility(View.GONE);
+					ListView lv = (ListView) findViewById(R.id.mypage_new_company_list);
+					newAdapter = new CompanyAdapter(context, list);
+					lv.setAdapter(newAdapter);
+					newAdapter.notifyDataSetChanged();
+					lv.setVisibility(View.VISIBLE);
+				}
 			} else {
+				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
+				findViewById(R.id.mypage_company_null_text).setVisibility(
+						View.VISIBLE);
 			}
 		}
 	}
+
+	// public class GetPointListAsyncTask extends
+	// AsyncTask<String, Integer, Boolean> {
+	// private PointV1Dto point;
+	//
+	// @Override
+	// protected Boolean doInBackground(String... queries) {
+	// UserEndpoint endpoint = RemoteApi.getUserEndpoint();
+	// try {
+	// PointV1Dto collection = endpoint.userV1Endpoint()
+	// .login(userKey).execute();
+	// if (collection != null) {
+	// point = collection;
+	// } else {
+	// return false;
+	// }
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// return false;
+	// }
+	// return true;
+	// }
+	//
+	// @Override
+	// protected void onPostExecute(Boolean result) {
+	// if (result) {
+	//
+	// pointText.setText(point.getValue().toString());
+	//
+	// } else {
+	// }
+	// }
+	// }
 
 	@Override
 	protected void onStart() {
