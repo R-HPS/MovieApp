@@ -18,6 +18,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.FrameLayout.LayoutParams;
 
 public class MainActivity extends Activity {
 	String mPassword = "hpsmovies";
@@ -28,7 +31,16 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//待ち時間にlogoを表示
+		FrameLayout fv = new FrameLayout(this);
+		ImageView image = new ImageView(this);
+		image.setImageResource(R.drawable.logo);
+		image.setAdjustViewBounds(true);
+		fv.addView(image, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		setContentView(fv);
+		//ここからログイン開始
 		new CompanyPreferences();
+		//以前に端末がログイン済みかを調べる
 		if (sharedCheck()) {
 			Intent intent = new Intent(this, TopActivity.class);
 			startActivity(intent);
