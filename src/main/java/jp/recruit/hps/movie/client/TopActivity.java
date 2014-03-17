@@ -1,11 +1,8 @@
 package jp.recruit.hps.movie.client;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.services.UpdateClockService;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
@@ -29,8 +26,6 @@ import com.appspot.hps_movie.companyEndpoint.model.CompanyV1DtoCollection;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class TopActivity extends HPSActivity {
-	private static SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy年MM月dd日HH時mm分", Locale.JAPAN);
 	GetCompanyListAsyncTask mLoadSelectionTask;
 	String userKey;
 	CompanyAdapter adapter;

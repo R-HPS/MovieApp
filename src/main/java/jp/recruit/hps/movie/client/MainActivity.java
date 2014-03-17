@@ -1,8 +1,5 @@
 package jp.recruit.hps.movie.client;
 
-import com.appspot.hps_movie.loginEndpoint.LoginEndpoint;
-import com.appspot.hps_movie.loginEndpoint.LoginEndpoint.LoginV1Endpoint.Login;
-import com.appspot.hps_movie.loginEndpoint.model.LoginResultV1Dto;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint.RegisterV1Endpoint.Register;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -13,6 +10,8 @@ import jp.recruit.hps.movie.client.utils.CompanyPreferences;
 import jp.recruit.hps.movie.client.utils.Installation;
 import jp.recruit.hps.movie.common.CommonConstant;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -101,6 +100,25 @@ public class MainActivity extends Activity {
 				Log.d("DEBUG", "ログイン成功");
 				startActivity(new Intent(MainActivity.this, TopActivity.class));
 				finish();
+			} else {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						MainActivity.this);
+				// アラートダイアログのタイトルを設定します
+				alertDialogBuilder.setTitle("接続エラー");
+				// アラートダイアログのメッセージを設定します
+				alertDialogBuilder.setMessage("ネット接続環境を確かめた後" + "\n" +"もう一度起動してください。");
+				// アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+				alertDialogBuilder.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+							}
+						});
+				// アラートダイアログのキャンセルが可能かどうかを設定します
+				alertDialogBuilder.setCancelable(true);
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
 			}
 		}
 	}
