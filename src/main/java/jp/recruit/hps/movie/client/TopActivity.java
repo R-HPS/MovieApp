@@ -27,25 +27,19 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class TopActivity extends HPSActivity {
 	GetCompanyListAsyncTask mLoadSelectionTask;
+	GetNewCompanyListAsyncTask mLoadPopularTask;
 	String userKey;
 	CompanyAdapter adapter;
 	CompanyAdapter newAdapter;
 	TextView pointText;
-	boolean newList = false;
+	boolean newList = true;
 	boolean isLoaded = false;
 	boolean isNewLoaded = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// UpdateClockReceiver receiver = new UpdateClockReceiver();
-		// IntentFilter intentFilter = new IntentFilter();
-		// intentFilter.addAction("UPDATE_CLOCK");
-		// registerReceiver(receiver, intentFilter);
-
 		setContentView(R.layout.activity_mypage);
-		// pointText = (TextView) findViewById(R.id.nowpoint);
 		findViewById(R.id.newregistbtn).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -55,6 +49,33 @@ public class TopActivity extends HPSActivity {
 						Intent i = new Intent(TopActivity.this,
 								RegisterCompanyActivity.class);
 						startActivity(i);
+					}
+				});
+
+		findViewById(R.id.changebtn).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO 自動生成されたメソッド・スタブ
+						if (newList) {
+							newList = false;
+							if (isLoaded) {
+								findViewById(R.id.mypage_new_company_list)
+										.setVisibility(View.GONE);
+								findViewById(R.id.mypage_company_list)
+										.setVisibility(View.VISIBLE);
+							}
+						} else {
+							newList = true;
+							if (isNewLoaded) {
+								findViewById(R.id.mypage_company_list)
+										.setVisibility(View.GONE);
+								findViewById(R.id.mypage_new_company_list)
+										.setVisibility(View.VISIBLE);
+							}
+						}
+
 					}
 				});
 
@@ -88,6 +109,9 @@ public class TopActivity extends HPSActivity {
 		findViewById(R.id.mypage_progressBar).setVisibility(View.VISIBLE);
 		mLoadSelectionTask = new GetCompanyListAsyncTask(TopActivity.this);
 		mLoadSelectionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+				userKey);
+		mLoadPopularTask = new GetNewCompanyListAsyncTask(TopActivity.this);
+		mLoadPopularTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
 				userKey);
 	}
 
@@ -218,39 +242,6 @@ public class TopActivity extends HPSActivity {
 			}
 		}
 	}
-
-	// public class GetPointListAsyncTask extends
-	// AsyncTask<String, Integer, Boolean> {
-	// private PointV1Dto point;
-	//
-	// @Override
-	// protected Boolean doInBackground(String... queries) {
-	// UserEndpoint endpoint = RemoteApi.getUserEndpoint();
-	// try {
-	// PointV1Dto collection = endpoint.userV1Endpoint()
-	// .login(userKey).execute();
-	// if (collection != null) {
-	// point = collection;
-	// } else {
-	// return false;
-	// }
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// return false;
-	// }
-	// return true;
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(Boolean result) {
-	// if (result) {
-	//
-	// pointText.setText(point.getValue().toString());
-	//
-	// } else {
-	// }
-	// }
-	// }
 
 	@Override
 	protected void onStart() {

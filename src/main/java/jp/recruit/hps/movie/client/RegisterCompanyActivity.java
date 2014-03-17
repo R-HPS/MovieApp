@@ -53,10 +53,6 @@ import android.widget.TimePicker;
 
 public class RegisterCompanyActivity extends HPSActivity {
 	// 登録するData
-	private String mName;
-	private String mSection;
-	private String mPhase;
-	private String mDate;
 	private Long mTime;
 
 	// selectionあったとき
@@ -264,16 +260,13 @@ public class RegisterCompanyActivity extends HPSActivity {
 		// Reset errors.
 		mNameView.setError(null);
 		mDateView.setError(null);
-		mSection = "a";
-		mPhase = "a";
 		boolean cancel = false;
-		if (mNameSpinner.getTag() != null) {
-			mName = mNameSpinner.getTag().toString();
-		} else {
+		//会社名確認
+		if (mNameSpinner.getTag() == null) {
 			mNameView.setError(getString(R.string.error_field_required));
 			cancel = true;
 		}
-
+		//日付確認
 		if (mDateSpinner.getTag() != null) {
 			String date = mDateSpinner.getTag().toString();
 			mTime = setCal(date);
@@ -282,9 +275,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 			cancel = true;
 		}
 
-		if (cancel) {
-			// There was an error; don't attempt register
-		} else {
+		if (!cancel) {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user register attempt.
 			// selectionKey = mInterviewMap.get(mSection).get(mPhase).getKey();

@@ -19,8 +19,6 @@ public class InterviewAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<QuestionWithCountV1Dto> list;
 	private Context context;
-	private boolean checked = false;
-	
 
 	public InterviewAdapter(Context context, List<QuestionWithCountV1Dto> list) {
 		super();
@@ -44,31 +42,35 @@ public class InterviewAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-	
-	public Double getPercent(int position){
+
+	public Double getPercent(int position) {
 		return list.get(position).getPercent();
 	}
-	
-	public String getQuestion(int position){
+
+	public String getQuestion(int position) {
 		return list.get(position).getName();
 	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.company_list_inflater, null);
+			convertView = inflater
+					.inflate(R.layout.company_list_inflater, null);
 		}
-		checked = true;
-		FrameLayout v = (FrameLayout)convertView.findViewById(R.id.question_meter);
-		TextView tv = (TextView) convertView.findViewById(R.id.interview_list_question);
+		FrameLayout v = (FrameLayout) convertView
+				.findViewById(R.id.question_meter);
+		TextView tv = (TextView) convertView
+				.findViewById(R.id.interview_list_question);
 		tv.setText(getQuestion(position));
-		tv = (TextView)convertView.findViewById(R.id.interview_list_percent);
-		int percent = (int) (getPercent(position)*100);
-		tv.setText(percent+"％");
-		DisplayMetrics metrics = new DisplayMetrics();  
-		((CompanyInterviewActivity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int viewWidth = (int)metrics.widthPixels;
-		int paintWidth = viewWidth*percent/100;
-		MyView myView = new MyView(context,paintWidth,percent);
+		tv = (TextView) convertView.findViewById(R.id.interview_list_percent);
+		int percent = (int) (getPercent(position) * 100);
+		tv.setText(percent + "％");
+		DisplayMetrics metrics = new DisplayMetrics();
+		((CompanyInterviewActivity) context).getWindowManager()
+				.getDefaultDisplay().getMetrics(metrics);
+		int viewWidth = (int) metrics.widthPixels;
+		int paintWidth = viewWidth * percent / 100;
+		MyView myView = new MyView(context, paintWidth, percent);
 		v.addView(myView);
 		return convertView;
 	}
