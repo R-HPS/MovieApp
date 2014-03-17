@@ -74,7 +74,7 @@ public class CompanyInterviewActivity extends HPSActivity {
 			InterviewEndpoint endpoint = RemoteApi.getInterviewEndpoint();
 			try {
 				interview = endpoint.interviewV1EndPoint()
-						.getInterview(userKey, selectionKey, wasRead).execute();// .searchInterview(query).execute();
+						.getInterview(userKey, selectionKey).execute();// .searchInterview(query).execute();
 
 			} catch (IOException e) {
 				e.printStackTrace();

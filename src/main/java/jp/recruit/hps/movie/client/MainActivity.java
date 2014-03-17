@@ -5,7 +5,6 @@ import com.appspot.hps_movie.loginEndpoint.LoginEndpoint.LoginV1Endpoint.Login;
 import com.appspot.hps_movie.loginEndpoint.model.LoginResultV1Dto;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint;
 import com.appspot.hps_movie.registerEndpoint.RegisterEndpoint.RegisterV1Endpoint.Register;
-import com.appspot.hps_movie.registerEndpoint.model.RegisterResultV1Dto;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import jp.recruit.hps.movie.client.api.RemoteApi;
@@ -23,33 +22,33 @@ import android.view.Menu;
 
 public class MainActivity extends Activity {
 	String mPassword = "hpsmovies";
-	private UserLoginTask mAuthTask = null;
-	private UserRegisterTask mAuthTask2 = null;
+	private UserRegisterTask mAuthTask = null;
 	private String mEmail;
 	private static String SUCCESS = CommonConstant.SUCCESS;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		new CompanyPreferences();
-		if(sharedCheck()){
-			Intent intent = new Intent(this,TopActivity.class);
+		if (sharedCheck()) {
+			Intent intent = new Intent(this, TopActivity.class);
 			startActivity(intent);
-		}else{
+		} else {
 			new Installation();
 			mEmail = Installation.id(this);
 			mEmail += "@test.ac.jp";
-			mAuthTask2 = new UserRegisterTask();
-			mAuthTask2.execute((Void) null);
+			mAuthTask = new UserRegisterTask();
+			mAuthTask.execute((Void) null);
 		}
 	}
-	
-	//SharedPreferencesにUserKeyがあるかを調べる。（あったときはログインをSKIP）
+
+	// SharedPreferencesにUserKeyがあるかを調べる。（あったときはログインをSKIP）
 	private boolean sharedCheck() {
 		// TODO 自動生成されたメソッド・スタブ
-		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
-		String key = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY,null);
-		if(key!=null){
+		SharedPreferences pref = getSharedPreferences(
+				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+		String key = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);
+		if (key != null) {
 			return true;
 		}
 		return false;
@@ -63,57 +62,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Represents an asynchronous login/registration task used to authenticate
-	 * the user.
-	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-		
-
-		@Override
-		protected Boolean doInBackground(Void... args) {
-
-			try {
-				LoginEndpoint endpoint = RemoteApi.getLoginEndpoint();
-				Login login = endpoint.loginV1Endpoint().login(mEmail,
-						mPassword);
-				
-				LoginResultV1Dto result = login.execute();
-			
-
-				if (SUCCESS.equals(result.getResult())) {
-					//ログイン中のユーザー情報をpreferenceに格納して用いることができるようにする
-					SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString(CommonUtils.STRING_EXTRA_USER_KEY,result.getKey());  
-				    editor.commit();
-					return true;
-				} else {
-					return false;
-				}
-
-			} catch (Exception e) {
-				return false;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
-			
-
-			if (success) {
-				Log.d("DEBUG", "ログイン成功");
-				startActivity(new Intent(MainActivity.this, TopActivity.class));
-				finish();
-			} else {
-				
-			}
-		}
-	}
-	
-	/**
-	 * Represents an asynchronous registration task used to authenticate
-	 * the user.
+	 * Represents an asynchronous registration task used to authenticate the
+	 * user.
 	 */
 	public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
@@ -123,10 +73,17 @@ public class MainActivity extends Activity {
 				RegisterEndpoint endpoint = RemoteApi.getRegisterEndpoint();
 				Register register = endpoint.registerV1Endpoint().register(
 						mEmail, mPassword, mPassword);
-				RegisterResultV1Dto result = register.execute();
+				com.appspot.hps_movie.registerEndpoint.model.LoginResultV1Dto result = register
+						.execute();
 
-				
 				if (SUCCESS.equals(result.getResult())) {
+					// ログイン中のユーザー情報をpreferenceに格納して用いることができるようにする
+					SharedPreferences pref = getSharedPreferences(
+							CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putString(CommonUtils.STRING_EXTRA_USER_KEY,
+							result.getKey());
+					editor.commit();
 					return true;
 				} else {
 					return false;
@@ -138,16 +95,16 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			mAuthTask2 = null;
+			mAuthTask = null;
 
 			if (success) {
-				Log.d("DEBUG", "register success");
-				mAuthTask = new UserLoginTask();
-				mAuthTask.execute((Void) null);
+				Log.d("DEBUG", "ログイン成功");
+				startActivity(new Intent(MainActivity.this, TopActivity.class));
 				finish();
 			}
 		}
 	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();

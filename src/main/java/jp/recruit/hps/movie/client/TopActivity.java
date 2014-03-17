@@ -82,7 +82,7 @@ public class TopActivity extends HPSActivity {
 		checkCompanyTime();
 		getUserKey();
 		if (userKey == null) {
-			startActivity(new Intent(this, LoginActivity.class));
+			startActivity(new Intent(this, MainActivity.class));
 			Toast.makeText(this, R.string.mypage_userkey_error,
 					Toast.LENGTH_SHORT).show();
 			finish();

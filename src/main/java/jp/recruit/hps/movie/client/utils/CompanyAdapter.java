@@ -72,10 +72,6 @@ public class CompanyAdapter extends BaseAdapter {
 		return position;
 	}
 	
-//	public boolean getWasRead(int position){
-//		return list.get(position).getWasRead();
-//	}
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
@@ -118,10 +114,6 @@ public class CompanyAdapter extends BaseAdapter {
 						getKey(position));
 				intent.putExtra(CommonUtils.STRING_EXTRA_FILE_NAME,
 						getName(position));
-//				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_PHASE,
-//						getPhase(position));
-				intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_READ, 
-						getWasRead(position));
 				context.startActivity(intent);
 			}
 		});
