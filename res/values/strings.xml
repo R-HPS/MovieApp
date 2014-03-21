@@ -18,5 +18,9 @@
     <string name="button_go_to_login">ログイン</string>
     <string name="register_interview_page">登録ページ</string>
 	<string name="register_company_page">会社登録ページ</string>  
+	<string name="mail_to">growui@gmail.com</string>
+    <string name="title">面接バンクへのご要望</string>
+    <string name="selectapp">アプリケーションを選択</string>
+    <string name="sendrequest_app"> \n\n\n\n--------------------\nアプリ名:面接バンク\n</string>
 
 </resources>

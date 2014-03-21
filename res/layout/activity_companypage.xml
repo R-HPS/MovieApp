@@ -65,7 +65,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_weight="1"
         android:contentDescription="@string/desc"
-        android:src="@drawable/btn_can" />
+        android:src="@drawable/design_btn_can" />
 
     <!-- 広告を表示 -->
 

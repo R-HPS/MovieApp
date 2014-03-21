@@ -3,18 +3,24 @@ package jp.recruit.hps.movie.client;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+
 import jp.recruit.hps.movie.client.api.RemoteApi;
 import jp.recruit.hps.movie.client.services.UpdateClockService;
 import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyAdapter;
 import jp.recruit.hps.movie.client.utils.CompanyPreferences;
+import jp.recruit.hps.movie.client.utils.PopularCompanyAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,9 +36,9 @@ public class TopActivity extends HPSActivity {
 	GetNewCompanyListAsyncTask mLoadPopularTask;
 	String userKey;
 	CompanyAdapter adapter;
-	CompanyAdapter newAdapter;
+	PopularCompanyAdapter newAdapter;
 	TextView pointText;
-	boolean newList = true;
+	boolean newList = false;
 	boolean isLoaded = false;
 	boolean isNewLoaded = false;
 
@@ -40,6 +46,27 @@ public class TopActivity extends HPSActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mypage);
+		findViewById(R.id.mypage_mail).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO 自動生成されたメソッド・スタブ
+						String Model = Build.MODEL;
+						int VERSION_SDK = Build.VERSION.SDK_INT;
+
+						Uri uri = Uri.parse("mailto:" + getResources().getString(R.string.mail_to));
+						Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+						intent.putExtra(Intent.EXTRA_SUBJECT,
+								getResources().getString(R.string.title));
+						intent.putExtra(Intent.EXTRA_TEXT,
+								getResources().getString(R.string.sendrequest_app)
+										+ "VERSION.SDK:" + VERSION_SDK + "\nModel:"
+										+ Model);
+						startActivity(intent);
+					}
+				});
+		
 		findViewById(R.id.newregistbtn).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -65,6 +92,8 @@ public class TopActivity extends HPSActivity {
 										.setVisibility(View.GONE);
 								findViewById(R.id.mypage_company_list)
 										.setVisibility(View.VISIBLE);
+								ImageView img = (ImageView) findViewById(R.id.changebtn);
+								img.setImageResource(R.drawable.design_btn_poplar);
 							}
 						} else {
 							newList = true;
@@ -73,6 +102,9 @@ public class TopActivity extends HPSActivity {
 										.setVisibility(View.GONE);
 								findViewById(R.id.mypage_new_company_list)
 										.setVisibility(View.VISIBLE);
+								ImageView img = (ImageView) findViewById(R.id.changebtn);
+								img.setImageResource(R.drawable.design_btn_myphase);
+
 							}
 						}
 
@@ -174,14 +206,14 @@ public class TopActivity extends HPSActivity {
 		protected void onPostExecute(Boolean result) {
 			if (result) {
 				isLoaded = true;
+				ListView lv = (ListView) findViewById(R.id.mypage_company_list);
+				adapter = new CompanyAdapter(context, list);
+				lv.setAdapter(adapter);
+				adapter.notifyDataSetChanged();
+				CompanyPreferences.setCompanyData(TopActivity.this, list);
 				if (!newList) {
-					CompanyPreferences.setCompanyData(TopActivity.this, list);
 					ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
 					prog.setVisibility(View.GONE);
-					ListView lv = (ListView) findViewById(R.id.mypage_company_list);
-					adapter = new CompanyAdapter(context, list);
-					lv.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
 					lv.setVisibility(View.VISIBLE);
 				}
 
@@ -189,6 +221,8 @@ public class TopActivity extends HPSActivity {
 				findViewById(R.id.mypage_progressBar).setVisibility(View.GONE);
 				findViewById(R.id.mypage_company_null_text).setVisibility(
 						View.VISIBLE);
+				newList = true;
+				findViewById(R.id.changebtn).setVisibility(View.INVISIBLE);
 			}
 
 		}
@@ -225,14 +259,13 @@ public class TopActivity extends HPSActivity {
 		protected void onPostExecute(Boolean result) {
 			if (result) {
 				isNewLoaded = true;
+				ListView lv = (ListView) findViewById(R.id.mypage_new_company_list);
+				newAdapter = new PopularCompanyAdapter(context, list);
+				lv.setAdapter(newAdapter);
+				newAdapter.notifyDataSetChanged();
 				if (newList) {
-					CompanyPreferences.setCompanyData(TopActivity.this, list);
 					ProgressBar prog = (ProgressBar) findViewById(R.id.mypage_progressBar);
 					prog.setVisibility(View.GONE);
-					ListView lv = (ListView) findViewById(R.id.mypage_new_company_list);
-					newAdapter = new CompanyAdapter(context, list);
-					lv.setAdapter(newAdapter);
-					newAdapter.notifyDataSetChanged();
 					lv.setVisibility(View.VISIBLE);
 				}
 			} else {

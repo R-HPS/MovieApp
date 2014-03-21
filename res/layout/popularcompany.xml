@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/company_element"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:orientation="horizontal"
+    android:weightSum="10" >
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:orientation="vertical"
+        android:weightSum="5" >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" >
+
+            <ImageButton
+                android:id="@+id/company_name_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/desc" />
+
+            <TextView
+                android:id="@+id/mypage_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:maxLength="17"
+                android:text="@string/exampletext"
+                android:textColor="@color/black" />
+            <!--
+		    <TextView
+		        android:id="@+id/mypage_company_phase"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignBaseline="@+id/mypage_company_name"
+		        android:layout_alignBottom="@+id/mypage_company_name"
+		        android:layout_alignParentRight="true"
+		        android:textColor="@color/recruit_black"
+		        android:layout_marginRight="3dp"
+		        android:textSize="12sp"
+		        android:text="@string/exampletext" />
+            -->
+
+            <TextView
+                android:id="@+id/mypage_company_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/company_name_button"
+                android:layout_centerHorizontal="true"
+                android:text="@string/exampletext"
+                android:textColor="@color/recruit_red"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+</LinearLayout>

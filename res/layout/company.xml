@@ -37,6 +37,7 @@
 		        android:text="@string/exampletext"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="5dp"
+		        android:maxLength="17"
 		        android:textColor="@color/black"
 		        android:id="@+id/mypage_company_name"
 		        />

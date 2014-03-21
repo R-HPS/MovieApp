@@ -12,6 +12,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/header" >
+        <ImageView
+            android:id="@+id/mypage_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/icon_1r_64"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/desc"/>
 
         <TextView
             android:id="@+id/mypage_title_text"
@@ -27,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="8"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
@@ -40,9 +49,11 @@
         <TextView
             android:id="@+id/mypage_company_null_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/mypage_company_null"
             android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
             android:visibility="gone" />
 
         <ListView
@@ -63,22 +74,22 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/changebtn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/btn_famous" />
-
-    <ImageView
         android:id="@+id/newregistbtn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:contentDescription="@string/desc"
-        android:src="@drawable/btn_add" />
+        android:src="@drawable/design_btn_add" />
+
+    <ImageView
+        android:id="@+id/changebtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/design_btn_poplar" />
 
     <!-- 広告を表示 -->
 

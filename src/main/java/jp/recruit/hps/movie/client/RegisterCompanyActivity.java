@@ -261,12 +261,12 @@ public class RegisterCompanyActivity extends HPSActivity {
 		mNameView.setError(null);
 		mDateView.setError(null);
 		boolean cancel = false;
-		//会社名確認
+		// 会社名確認
 		if (mNameSpinner.getTag() == null) {
 			mNameView.setError(getString(R.string.error_field_required));
 			cancel = true;
 		}
-		//日付確認
+		// 日付確認
 		if (mDateSpinner.getTag() != null) {
 			String date = mDateSpinner.getTag().toString();
 			mTime = setCal(date);
