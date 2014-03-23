@@ -99,6 +99,8 @@ public class RegisterCompanyActivity extends HPSActivity {
 	private View mRegisterStatusView;
 	private TextView mRegisterStatusMessageView;
 
+	private TextView errorText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたコンストラクター・スタブ
@@ -190,6 +192,8 @@ public class RegisterCompanyActivity extends HPSActivity {
 				.findViewById(R.id.register_company_search_progress);
 		nothing = (TextView) companyDialogView
 				.findViewById(R.id.register_company_name_nothing);
+		errorText = (TextView) companyDialogView
+				.findViewById(R.id.register_company_name_error);
 
 		companyDialog = new AlertDialog.Builder(this)
 				.setView(companyDialogView)
@@ -237,6 +241,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 									InputMethodManager.HIDE_NOT_ALWAYS);
 							button.setEnabled(false);
 							nothing.setVisibility(View.GONE);
+							errorText.setVisibility(View.GONE);
 							listView.setVisibility(View.GONE);
 							progressBar.setVisibility(View.VISIBLE);
 
@@ -541,6 +546,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 			AsyncTask<String, Integer, Boolean> {
 		private final Context context;
 		private List<CompanyV1Dto> list;
+		private boolean error = false;
 
 		public GetCompanySerchAsyncTask(Context context) {
 			this.context = context;
@@ -560,6 +566,7 @@ public class RegisterCompanyActivity extends HPSActivity {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				error = true;
 				return false;
 			}
 			return true;
@@ -579,13 +586,18 @@ public class RegisterCompanyActivity extends HPSActivity {
 					listView.setItemChecked(0, true);
 					button.setEnabled(true);
 				} else {
-					progressBar.setVisibility(View.GONE);
-					nothing.setVisibility(View.VISIBLE);
+					if (error) {
+						progressBar.setVisibility(View.GONE);
+						errorText.setVisibility(View.VISIBLE);
+					} else {
+						progressBar.setVisibility(View.GONE);
+						nothing.setVisibility(View.VISIBLE);
+					}
 				}
 
 			} else {
 				progressBar.setVisibility(View.GONE);
-				nothing.setVisibility(View.VISIBLE);
+				errorText.setVisibility(View.VISIBLE);
 			}
 			mSearchTask = null;
 		}

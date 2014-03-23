@@ -53,4 +53,12 @@
 	    android:visibility="gone"
 	    android:textSize="20sp"
 	    />
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/register_company_name_error"
+	    android:text="@string/register_company_name_error"
+	    android:visibility="gone"
+	    android:textSize="20sp"
+	    />
 	</LinearLayout>

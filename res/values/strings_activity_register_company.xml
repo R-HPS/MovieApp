@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="register_company_name">会社名</string>
     <string name="register_company_section">部門名</string>
     <string name="register_company_phase">選考段階</string>
     <string name="register_company_time">選考開始時間</string>
     <string name="register_company_startTime_text">時間</string>
     <string name="register_company_startDate_text">日付</string>
-	<string name="date_format">%tF</string>
+    <string name="date_format">%tF</string>
     <string name="time_format">%tR</string>
     <string name="date_time_format">%1$tF %1$tR</string>
     <string name="register_company_set_title">設定</string>
@@ -14,10 +15,13 @@
     <string name="register_company_select">登録したい企業名</string>
     <string name="register_company_name_set">企業名登録</string>
     <string name="register_company_name_nothing">見つかりませんでした。</string>
+    <string name="register_company_name_error">電波の良い所に移動してください。</string>
+
     <string-array name="register_company_phase_str_arr">
-        <item >1次面接</item>
-        <item >2次面接</item>
-        <item >3次面接</item>
-        <item >4次面接</item>
+        <item>1次面接</item>
+        <item>2次面接</item>
+        <item>3次面接</item>
+        <item>4次面接</item>
     </string-array>
+
 </resources>
