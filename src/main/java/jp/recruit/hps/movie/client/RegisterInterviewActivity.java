@@ -170,8 +170,63 @@ public class RegisterInterviewActivity extends Activity {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										// TODO 自動生成されたメソッド・スタブ
-										if (!TextUtils.isEmpty(mAddEdit
+										if (TextUtils.isEmpty(mAddEdit
 												.getText().toString())) {
+											AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+													RegisterInterviewActivity.this);
+											// アラートダイアログのタイトルを設定します
+											alertDialogBuilder
+													.setTitle("入力エラー");
+											// アラートダイアログのメッセージを設定します
+											alertDialogBuilder
+													.setMessage("質問を入力してください。");
+											// アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+											alertDialogBuilder
+													.setPositiveButton(
+															"OK",
+															new DialogInterface.OnClickListener() {
+																@Override
+																public void onClick(
+																		DialogInterface dialog,
+																		int which) {
+																}
+															});
+											// アラートダイアログのキャンセルが可能かどうかを設定します
+											alertDialogBuilder
+													.setCancelable(true);
+											AlertDialog alertDialog = alertDialogBuilder
+													.create();
+											alertDialog.show();
+										} else if (mAddEdit.getText()
+												.toString().length() > 15) {
+											AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+													RegisterInterviewActivity.this);
+											// アラートダイアログのタイトルを設定します
+											alertDialogBuilder
+													.setTitle("入力エラー");
+											// アラートダイアログのメッセージを設定します
+											alertDialogBuilder
+													.setMessage("質問が15文字を超えています"
+															+ "\n"
+															+ "もう一度入力してください。");
+											// アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+											alertDialogBuilder
+													.setPositiveButton(
+															"OK",
+															new DialogInterface.OnClickListener() {
+																@Override
+																public void onClick(
+																		DialogInterface dialog,
+																		int which) {
+																}
+															});
+											// アラートダイアログのキャンセルが可能かどうかを設定します
+											alertDialogBuilder
+													.setCancelable(true);
+											AlertDialog alertDialog = alertDialogBuilder
+													.create();
+											alertDialog.show();
+										} else {
 											ProgressBar prog = (ProgressBar) findViewById(R.id.register_question_progressBar);
 											prog.setVisibility(View.VISIBLE);
 											new SetQuestionAsyncTask()

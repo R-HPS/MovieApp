@@ -15,7 +15,7 @@ public class MyView extends View {
 
 	public MyView(Context context, int meter, double percent) {
 		super(context);
-		mMeter = meter*2/3;
+		mMeter = meter;
 		paint = new Paint();
 		this.percent = percent;
 	}

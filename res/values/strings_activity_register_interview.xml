@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_hint">新しい質問を入力してください。</string>
+    <string name="question_hint">新しい質問を\n14文字以内で入力してください。</string>
     <string name="question_add">新しい質問を追加する。</string>
     <string name="question_add_title">質問追加画面</string>
     <string name="question_add_positive">追加する</string>
