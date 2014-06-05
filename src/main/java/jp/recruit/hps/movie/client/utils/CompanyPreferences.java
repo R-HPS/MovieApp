@@ -27,9 +27,12 @@ public class CompanyPreferences {
 		pref = context.getSharedPreferences(CommonUtils.STRING_PREF_KEY,
 				Activity.MODE_PRIVATE);
 		editor = pref.edit();
-		int count = COUNT;
-		if (list.size() < 3) {
-			count = list.size();
+		int count = list.size();
+		for(int j =0;j<count;j++){
+			KEYS_KEY[j] = CommonUtils.STRING_PREF_COMPANY_KEY + j;
+			KEYS_INTERVIEW_KEY[j] = CommonUtils.STRING_PREF_INTERVIEW_KEY + j;
+			KEYS_DATE[j] = CommonUtils.STRING_PREF_COMPANY_DATE + j;
+			KEYS_NAME[j] = CommonUtils.STRING_PREF_COMPANY_NAME + j;
 		}
 
 		for (int i = 0; i < count; i++) {
@@ -55,14 +58,14 @@ public class CompanyPreferences {
 	}
 
 	public static String getcompanyKey(int i) {
-		if (pref != null && i < 3) {
+		if (pref != null) {
 			return pref.getString(KEYS_KEY[i], null);
 		}
 		return null;
 	}
 	
 	public static String getinterviewKey(int i) {
-		if (pref != null && i < 3) {
+		if (pref != null ) {
 			return pref.getString(KEYS_INTERVIEW_KEY[i], null);
 		}
 		return null;
@@ -70,22 +73,22 @@ public class CompanyPreferences {
 	
 
 	public static Long getTime(int i) {
-		if (pref != null && i < 3) {
+		if (pref != null ) {
 			return pref.getLong(KEYS_DATE[i], -1l);
 		}
 		return -1l;
 	}
 	
 	public static String getName(int i) {
-		if (pref != null && i < 3) {
+		if (pref != null) {
 			return pref.getString(KEYS_NAME[i], null);
 		}
 		return null;
 	}
 	
 	public static void cleanPref(int i){
-		if(pref !=null&& i<3){
-			
+		if(pref !=null){
+			pref.edit().remove(KEYS_INTERVIEW_KEY[i]).commit();
 			pref.edit().remove(KEYS_DATE[i]).commit();
 			pref.edit().remove(KEYS_KEY[i]).commit();
 			pref.edit().remove(KEYS_NAME[i]).commit();
