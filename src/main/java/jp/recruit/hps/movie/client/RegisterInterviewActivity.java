@@ -502,7 +502,7 @@ public class RegisterInterviewActivity extends Activity {
 				SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY_REGISTERING_COMPANY,
 						Activity.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
-				editor.putBoolean(CommonUtils.STRING_PREF_REGISTERING_KEY, false);
+				editor.putBoolean(CommonUtils.STRING_PREF_REGISTERING, false);
 				editor.commit();
 				startActivity(new Intent(RegisterInterviewActivity.this,
 						TopActivity.class));
