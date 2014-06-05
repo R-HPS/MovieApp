@@ -6,6 +6,7 @@ import jp.recruit.hps.movie.client.utils.CommonUtils;
 import jp.recruit.hps.movie.client.utils.CompanyPreferences;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 public class HPSActivity extends Activity {
@@ -19,6 +20,10 @@ public class HPSActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if(checkIsRegistering()){
+			
+			return;
+		}
 		int current = -1;
 		
 	for (int i = 0; i < 3; i++) {
@@ -48,6 +53,25 @@ public class HPSActivity extends Activity {
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	private boolean checkIsRegistering() {
+		// TODO Auto-generated method stub
+		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY_REGISTERING_COMPANY,
+				Activity.MODE_PRIVATE);
+		boolean isRegistering = pref.getBoolean(CommonUtils.STRING_PREF_REGISTERING, false);
+		if(isRegistering){
+			Intent intent = new Intent(this, RegisterInterviewActivity.class);
+			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_KEY,
+					pref.getString(CommonUtils.STRING_PREF_COMPANY_KEY, ""));
+			intent.putExtra(CommonUtils.STRING_EXTRA_INTERVIEW_KEY,
+					pref.getString(CommonUtils.STRING_PREF_INTERVIEW_KEY, ""));
+			intent.putExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME, 
+					pref.getString(CommonUtils.STRING_PREF_COMPANY_NAME, ""));
+			startActivity(intent);
+			finish();
+		}
+		return isRegistering;
 	}
 
 }

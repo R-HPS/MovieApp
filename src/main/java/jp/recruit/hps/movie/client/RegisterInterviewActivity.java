@@ -99,6 +99,8 @@ public class RegisterInterviewActivity extends Activity {
 				.getStringExtra(CommonUtils.STRING_EXTRA_COMPANY_NAME);
 		TextView name = (TextView) findViewById(R.id.register_interview_title_text);
 		name.setText(companyName);
+		
+		setLastPreference(companyName, companyName, companyName);
 		SharedPreferences pref = getSharedPreferences(
 				CommonUtils.STRING_PREF_KEY, Activity.MODE_PRIVATE);
 		userKey = pref.getString(CommonUtils.STRING_EXTRA_USER_KEY, null);
@@ -108,6 +110,17 @@ public class RegisterInterviewActivity extends Activity {
 		setButton();
 		new GetQuestionListAsyncTask(this).executeOnExecutor(
 				AsyncTask.THREAD_POOL_EXECUTOR, companyKey);
+	}
+	
+	private void setLastPreference(String companyKey,String interviewKey,String companyName){
+		SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY_REGISTERING_COMPANY,
+				Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString(CommonUtils.STRING_PREF_COMPANY_KEY, companyKey);
+		editor.putString(CommonUtils.STRING_PREF_INTERVIEW_KEY, interviewKey);
+		editor.putString(CommonUtils.STRING_PREF_COMPANY_NAME, companyName);
+		editor.putBoolean(CommonUtils.STRING_PREF_REGISTERING, true);
+		editor.commit();
 	}
 
 	public void getCheckdList() {
@@ -486,6 +499,11 @@ public class RegisterInterviewActivity extends Activity {
 
 			if (success) {
 				Log.d("DEBUG", "register success");
+				SharedPreferences pref = getSharedPreferences(CommonUtils.STRING_PREF_KEY_REGISTERING_COMPANY,
+						Activity.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putBoolean(CommonUtils.STRING_PREF_REGISTERING_KEY, false);
+				editor.commit();
 				startActivity(new Intent(RegisterInterviewActivity.this,
 						TopActivity.class));
 				finish();
